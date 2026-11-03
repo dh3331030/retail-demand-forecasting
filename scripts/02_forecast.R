@@ -1,6 +1,8 @@
 # A compact, fixed comparison replaces the large experimental search.
 # Each target is predicted using observations strictly before its month.
 # The historical scoring period was inspected during development: not an untouched test.
+
+library(forecast)
 retail <- as.data.table(readRDS("data/processed/approved_retail_country_month.rds"))[core_country==TRUE]
 setorder(retail,iso3,month)
 targets <- retail[month>="2023-01" & month<="2025-12",.(iso3,target_month=month,actual=retail_growth_mom)]
@@ -8,14 +10,8 @@ stopifnot(nrow(targets)==180L,all(is.finite(targets$actual)),!anyDuplicated(targ
 specs <- c("Zero growth","Last observed growth","Same month last year growth",
            "Mean previous 3 months","Mean previous 12 months","AR(1)",
            "ETS growth","Theta growth","ARIMA full history","ARIMA since 2016")
-signature <- digest(list(data=digest(file="data/processed/approved_retail_country_month.rds",algo="sha256"),
-  script=digest(file="scripts/02_forecast.R",algo="sha256"),forecast=as.character(packageVersion("forecast")),R=R.version.string))
-cache_file <- "results/forecast_cache.rds"
-cached <- if(file.exists(cache_file)) readRDS(cache_file) else NULL
-if(!is.null(cached) && identical(cached$signature,signature)) {
-  predictions <- cached$predictions
-  message("Using verified forecasts: data, script and R/forecast versions match.")
-} else {
+# Always refit models from the observations rebuilt from raw files in stage 01.
+{
   rows <- list(); warning_rows <- list()
   for(cc in unique(targets$iso3)) {
     message("Forecasting ",cc," (36 months, 10 models)")
@@ -46,7 +42,6 @@ if(!is.null(cached) && identical(cached$signature,signature)) {
   predictions <- rbindlist(rows)
   warnings <- if(length(warning_rows)) rbindlist(warning_rows) else data.table(iso3=character(),target_month=character(),warning=character())
   fwrite(warnings,"results/fit_warnings.csv")
-  saveRDS(list(signature=signature,predictions=predictions),cache_file)
 }
 stopifnot(nrow(predictions)==1800L,!anyDuplicated(predictions[,.(model,iso3,target_month)]),
   all(predictions$training_end<predictions$target_month),all(is.finite(predictions$prediction)))

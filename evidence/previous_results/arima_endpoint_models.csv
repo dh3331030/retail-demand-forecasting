@@ -1,0 +1,6 @@
+iso3,training_start,training_end,observations,order,AICc
+DEU,1994-02,2025-12,383,p=4; d=0; q=3; P=2; D=0; Q=0; Frequency=12,1358.79171234435
+FRA,1999-02,2025-12,323,p=0; d=0; q=2; P=2; D=0; Q=1; Frequency=12,1161.30838422041
+ITA,2000-02,2025-12,311,p=3; d=0; q=3; P=0; D=0; Q=1; Frequency=12,785.84345171658
+POL,2000-02,2025-12,311,p=0; d=0; q=1; P=2; D=0; Q=0; Frequency=12,1402.83222740694
+PRT,2000-02,2025-12,311,p=0; d=0; q=1; P=2; D=0; Q=2; Frequency=12,1212.73142725424

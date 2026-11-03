@@ -1,4 +1,7 @@
 # Reproducible research figures and a plain-language results page.
+
+library(ggplot2)
+
 esc <- function(x) {x<-gsub("&","&amp;",as.character(x),fixed=TRUE);x<-gsub("<","&lt;",x,fixed=TRUE);gsub(">","&gt;",x,fixed=TRUE)}
 html_table <- function(d) {
   d <- as.data.frame(d)
@@ -41,11 +44,13 @@ p <- ggplot(cl,aes(as.Date(paste0(month,"-01")),ucdp_events))+geom_line(color="#
 ggsave("results/figures/conflict_context.png",p,width=11,height=4,dpi=160)
 ar <- final[model=="ARIMA full history"]; zero <- final[model=="Zero growth"]
 sup <- fread("results/supporting_model_comparison.csv")
+source_notice <- "This run rebuilt its analytic tables from the original Excel and ZIP datasets in data/raw/."
 body <- paste0('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Core retail analysis</title><style>',style,'</style></head><body><main>',
  '<nav><a href="../README.html">Project guide</a><a href="../MODEL_DECISION.html">Why ARIMA?</a><a href="model_comparison.csv">Download scores</a></nav>',
  '<h1>Can retail history forecast next month&#8217;s demand?</h1><p>We compare one-month forecasts for food, beverage and tobacco retail-volume growth in Germany, France, Italy, Poland and Portugal. The unit is a country-month, not a store or product.</p>',
  '<p><strong>ARIMA full history: MAE ',sprintf('%.4f',ar$MAE),' and RMSE ',sprintf('%.4f',ar$RMSE),'.</strong> Its average absolute error is ',sprintf('%.1f',100*(1-ar$MAE/zero$MAE)),'% below predicting no change over the same 120 targets.</p>',
  '<p class="notice">These are retrospective results. The 2024-2025 period influenced earlier model searches. Each forecast uses only earlier observations, but that does not make the model-selection process an untouched test. The source workbook contains revised values; actual release-time availability is not established.</p>',
+ '<p class="notice">Data provenance: ',source_notice,'</p>',
  '<h2>1. Understand the data</h2><p>Growth = 100 &#215; log(this month&#8217;s volume / previous month&#8217;s volume). A value near 1 means approximately 1% monthly growth. Earlier source history is retained for training; the descriptive study window is 2015-2025. No external data are downloaded and missing historical macro data are not invented.</p><img src="figures/retail_trends.png" alt="Retail volume trends by country">',
  '<h2>2. Compare forecasts fairly</h2><p>All models predict the same months. MAE is the average size of the error; RMSE penalises large misses more heavily. Models are refitted as each month passes. This is a sequence of one-month forecasts, not a 24-month forecast made at the end of 2023.</p><img src="figures/model_errors.png" alt="Mean absolute errors by model"><div class="scroll">',html_table(final),'</div>',
  '<h2>3. Inspect the misses</h2><img src="figures/arima_forecasts.png" alt="Actual and ARIMA monthly growth by country"><p>Country-level errors are in <a href="errors_by_country.csv">the country comparison</a>. An aggregate gain does not imply the same improvement in every country or month.</p>',
@@ -53,6 +58,6 @@ body <- paste0('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta
  '<img src="figures/conflict_context.png" alt="Global monthly conflict event counts"><p>Annual Gini remains annual context. COVID observations remain missing outside their observed range. Inflation, confidence and unemployment extracts have insufficient historical coverage for the full forecast experiment. The file labelled energy inflation duplicates headline inflation; workbook metadata identifies the inflation unit as monthly change, despite the filenames saying annual.</p>',
  '<h2>5. Reproduction and limits</h2>',html_table(fread("results/arima_reproduction_check.csv")),
  '<p><a href="arima_endpoint_models.csv">ARIMA orders fitted through December 2025</a> show what the automatic procedure selected for each country at the endpoint; orders can differ at earlier forecast origins.</p>',
- '<p>Tables round numeric values to four decimal places; the CSV files retain full precision. The reproduction check compares all 120 ARIMA predictions against the saved previous run. Source hashes are checked before extraction. Full outputs: <a href="forecasts.csv">core forecasts</a>, <a href="supporting_forecasts.csv">supporting forecasts</a>, <a href="economic_coverage.csv">economic coverage</a>, <a href="session_info.txt">R environment</a>.</p>',
+ '<p>Tables round numeric values to four decimal places; the CSV files retain full precision. The reproduction check compares all 120 ARIMA predictions against the saved previous run. This workflow reads its source datasets directly from the raw-data folder. Full outputs: <a href="forecasts.csv">core forecasts</a>, <a href="supporting_forecasts.csv">supporting forecasts</a>, <a href="economic_coverage.csv">economic coverage</a>, <a href="session_info.txt">R environment</a>.</p>',
  '<p>Business use: a transparent country-level baseline for planning discussions. This analysis does not measure store-level inventory savings, prove causality, or establish future deployment performance. The news extension is outside the scope of this final analysis.</p></main></body></html>')
 writeLines(body,"results/analysis.html",useBytes=TRUE)
