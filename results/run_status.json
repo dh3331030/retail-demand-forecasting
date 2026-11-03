@@ -1,5 +1,7 @@
 {
-  "status": "not_run",
+  "status": "failed",
   "input": "original local raw datasets",
-  "detail": "Run source(\"run_project.R\") to rebuild all results from data/raw/"
+  "stage": "preflight",
+  "at": "2026-11-03 21:22:25 UTC",
+  "detail": "cannot open the connection"
 }
