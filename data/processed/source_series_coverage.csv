@@ -1,0 +1,51 @@
+series_id,cells,nonmissing,geographies,first_period,last_period,file,sheet
+source_001,400,363,40,2016,2025,(new)Gini coefficient of equivalised disposable income by age(ilc_di12$defaultview_spreadsheet).xlsx,Sheet 1
+source_002,1840,274,40,2015-Q1,2026-Q2,"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",Sheet 1
+source_003,1840,1768,40,2015-Q1,2026-Q2,"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",Sheet 2
+source_004,1840,274,40,2015-Q1,2026-Q2,"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",Sheet 3
+source_005,1840,1768,40,2015-Q1,2026-Q2,"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",Sheet 4
+source_006,1840,274,40,2015-Q1,2026-Q2,"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",Sheet 5
+source_007,1840,1768,40,2015-Q1,2026-Q2,"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",Sheet 6
+source_008,516,492,43,2025-09,2026-08,Annual energy inflation rate - HICP energy (teicp000_page_spreadsheet).xlsx,Sheet 1
+source_009,492,492,41,2025-09,2026-08,Annual food inflation rate - HICP food (teicp010_page_spreadsheet).xlsx,Sheet 1
+source_010,516,492,43,2025-09,2026-08,Annual headline inflation rate - HICP - all items (teicp000_page_spreadsheet).xlsx,Sheet 1
+source_011,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 1
+source_012,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 2
+source_013,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 3
+source_014,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 4
+source_015,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 5
+source_016,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 6
+source_017,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 7
+source_018,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 8
+source_019,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 9
+source_020,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 10
+source_021,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 11
+source_022,350,335,35,2025-12,2026-09,Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx,Sheet 12
+source_023,430,316,43,2016,2025,Household final consumption expenditure by purpose (nama_10_co3_p3$defaultview_spreadsheet).xlsx,Sheet 1
+source_024,430,318,43,2016,2025,Household final consumption expenditure by purpose (nama_10_co3_p3$defaultview_spreadsheet).xlsx,Sheet 2
+source_025,430,292,43,2016,2025,Household final consumption expenditure by purpose (nama_10_co3_p3$defaultview_spreadsheet).xlsx,Sheet 3
+source_026,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 1
+source_027,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 2
+source_028,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 3
+source_029,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 4
+source_030,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 5
+source_031,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 6
+source_032,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 7
+source_033,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 8
+source_034,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 9
+source_035,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 10
+source_036,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 11
+source_037,230,190,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 12
+source_038,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 13
+source_039,230,190,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 14
+source_040,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 15
+source_041,230,30,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 16
+source_042,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 17
+source_043,230,30,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 18
+source_044,230,0,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 19
+source_045,230,20,23,2023-Q4,2026-Q1,Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx,Sheet 20
+source_046,18361,11899,43,1991-01,2026-07,"Retail trade volume of sales - food, beverages and tobacco(sts_trtu_m__custom_22913457_spreadsheet).xlsx",Sheet 1
+source_047,380,333,38,2025-11,2026-08,Unemployment by sex and age (une_rt_m$defaultview_spreadsheet).xlsx,Sheet 1
+source_048,380,333,38,2025-11,2026-08,Unemployment by sex and age (une_rt_m$defaultview_spreadsheet).xlsx,Sheet 2
+source_049,380,334,38,2025-11,2026-08,Unemployment by sex and age (une_rt_m$defaultview_spreadsheet).xlsx,Sheet 3
+source_050,380,334,38,2025-11,2026-08,Unemployment by sex and age (une_rt_m$defaultview_spreadsheet).xlsx,Sheet 4

@@ -1,0 +1,11 @@
+split,model,n,MAE,RMSE,eligible
+validation,Zero growth,60,1.02566104588919,1.37550337916708,TRUE
+validation,Elastic net five,60,1.02687852935124,1.30376005621433,TRUE
+validation,Elastic net five + exposure,60,1.02687852935124,1.30376005621433,TRUE
+validation,Elastic net wider,60,1.05867913194267,1.33551153439694,TRUE
+validation,Dynamic five + exposure,60,1.11514822286255,1.41940961261378,TRUE
+validation,Dynamic wider,60,1.12483041499066,1.38540203292799,TRUE
+validation,Dynamic five,60,1.13562164268203,1.40110752170299,TRUE
+validation,Retail autoregression,60,1.14637565346992,1.43577263407993,TRUE
+validation,Seasonal growth,60,1.54423765372027,2.03429246313977,TRUE
+validation,Last growth,60,1.76097899112403,2.33662268201725,TRUE

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retail Demand Forecasting</title>
+  <style>
+    :root { color-scheme: light; font-family: "Segoe UI", Arial, sans-serif; color: #20343b; background: #f5f7f6; }
+    body { margin: 0; line-height: 1.65; }
+    main { max-width: 900px; margin: auto; padding: 40px 24px; }
+    h1, h2 { font-family: Georgia, "Times New Roman", serif; }
+    h1 { font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.1; }
+    h2 { margin-top: 2rem; }
+    a { color: #086c63; }
+    code { overflow-wrap: anywhere; }
+    .lead { font-size: 1.2rem; }
+    .note { padding: 1rem; border-radius: .5rem; background: #fff5e5; }
+    li { margin: .45rem 0; }
+  </style>
+</head>
+<body>
+<main>
+  <p>Applied forecasting project</p>
+  <h1>Can retail history help predict next month’s demand?</h1>
+  <p class="lead">This reproducible R project studies monthly food, beverage and tobacco retail-volume growth in Germany, France, Italy, Poland and Portugal.</p>
+
+  <p><a href="results/analysis.html">Explore the results</a> ·
+     <a href="DATA_GUIDE.html">Understand the data</a> ·
+     <a href="MODEL_DECISION.html">Read the model decision</a></p>
+
+  <h2>What the analysis does</h2>
+  <ol>
+    <li>Checks the supplied source files against their recorded SHA-256 fingerprints.</li>
+    <li>Rebuilds the retail, economic, COVID and global conflict analysis datasets.</li>
+    <li>Compares ten one-month forecasting methods using the same country-months.</li>
+    <li>Reports the results and limitations in plain language and as reusable data files.</li>
+  </ol>
+
+  <h2>Headline result</h2>
+  <p>Across 120 retrospective forecasts for 2024–2025, the full-history ARIMA model recorded a mean absolute error (MAE) of 0.7864. That is about 14.5% lower than predicting no change. MAE summarizes the typical absolute miss; RMSE is also reported because it gives more weight to large misses.</p>
+  <p class="note"><strong>Important:</strong> 2024–2025 was examined during earlier model development, so it is not an untouched test set. The results are retrospective and do not establish future performance, real-time data availability, or causation.</p>
+
+  <h2>Run it locally</h2>
+  <p>Install R and the packages below, then run <code>Rscript --vanilla run_project.R</code> from this folder. Alternatively, open <code>Retail_forecasting.Rproj</code> in RStudio and run <code>source("run_project.R")</code>.</p>
+  <pre><code>install.packages(c("data.table", "readxl", "forecast", "jsonlite", "digest", "ggplot2"))</code></pre>
+  <p>The analysis uses the supplied files; it does not download data or require API credentials. Package installation requires internet access.</p>
+
+  <h2>Project files</h2>
+  <ul>
+    <li><code>scripts/</code> contains the data preparation, forecasting, supporting analysis and reporting steps.</li>
+    <li><code>data/raw/</code> contains the source extracts; <code>data/source_manifest.csv</code> records their expected size and SHA-256 hash.</li>
+    <li><code>data/processed/</code> contains derived observations and analysis panels.</li>
+    <li><code>results/</code> contains forecasts, comparisons, figures, validation checks and the generated results page.</li>
+    <li><code>evidence/</code> contains selected historical results used to explain the model-selection context.</li>
+  </ul>
+
+  <h2>Data and interpretation</h2>
+  <p>Source dataset names and links are listed in <code>data/raw/project_data_sources.xlsx</code>. The data guide documents units, coverage and known limitations. Source fingerprints verify that the local files match the recorded versions; they do not prove external provenance or historical release timing. Check each data provider’s terms before reusing or redistributing its data.</p>
+  <p>The forecast is a country-level analytical baseline, not a store-level inventory system. Economic and global conflict measures are supporting context; the model comparison does not establish that they cause changes in retail demand.</p>
+</main>
+</body>
+</html>
