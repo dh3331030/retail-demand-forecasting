@@ -1,45 +1,46 @@
-# European retail demand forecasting — run from the original datasets
+# European retail demand forecasting
 
-This is the Bocconi 20564 group project's R analysis, packaged **with the 13 original Excel and ZIP data files**. Everything is included under `data/raw/` and the full workflow reads those original files by default. No precomputed input data are required.
+This repository contains a reproducible R workflow for forecasting monthly retail-volume growth in Germany, France, Italy, Poland, and Portugal. It includes the source data, data preparation scripts, forecasting models, validation checks, and generated reports.
 
-## Run the project (RStudio)
+## Run the analysis
 
-1. Extract the entire ZIP to a folder on your computer. **Do not run files from the ZIP preview.**
-2. Open **`Retail_forecasting.Rproj`** in RStudio (or Positron with an R project working directory).
-3. Run `source("00_setup.R")`. Install any missing packages using the command printed by the setup script.
-4. Run `source("run_project.R")`. It reads all 13 original datasets, creates `data/processed/`, refits the forecasting models and creates new `results/` files.
-5. Check that `results/run_status.json` shows `"status": "complete"`; open `results/analysis.html` and `results/model_comparison.csv`.
+1. Clone the repository and open `Retail_forecasting.Rproj` in RStudio, or open the project directory in Positron.
+2. Run `source("00_setup.R")` and install any missing packages using the command printed by the setup script.
+3. Run `source("run_project.R")` to rebuild the processed data, fit the models, and generate the reports.
+4. Check that `results/run_status.json` reports `"status": "complete"`. Open `results/analysis.html` and `results/model_comparison.csv` to review the results.
 
-To check the 13 original datasets without running the models, use a terminal. The following commands work from **any** working directory:
+From a terminal, run the workflow from any working directory:
 
 ```sh
 Rscript --vanilla /path/to/project/run_project.R --check
 Rscript --vanilla /path/to/project/run_project.R
 ```
 
-`--check` only confirms that the original datasets exist and are openable. It does not execute the forecasting models. The default command always reads the original Excel and ZIP sources, even when derived files already exist.
+The `--check` option verifies that the original source files are present and readable without fitting models. A full run always rebuilds derived data from the original source files.
 
-## Project structure
+## Data and reproducibility
 
-- `data/raw/` — **13 real, original datasets** (Excel source workbooks and the Oxford COVID ZIP). Leave their filenames unchanged.
-- `data/raw_sources.csv` — filenames used by the importing script. It contains no fingerprints.
-- `scripts/00_preflight.R` — checks that original files exist and can be opened.
-- `scripts/01_prepare_data.R` — rebuilds every derived input directly from the original Excel and ZIP datasets. The large UCDP workbook is re-read for every full run.
-- `scripts/02_forecast.R` — fits ten historical-growth forecasting models on rolling one-month forecast origins.
-- `scripts/03_supporting_analysis.R` — constructs economic/context features and matched supporting forecasts.
-- `scripts/04_results.R` — generates the HTML report, score tables and figures.
-- `tests/check_outputs.R` — checks final row counts, uniqueness, prediction finiteness and forecast timing.
-- `evidence/previous_results/` — earlier results retained for reference only. They are not presented as outputs from the new run.
-- `results/` — new outputs appear here after the full run.
+The original Excel and ZIP datasets are stored in `data/raw/`. Excel and ZIP files are tracked with Git LFS; install Git LFS before cloning so the source files are downloaded rather than their pointer files. The source datasets retain their respective providers' attribution and usage terms.
 
-## Statistical interpretation
+The large UCDP workbook exceeds GitHub's regular file-size limit and is stored through Git LFS. Downloading the complete data may require additional bandwidth and Git LFS storage.
 
-The analysis predicts one-month-ahead log growth in the seasonally and calendar-adjusted food, beverage and tobacco retail-volume index for Germany, France, Italy, Poland and Portugal. 2023 is used as a diagnostic period; 2024–2025 is a **previously reviewed retrospective evaluation**, not a pristine held-out test. The supporting regression uses global conflict, not country-specific exposure, and cannot establish causality. The underlying data are historical revised extracts and do not prove real-time release-vintage availability.
+## Repository structure
 
-## Sharing with teammates and GitHub
+- `data/raw/` — original source datasets.
+- `data/processed/` — derived datasets created by the workflow.
+- `scripts/00_preflight.R` — checks that the original source files are present and readable.
+- `scripts/01_prepare_data.R` — rebuilds derived inputs from the original datasets.
+- `scripts/02_forecast.R` — fits rolling one-month-ahead forecasting models.
+- `scripts/03_supporting_analysis.R` — prepares economic/context features and supporting forecasts.
+- `scripts/04_results.R` — generates the HTML report, score tables, and figures.
+- `tests/check_outputs.R` — checks forecast counts, uniqueness, finite predictions, and forecast timing.
+- `evidence/previous_results/` — earlier results retained for reference.
+- `results/` — current analysis outputs.
 
-Share the **complete ZIP** so every teammate receives the genuine original datasets. The original UCDP Excel workbook is larger than GitHub's 100 MB regular-file limit; GitHub will not accept that single workbook in a normal repository commit. If you keep code on GitHub, distribute the large original file separately through the team's shared drive and copy it into `data/raw/` before running. This ZIP is self-contained for direct exchange.
+## Interpretation
 
-## Verification status
+The analysis predicts one-month-ahead log growth in the seasonally and calendar-adjusted food, beverage, and tobacco retail-volume index. The 2023 period is diagnostic; 2024–2025 is a retrospective evaluation, not an untouched hold-out. The supporting regression uses global conflict measures and cannot establish causality. The underlying data are revised historical extracts and do not establish real-time data availability.
 
-The original dataset archives and their expected workbook/ZIP members were independently inspected while preparing this package. R and its packages are not available in this preparation environment, so **the complete R pipeline has not been execution-tested here**. `results/run_status.json` starts as `not_run` and reports success or a precise failed stage when run on an R-enabled computer.
+## Verification
+
+Run `Rscript --vanilla run_project.R` to rebuild the analysis and execute the output checks. The workflow records its status and any failing stage in `results/run_status.json`.
