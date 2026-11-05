@@ -4,9 +4,28 @@
 run_retail_project <- function() {
   original_wd <- getwd()
   on.exit(setwd(original_wd), add = TRUE)
-  frames <- unlist(lapply(sys.frames(), function(fr) fr$ofile), use.names = FALSE)
-  cli <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE))
-  paths <- c(frames[basename(frames) == "run_project.R"], cli)
+  
+  frames <- unlist(
+    lapply(sys.frames(), function(fr) fr$ofile),
+    use.names = FALSE
+  )
+  if (is.null(frames)) {
+    frames <- character(0)
+  }
+  
+  # Identify the file supplied to Rscript.
+  cli <- sub(
+    "^--file=", "",
+    grep("^--file=", commandArgs(FALSE), value = TRUE)
+  )
+  
+  # Prefer the actual sourced script, if available.
+  paths <- c(
+    cli[basename(cli) == "run_project.R"],
+    frames[basename(frames) == "run_project.R"]
+  )
+  
+
   if (length(paths)) {
     root <- dirname(normalizePath(tail(paths, 1L), mustWork = TRUE))
   } else if (file.exists("Retail_forecasting.Rproj") && file.exists("scripts/01_prepare_data.R")) {

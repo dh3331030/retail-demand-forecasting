@@ -5,8 +5,12 @@ library("data.table")
 
 out <- "data/processed"
 dir.create(out, recursive = TRUE, showWarnings = FALSE)
+
 # Import from actual originals, never a CSV manifest or a cached snapshot.
-source("scripts/00_raw_files.R", local = TRUE, encoding = "UTF-8")
+if (!exists("locate_raw_sources", mode="function")) {
+  source("scripts/00_preflight.R", local = TRUE, encoding = "UTF-8")
+}
+
 sources <- as.data.table(locate_raw_sources(getwd()))
 if (any(!file.exists(sources$read_path)))
   stop("Original raw datasets are missing. Run Rscript run_project.R --check.", call. = FALSE)
