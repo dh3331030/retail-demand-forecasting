@@ -1,22 +1,8 @@
-# 00_preflight.R - Preliminary source-file checks
-#
-# Checks that the expected input files and internal file structures exist.
-# Detailed checks of values, units, and coverage belong in data preparation.
-#
-# Before running this script, run:
-# source("00_setup.R")
-# source("scripts/00_config.R")
-
-
-# Check that the raw-data folder exists
-
 if (!dir.exists(config$paths$raw)) {
   stop("The raw-data folder is missing.", call. = FALSE)
 }
 
 message("Raw-data folder found.")
-
-# Identify the Excel and ZIP files in the raw-data folder
 
 raw_files <- list.files(
   path = config$paths$raw,
@@ -24,12 +10,9 @@ raw_files <- list.files(
   ignore.case = TRUE
 )
 
-# Exclude temporary files created when an Excel workbook is open
 raw_files <- raw_files[!startsWith(raw_files, "~$")]
 
 print(raw_files)
-
-# Check that the number of source files matches the configuration
 
 if (length(raw_files) != config$sources$expected_count) {
   stop(
@@ -40,8 +23,6 @@ if (length(raw_files) != config$sources$expected_count) {
 }
 
 message("Source-file count is correct.")
-
-# Check that each expected source matches exactly one filename
 
 for (prefix in config$sources$expected_prefixes) {
   
@@ -58,8 +39,6 @@ for (prefix in config$sources$expected_prefixes) {
 
 message("All expected source filenames were found.")
 
-# Create a source-file table for subsequent checks
-
 source_list <- data.frame(
   file = raw_files,
   read_path = file.path(config$paths$raw, raw_files),
@@ -68,17 +47,10 @@ source_list <- data.frame(
 
 print(source_list)
 
-# Check that Excel workbooks contain sheets
-
-# Check Excel sheet names and the contents of the COVID ZIP
-
 for (i in seq_len(nrow(source_list))) {
   
   file_name <- source_list$file[i]
   file_path <- source_list$read_path[i]
-  
-  
-  # Excel workbooks -------------------------------------------------------
   
   if (grepl("\\.xlsx$", file_name, ignore.case = TRUE)) {
     
@@ -86,18 +58,6 @@ for (i in seq_len(nrow(source_list))) {
     
     if (length(sheets) == 0L) {
       stop("Workbook has no sheets: ", file_name, call. = FALSE)
-    }
-    
-    # UCDP workbook
-    if (startsWith(file_name, "UCDP")) {
-      
-      if (!(config$sources$ucdp_sheet %in% sheets)) {
-        stop(
-          "Expected UCDP sheet missing: ",
-          config$sources$ucdp_sheet,
-          call. = FALSE
-        )
-      }
     }
     
     # Select the expected sheet for each Eurostat workbook.
@@ -129,9 +89,6 @@ for (i in seq_len(nrow(source_list))) {
 
     message("Excel structure checked: ", file_name)
     
-    
-    # COVID ZIP -------------------------------------------------------------
-    
   } else if (grepl("\\.zip$", file_name, ignore.case = TRUE)) {
     
     members <- utils::unzip(file_path, list = TRUE)$Name
@@ -148,8 +105,48 @@ for (i in seq_len(nrow(source_list))) {
   }
 }
 
+# Check the annual UCDP CSV -----------------------------------------------
 
-# Report completion -------------------------------------------------------
+annual_file <- "data/raw/ucdp/annual/GEDEvent_v23_1.csv"
+
+if (!file.exists(annual_file)) {
+  stop(
+    "Annual UCDP file missing: ",
+    annual_file,
+    call. = FALSE
+  )
+}
+
+message("Annual UCDP CSV found.")
+
+
+# Check the monthly Candidate CSVs ----------------------------------------
+
+candidate_names <- c(
+  paste0("GEDEvent_v22_0_", 11:12, ".csv"),
+  paste0("GEDEvent_v23_0_", 1:12, ".csv"),
+  paste0("GEDEvent_v24_0_", 1:12, ".csv"),
+  paste0("GEDEvent_v25_0_", 1:12, ".csv")
+)
+
+candidate_paths <- file.path(
+  "data/raw/ucdp/candidate",
+  candidate_names
+)
+
+missing_candidates <- candidate_names[
+  !file.exists(candidate_paths)
+]
+
+if (length(missing_candidates) > 0) {
+  stop(
+    "Missing UCDP Candidate files: ",
+    paste(missing_candidates, collapse = ", "),
+    call. = FALSE
+  )
+}
+
+message("All 38 monthly UCDP Candidate CSVs found.")
 
 message("Preflight passed: expected files and internal structures found.")
 message("Data values, units, coverage, and timing have not yet been checked.")

@@ -331,15 +331,135 @@ covid_monthly[, .(
   missing_values = sum(is.na(covid_stringency))
 )]
 
-ucdp_column_types <- rep("guess", 49)
-ucdp_column_types[48:49] <- "text"
+ucdp_raw <- fread(
+  "data/raw/ucdp/annual/GEDEvent_v23_1.csv"
+)
 
-ucdp_raw <- as.data.table(
-  read_excel(
-    "data/raw/UCDP Georeferenced Event Dataset (GED) Global.xlsx",
-    sheet = config$sources$ucdp_sheet,
-    col_types = ucdp_column_types
+ucdp_raw[
+  , .(
+    events = .N,
+    first_year = min(year),
+    last_year = max(year)
   )
+]
+
+# List the monthly Candidate files.
+candidate_names <- c(
+  paste0("GEDEvent_v22_0_", 11:12, ".csv"),
+  paste0("GEDEvent_v23_0_", 1:12, ".csv"),
+  paste0("GEDEvent_v24_0_", 1:12, ".csv"),
+  paste0("GEDEvent_v25_0_", 1:12, ".csv")
+)
+
+# Columns required for our conflict calculations.
+required_columns <- c(
+  "id",
+  "country",
+  "type_of_violence",
+  "code_status",
+  "latitude",
+  "longitude",
+  "date_start",
+  "date_end",
+  "date_prec",
+  "where_prec",
+  "best",
+  "low",
+  "high"
+)
+
+# Store one table per monthly release.
+candidate_tables <- list()
+
+for (i in 1:length(candidate_names)) {
+  
+  message("Reading: ", candidate_names[i])
+  
+  if (candidate_names[i] == "GEDEvent_v24_0_1.csv") {
+    
+    # January 2024 has no header row.
+    monthly_data <- fread(
+      file.path(
+        "data/raw/ucdp/candidate",
+        candidate_names[i]
+      ),
+      header = FALSE,
+      col.names = names(ucdp_raw)
+    )
+    
+  } else {
+    
+    # All other files use their existing header row.
+    monthly_data <- fread(
+      file.path(
+        "data/raw/ucdp/candidate",
+        candidate_names[i]
+      )
+    )
+    
+  }
+  
+  missing_columns <- required_columns[
+    !required_columns %in% names(monthly_data)
+  ]
+  
+  if (length(missing_columns) > 0) {
+    
+    print(names(monthly_data))
+    
+    stop(
+      "File: ", candidate_names[i],
+      "\nMissing columns: ",
+      paste(missing_columns, collapse = ", "),
+      call. = FALSE
+    )
+  }
+  
+  # Keep the required columns.
+  monthly_data <- monthly_data[
+    , required_columns,
+    with = FALSE
+  ]
+  
+  # Preserve the identity of the release.
+  monthly_data[, source_file := candidate_names[i]]
+  
+  candidate_tables[[i]] <- monthly_data
+}
+
+candidate_events <- rbindlist(candidate_tables)
+
+candidate_events[, date_start := as.Date(date_start)]
+candidate_events[, date_end := as.Date(date_end)]
+
+# Preserve records that cannot be used in distance calculations.
+candidate_missing_coordinates <- copy(
+  candidate_events[
+    is.na(latitude) | is.na(longitude)
+  ]
+)
+
+saveRDS(
+  candidate_missing_coordinates,
+  "data/processed/ucdp_candidate_missing_coordinates.rds"
+)
+
+# Retain events with both coordinates.
+candidate_events <- candidate_events[
+  !is.na(latitude) & !is.na(longitude)
+]
+
+# Confirm that the exclusions were recorded.
+print(nrow(candidate_missing_coordinates))
+
+# Confirm that the remaining events have complete coordinates.
+print(
+  candidate_events[
+    , .(
+      missing_latitude = sum(is.na(latitude)),
+      missing_longitude = sum(is.na(longitude))
+    )
+  ]
 )
 
 ucdp <- ucdp_raw[
@@ -413,8 +533,7 @@ for (i in 1:nrow(capitals)) {
   events[, distance_km := 2 * 6371 * asin(sqrt(a))]
   
   events[, a := NULL]
-  
-  # Identify the country whose exposure we are measuring.
+
   events[, focal_country := capitals$country[i]]
   
   country_events[[i]] <- events

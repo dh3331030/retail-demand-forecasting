@@ -1,19 +1,3 @@
-# Shared project settings
-#
-# Stores the folder paths, source-file requirements, and approved analytical
-# settings used throughout the project.
-# Load these settings before running scripts that use the config object,
-# by running the following command through the console:
-#
-# source("scripts/00_config.R")
-#
-# Access individual settings using $, for example: config$paths$raw.
-# Both master scripts will load this file to use the same settings.
-#
-# This script only defines settings. It does not read or validate datasets,
-# create folders, fit models, or produce results.
-# Change shared settings here rather than repeating them in other scripts.
-
 config <- list(
   
   paths = list(
@@ -27,14 +11,13 @@ config <- list(
   
   sources = list(
     
-    expected_count = 7L,
+    expected_count = 6L,
     
     expected_prefixes = c(
       "Retail trade volume of sales",
       "Headline inflation.xlsx",
       "Unemployment.xlsx",
       "(new)Gross domestic product (GDP)",
-      "UCDP Georeferenced Event Dataset",
       "Oxford Covid-19 Government Response Tracker",
       "Household final consumption expenditure.xlsx"
     ),
@@ -49,8 +32,6 @@ config <- list(
     headline_inflation_sheet = "Sheet 16",
     unemployment_sheet = "Sheet 1"
   ),
-    
-  # Analytical settings: NULL means not yet agreed
   
   analysis = list(
     countries = c(

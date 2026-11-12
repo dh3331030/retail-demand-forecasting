@@ -83,5 +83,4 @@ panel[
   .(month, retail_growth, retail_growth_lag1, retail_growth_lag2)
 ]
 
-# Resume here: define information availability and construct other predictors.
-# Keep initial missing values. No model dataset has been saved at this stage.
+
