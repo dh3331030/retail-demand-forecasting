@@ -1,14 +1,7 @@
-"file"
-"(new)Gini coefficient of equivalised disposable income by age(ilc_di12$defaultview_spreadsheet).xlsx"
-"(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx"
-"Annual energy inflation rate - HICP energy (teicp000_page_spreadsheet).xlsx"
-"Annual food inflation rate - HICP food (teicp010_page_spreadsheet).xlsx"
-"Annual headline inflation rate - HICP - all items (teicp000_page_spreadsheet).xlsx"
-"Consumers confidence indicator and survey results - monthly data (ei_bsco_m$defaultview_spreadsheet).xlsx"
-"Household final consumption expenditure by purpose (nama_10_co3_p3$defaultview_spreadsheet).xlsx"
-"Key indicators for sector accounts (nasq_10_ki$defaultview_spreadsheet).xlsx"
-"Oxford Covid-19 Government Response Tracker (OxCGRT).zip"
-"Retail trade volume of sales - food, beverages and tobacco(sts_trtu_m__custom_22913457_spreadsheet).xlsx"
-"UCDP Georeferenced Event Dataset (GED) Global.xlsx"
-"Unemployment by sex and age (une_rt_m$defaultview_spreadsheet).xlsx"
-"project_data_sources.xlsx"
+file;description;source
+(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx;Quarterly percentage change in GDP as chain-linked volume;
+Headline inflation.xlsx;Monthly headline inflation;
+Oxford Covid-19 Government Response Tracker (OxCGRT).zip;COVID regulations stringency index;
+Retail trade volume of sales - food, beverages and tobacco(sts_trtu_m__custom_22913457_spreadsheet).xlsx;Volume of sales for FMCG;
+UCDP Georeferenced Event Dataset (GED) Global.xlsx;UCDP measures on conflicts;
+Unemployment.xlsx;Monthly unemployment;

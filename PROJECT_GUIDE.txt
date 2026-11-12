@@ -1,0 +1,88 @@
+EUROPEAN RETAIL DEMAND FORECASTING
+PROJECT STRUCTURE AND EXECUTION GUIDE
+
+CURRENT STATUS
+Data preparation is implemented in scripts/01_prepare_data.R and saves
+the merged dataset as data/processed/prepared_panel.rds.
+Model-data construction is implemented through monthly retail growth and
+its first two lags in scripts/02_construct_model_data.R. Predictor information
+availability, remaining lags, and missing-value rules are still pending.
+Training, validation and final evaluation have not been implemented.
+
+HOW TO RESUME
+See START_HERE.txt. Extract the whole project before opening the Rproj.
+All active paths are relative to the project folder.
+Run source("run_development.R") to rebuild preparation, then
+source("scripts/02_construct_model_data.R") to reach the last discussed step.
+The development runner currently executes preparation only.
+
+CURRENT FILES
+Retail_forecasting.Rproj opens the active project in RStudio.
+00_setup.R checks the project location and required packages: data.table
+and readxl. Modeling packages will be added as models are implemented.
+scripts/00_config.R stores shared settings. Sample dates, countries,
+prepared-panel path, source sheets and conflict candidates are recorded.
+Remaining NULL entries represent modeling settings still to be finalized.
+scripts/00_preflight.R checks seven sources, filenames, required Excel
+sheets and the national COVID CSV member inside its ZIP.
+Inflation uses Sheet 16, GDP Sheet 2, retail and unemployment Sheet 1.
+scripts/01_prepare_data.R imports and merges retail, inflation,
+unemployment, quarterly GDP converted to monthly equivalents, COVID
+stringency and four conflict measures. UCDP columns 48 and 49 are read as
+text to preserve multiple codes and avoid numeric-conversion warnings.
+The remaining date filters and source paths retain the original explicit
+style; further refactoring was not performed.
+scripts/02_construct_model_data.R checks monthly continuity and duplicates,
+constructs 100 * log(current_index / previous_index), and adds retail growth
+lags of one and two months. It retains initial missing values. It does not
+save a final modeling dataset or fit models.
+run_development.R runs setup, config, preflight and preparation, then reports
+successful completion instead of raising the obsolete not-implemented error.
+run_final_evaluation.R remains the original guarded placeholder, requiring
+a frozen configuration and stopping before unimplemented final evaluation.
+
+CHRONOLOGICAL SAMPLES
+Training: January 2015 through December 2022 (480 country-month rows).
+Validation: January through December 2023 (60 country-month rows).
+Testing: January 2024 through December 2025 (120 country-month rows).
+Counts assume five countries and complete monthly coverage. Row counts
+do not imply all predictors or the growth target are nonmissing.
+Sample membership refers to the month being predicted. Compare model and
+conflict definitions in validation; freeze choices before evaluating tests.
+
+COUNTRIES AND CANDIDATES
+Germany, France, Italy, Poland and Portugal.
+Candidate predictors currently in the prepared panel: inflation_yoy,
+unemployment_rate, gdp_monthly_equivalent, covid_stringency, conflict_500,
+conflict_1000, conflict_2000 and conflict_deaths_1000.
+The four conflict definitions are alternatives to compare during validation,
+not a decision to use all four together. Retail growth lags are constructed,
+but admissible forecast inputs still depend on publication timing.
+Household consumption has not been merged or used.
+
+FOLDERS
+scripts/: active numbered R scripts; masters determine execution order.
+data/raw/: seven original Excel/ZIP files; six are currently used in the
+panel, while household consumption is present but not incorporated.
+data/: source registers, which are not counted among the seven raw inputs.
+data/processed/: extracted COVID CSV and other archived processed inputs.
+prepared_panel_before_split_update.rds is the original archive snapshot,
+with old sample labels. Rebuild prepared_panel.rds before using file 02.
+results/development/: reserved for validation and frozen specifications.
+results/final/: reserved for final testing and reporting.
+reference_materials/: tutoring archive and supplied project context PDF.
+The uploaded archive did not contain 0_old/ or earlier repository history.
+
+NEXT WORK
+Set the forecast origin and information-availability assumptions; construct
+remaining predictor lags, resolve post-2022 COVID missingness and select
+usable observations. Only then implement training and rolling validation.
+Converting GDP to monthly equivalents does not change its quarterly
+observation or publication schedule. Historical revised data and conflict
+event dates alone do not establish real-time information availability.
+
+RECOVERY VALIDATION
+Original raw source bytes were checked against the uploaded ZIP. Script
+references, agreed edits, chronological boundary logic and ZIP integrity
+were checked. R is unavailable in the recovery environment, so the R
+pipeline has not been re-executed here.
