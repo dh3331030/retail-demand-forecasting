@@ -2,87 +2,180 @@ EUROPEAN RETAIL DEMAND FORECASTING
 PROJECT STRUCTURE AND EXECUTION GUIDE
 
 CURRENT STATUS
-Data preparation is implemented in scripts/01_prepare_data.R and saves
-the merged dataset as data/processed/prepared_panel.rds.
-Model-data construction is implemented through monthly retail growth and
-its first two lags in scripts/02_construct_model_data.R. Predictor information
-availability, remaining lags, and missing-value rules are still pending.
-Training, validation and final evaluation have not been implemented.
 
-HOW TO RESUME
-See START_HERE.txt. Extract the whole project before opening the Rproj.
-All active paths are relative to the project folder.
-Run source("run_development.R") to rebuild preparation, then
-source("scripts/02_construct_model_data.R") to reach the last discussed step.
-The development runner currently executes preparation only.
+Data preparation and model-data construction are implemented.
+The complete development runner has been checked from an empty R session.
 
-CURRENT FILES
-Retail_forecasting.Rproj opens the active project in RStudio.
-00_setup.R checks the project location and required packages: data.table
-and readxl. Modeling packages will be added as models are implemented.
-scripts/00_config.R stores shared settings. Sample dates, countries,
-prepared-panel path, source sheets and conflict candidates are recorded.
-Remaining NULL entries represent modeling settings still to be finalized.
-scripts/00_preflight.R checks seven sources, filenames, required Excel
-sheets and the national COVID CSV member inside its ZIP.
-Inflation uses Sheet 16, GDP Sheet 2, retail and unemployment Sheet 1.
-scripts/01_prepare_data.R imports and merges retail, inflation,
-unemployment, quarterly GDP converted to monthly equivalents, COVID
-stringency and four conflict measures. UCDP columns 48 and 49 are read as
-text to preserve multiple codes and avoid numeric-conversion warnings.
-The remaining date filters and source paths retain the original explicit
-style; further refactoring was not performed.
-scripts/02_construct_model_data.R checks monthly continuity and duplicates,
-constructs 100 * log(current_index / previous_index), and adds retail growth
-lags of one and two months. It retains initial missing values. It does not
-save a final modeling dataset or fit models.
-run_development.R runs setup, config, preflight and preparation, then reports
-successful completion instead of raising the obsolete not-implemented error.
-run_final_evaluation.R remains the original guarded placeholder, requiring
-a frozen configuration and stopping before unimplemented final evaluation.
+Model fitting, model selection and final testing remain to be implemented.
 
-CHRONOLOGICAL SAMPLES
-Training: January 2015 through December 2022 (480 country-month rows).
-Validation: January through December 2023 (60 country-month rows).
-Testing: January 2024 through December 2025 (120 country-month rows).
-Counts assume five countries and complete monthly coverage. Row counts
-do not imply all predictors or the growth target are nonmissing.
-Sample membership refers to the month being predicted. Compare model and
-conflict definitions in validation; freeze choices before evaluating tests.
 
-COUNTRIES AND CANDIDATES
-Germany, France, Italy, Poland and Portugal.
-Candidate predictors currently in the prepared panel: inflation_yoy,
-unemployment_rate, gdp_monthly_equivalent, covid_stringency, conflict_500,
-conflict_1000, conflict_2000 and conflict_deaths_1000.
-The four conflict definitions are alternatives to compare during validation,
-not a decision to use all four together. Retail growth lags are constructed,
-but admissible forecast inputs still depend on publication timing.
-Household consumption has not been merged or used.
+HOW TO RUN
 
-FOLDERS
-scripts/: active numbered R scripts; masters determine execution order.
-data/raw/: seven original Excel/ZIP files; six are currently used in the
-panel, while household consumption is present but not incorporated.
-data/: source registers, which are not counted among the seven raw inputs.
-data/processed/: extracted COVID CSV and other archived processed inputs.
-prepared_panel_before_split_update.rds is the original archive snapshot,
-with old sample labels. Rebuild prepared_panel.rds before using file 02.
-results/development/: reserved for validation and frozen specifications.
-results/final/: reserved for final testing and reporting.
-reference_materials/: tutoring archive and supplied project context PDF.
-The uploaded archive did not contain 0_old/ or earlier repository history.
+Extract or clone the complete project and open Retail_forecasting.Rproj.
 
-NEXT WORK
-Set the forecast origin and information-availability assumptions; construct
-remaining predictor lags, resolve post-2022 COVID missingness and select
-usable observations. Only then implement training and rolling validation.
-Converting GDP to monthly equivalents does not change its quarterly
-observation or publication schedule. Historical revised data and conflict
-event dates alone do not establish real-time information availability.
+From the project root, run:
 
-RECOVERY VALIDATION
-Original raw source bytes were checked against the uploaded ZIP. Script
-references, agreed edits, chronological boundary logic and ZIP integrity
-were checked. R is unavailable in the recovery environment, so the R
-pipeline has not been re-executed here.
+source("run_development.R")
+
+The setup script installs missing required packages automatically.
+The current dependencies are data.table and readxl.
+
+The runner executes stages inside a local environment. Intermediate objects
+therefore need not appear in RStudio's Global Environment.
+
+To inspect the saved modeling dataset:
+
+source("scripts/00_config.R")
+library(data.table)
+model_panel <- as.data.table(readRDS(config$paths$model_panel))
+View(model_panel)
+
+
+ACTIVE SCRIPTS
+
+00_setup.R
+Checks the project location and installs missing required packages.
+
+scripts/00_config.R
+Records paths, source requirements, sample dates, target definition,
+candidate predictors and implemented availability conventions.
+
+scripts/00_preflight.R
+Checks the six top-level Excel/ZIP sources and their required structures.
+Checks that the annual GED ZIP exists and contains one CSV.
+The exact Candidate filenames are checked during preparation.
+
+scripts/01_prepare_helpers.R
+Defines reusable functions for Eurostat reshaping, event validation,
+and conflict-distance calculations.
+
+scripts/01_prepare_data.R
+Imports and combines the original sources.
+Extracts the annual GED ZIP into data/processed/.
+Calculates annual monthly conflict exposure and Candidate event weights.
+Preserves Candidate release identities for later availability selection.
+
+scripts/02_construct_model_data.R
+Constructs retail growth and forecasting predictors.
+Combines annual-based training exposure with Candidate-based evaluation
+exposure, preserving a conflict_source column.
+Selects analysis columns, checks missingness and saves usable model rows.
+
+run_development.R
+Runs setup, configuration, preflight, preparation and model-data construction.
+
+run_final_evaluation.R
+Remains a guarded placeholder requiring frozen development settings.
+Final evaluation has not yet been implemented.
+
+
+RAW SOURCES AND GENERATED DATA
+
+data/raw/ contains six top-level Excel/ZIP sources.
+The household-consumption workbook is present but is not currently used.
+
+The annual conflict source is:
+data/raw/ucdp/annual/GEDEvent_23_1.csv.zip
+
+Candidate CSVs are stored in:
+data/raw/ucdp/candidate/
+
+There are 38 Candidate files covering November 2022 through December 2025.
+January 2024 is handled as a headerless file.
+
+Extracted files and generated datasets are stored in data/processed/.
+They should be excluded from Git using the supplied ignore rules.
+The uncompressed annual CSV is regenerated from its ZIP.
+
+
+SAMPLES AND TARGET
+
+Countries: France, Germany, Italy, Poland and Portugal.
+
+Nominal training period: January 2015 through December 2022.
+Validation period: January through December 2023.
+Testing period: January 2024 through December 2025.
+
+Target:
+100 * log(current retail index / previous month's retail index)
+
+The target is monthly retail growth in log percentage points.
+A value of 0.12 represents approximately 0.12% growth.
+
+Forecasts target the next calendar month from the preceding month-end.
+
+
+PREDICTORS AND AVAILABILITY
+
+Retail growth: lag 3.
+Headline inflation: lag 2.
+Unemployment rate: lag 3.
+
+GDP: the latest eligible quarter, expressed as a monthly-equivalent growth
+rate and carried forward. A quarter becomes eligible for target months
+starting four months after its quarter-end month.
+
+Conflict exposure: lag 2, using four alternative definitions:
+distance-weighted event counts with 500, 1000 and 2000 km decay distances;
+distance-weighted estimated deaths with 1000 km decay distance.
+
+Training conflict inputs use annual GED 23.1.
+Validation and testing use historical Candidate releases.
+
+Candidate releases become eligible from source month plus two target months.
+Within each forecast information set, the latest eligible event version is
+selected before choosing the event reference month and aggregating weights.
+
+These are conservative scheduling conventions. Individual historical
+publication dates have not been fully reconstructed.
+
+COVID stringency is excluded from the initial model comparisons.
+
+gdp_source_quarter and conflict_source are audit columns, not automatic
+model predictors.
+
+
+OUTPUTS OF STAGE 02
+
+analysis_panel.rds
+All 660 country-month rows, with selected analysis columns.
+
+model_panel.rds
+630 complete observations:
+450 training rows, July 2015 through December 2022;
+60 validation rows, January through December 2023;
+120 testing rows, January 2024 through December 2025.
+
+model_panel_excluded_rows.rds
+Rows excluded because required model values are missing.
+With the current inputs, these are January-June 2015 for each country.
+GDP availability determines the July start of the usable training sample.
+
+Missing validation or testing values cause stage 02 to stop.
+Missing exposure is not automatically interpreted as zero conflict.
+
+Events without coordinates are excluded from distance calculations and
+saved separately for inspection. Zero-death events remain in event counts.
+
+
+EVALUATION RULES AND LIMITATIONS
+
+Use training and validation for model development.
+Keep test performance untouched until model choices are frozen.
+Compare conflict definitions as alternatives rather than automatically
+including all four in the same regression.
+
+When implementing rolling estimation, restrict training outcomes to those
+published by each forecast date. Sample labels alone do not enforce this.
+
+The 2023 validation exercise is retrospective model development.
+Annual GED 23.1 was not available for the earliest 2023 forecast dates.
+
+Eurostat inputs are revised historical downloads. Publication-delay rules
+do not recreate the original historical data versions.
+
+NEXT STAGE
+
+Implement scripts/03_train_validate.R:
+construct benchmarks, fit candidate models, compare validation accuracy,
+and freeze the chosen specifications and evaluation procedure.

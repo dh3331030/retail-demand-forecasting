@@ -9,9 +9,11 @@ local({
   
   # Prepare and save the merged panel.
   
+  source("scripts/01_prepare_helpers.R", local = TRUE)
   source("scripts/01_prepare_data.R", local = TRUE)
+  source("scripts/02_construct_model_data.R", local = TRUE)
   
   message(
-    "Data preparation complete. Saved data/processed/prepared_panel.rds."
+    "Data preparation and model-data construction complete."
   )
 })

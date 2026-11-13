@@ -1,624 +1,239 @@
-source("scripts/00_config.R")
+# Run from the RStudio project root. This stage prepares data, not models.
+source("scripts/00_config.R", local = TRUE)
 
 library(data.table)
+
 library(readxl)
 
-retail_raw <- as.data.table(
-  read_excel(
-    "data/raw/Retail trade volume of sales - food, beverages and tobacco(sts_trtu_m__custom_22913457_spreadsheet).xlsx",
-    sheet = config$sources$eurostat_sheet,
-    col_names = FALSE,
-    col_types = "text",
-    na = c("", ":")
-  )
-)
+source("scripts/01_prepare_helpers.R", local = TRUE)
 
-retail_dates <- retail_raw[retail_raw[[1]] == "TIME"]
+dir.create(config$paths$processed, recursive = TRUE, showWarnings = FALSE)
+
 countries <- config$analysis$countries
 
-retail <- retail_raw[retail_raw[[1]] %in% countries]
+first <- config$analysis$sample_start
 
-date_labels <- as.character(
-  unlist(retail_dates, use.names = FALSE)
+last <- config$analysis$sample_end
+
+raw_path <- config$paths$raw
+
+processed <- config$paths$processed
+
+# 1. Monthly Eurostat sources ---------------------------------------------
+# One function performs the repeated select/rename/convert/melt operations.
+
+retail <- read_eurostat(
+  file.path(raw_path, "Retail trade volume of sales - food, beverages and tobacco(sts_trtu_m__custom_22913457_spreadsheet).xlsx"),
+  config$sources$eurostat_sheet, countries, first, last, "month", "retail_index"
 )
 
-date_columns <- which(
-  date_labels >= "2015-01" &
-    date_labels <= "2025-12"
+inflation <- read_eurostat(
+  file.path(raw_path, "Headline inflation.xlsx"),
+  config$sources$headline_inflation_sheet, countries, first, last, "month", "inflation_yoy"
 )
 
-retail <- retail[, c(1, date_columns), with = FALSE]
-
-setnames(
-  retail,
-  c("country", date_labels[date_columns])
+unemployment <- read_eurostat(
+  file.path(raw_path, "Unemployment.xlsx"),
+  config$sources$unemployment_sheet, countries, first, last, "month", "unemployment_rate"
 )
 
-retail[
-  , (names(retail)[-1]) := lapply(.SD, as.numeric),
-  .SDcols = names(retail)[-1]
-]
+retail[month <= config$analysis$training_end, sample := "training"]
 
-retail <- melt(
-  retail,
-  id.vars = "country",
-  variable.name = "month",
-  value.name = "retail_index",
-  variable.factor = FALSE
+retail[month > config$analysis$training_end &
+         month <= config$analysis$validation_end, sample := "validation"]
+
+retail[month > config$analysis$validation_end &
+         month <= config$analysis$test_end, sample := "testing"]
+
+if (any(is.na(retail$sample))) stop("Some retail months have no sample assignment.")
+
+# 2. Quarterly GDP --------------------------------------------------------
+
+first_quarter <- paste0(substr(first, 1, 4), "-Q",
+                        (as.integer(substr(first, 6, 7)) - 1) %/% 3 + 1)
+
+last_quarter <- paste0(substr(last, 1, 4), "-Q",
+                       (as.integer(substr(last, 6, 7)) - 1) %/% 3 + 1)
+
+gdp <- read_eurostat(
+  file.path(raw_path, "(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx"),
+  config$sources$gdp_sheet, countries, first_quarter, last_quarter, "quarter", "gdp_qoq"
 )
 
-retail <- retail[order(country, month)]
-
-retail[
-  month <= config$analysis$training_end,
-  sample := "training"
-]
-
-retail[
-  month > config$analysis$training_end &
-    month <= config$analysis$validation_end,
-  sample := "validation"
-]
-
-retail[
-  month > config$analysis$validation_end &
-    month <= config$analysis$test_end,
-  sample := "testing"
-]
-
-retail[, .(
-  observations = .N,
-  missing_values = sum(is.na(retail_index))
-), by = sample]
-
-inflation_raw <- as.data.table(
-  read_excel(
-    "data/raw/Headline inflation.xlsx",
-    sheet = config$sources$headline_inflation_sheet,
-    col_names = FALSE,
-    col_types = "text",
-    na = c("", ":")
-  )
-)
-
-inflation_dates <- inflation_raw[inflation_raw[[1]] == "TIME"]
-
-inflation <- inflation_raw[inflation_raw[[1]] %in% countries]
-
-date_labels <- as.character(
-  unlist(inflation_dates, use.names = FALSE)
-)
-
-date_columns <- which(
-  date_labels >= "2015-01" &
-    date_labels <= "2025-12"
-)
-
-inflation <- inflation[, c(1, date_columns), with = FALSE]
-
-setnames(
-  inflation,
-  c("country", date_labels[date_columns])
-)
-
-inflation[
-  , (names(inflation)[-1]) := lapply(.SD, as.numeric),
-  .SDcols = names(inflation)[-1]
-]
-
-inflation <- melt(
-  inflation,
-  id.vars = "country",
-  variable.name = "month",
-  value.name = "inflation_yoy",
-  variable.factor = FALSE
-)
-
-inflation <- inflation[order(country, month)]
-
-inflation[, .(
-  observations = .N,
-  missing_values = sum(is.na(inflation_yoy))
-)]
-
-unemployment_raw <- as.data.table(
-  read_excel(
-    "data/raw/Unemployment.xlsx",
-    sheet = config$sources$unemployment_sheet,
-    col_names = FALSE,
-    col_types = "text",
-    na = c("", ":")
-  )
-)
-
-unemployment_dates <- unemployment_raw[
-  unemployment_raw[[1]] == "TIME"
-]
-
-unemployment <- unemployment_raw[
-  unemployment_raw[[1]] %in% countries
-]
-
-date_labels <- as.character(
-  unlist(unemployment_dates, use.names = FALSE)
-)
-
-date_columns <- which(
-  !is.na(date_labels) &
-    date_labels >= "2015-01" &
-    date_labels <= "2025-12"
-)
-
-unemployment <- unemployment[
-  , c(1, date_columns), with = FALSE
-]
-
-setnames(
-  unemployment,
-  c("country", date_labels[date_columns])
-)
-
-unemployment[
-  , (names(unemployment)[-1]) := lapply(.SD, as.numeric),
-  .SDcols = names(unemployment)[-1]
-]
-
-unemployment <- melt(
-  unemployment,
-  id.vars = "country",
-  variable.name = "month",
-  value.name = "unemployment_rate",
-  variable.factor = FALSE
-)
-
-unemployment <- unemployment[order(country, month)]
-
-unemployment[, .(
-  observations = .N,
-  missing_values = sum(is.na(unemployment_rate))
-)]
-
-gdp_raw <- as.data.table(
-  read_excel(
-    "data/raw/(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",
-    sheet = config$sources$gdp_sheet,
-    col_names = FALSE,
-    col_types = "text",
-    na = c("", ":")
-  )
-)
-
-gdp_dates <- gdp_raw[gdp_raw[[1]] == "TIME"]
-
-gdp <- gdp_raw[gdp_raw[[1]] %in% countries]
-
-date_labels <- as.character(
-  unlist(gdp_dates, use.names = FALSE)
-)
-
-date_columns <- which(
-  !is.na(date_labels) &
-    date_labels >= "2015-Q1" &
-    date_labels <= "2025-Q4"
-)
-
-gdp <- gdp[, c(1, date_columns), with = FALSE]
-
-setnames(
-  gdp,
-  c("country", date_labels[date_columns])
-)
-
-gdp[
-  , (names(gdp)[-1]) := lapply(.SD, as.numeric),
-  .SDcols = names(gdp)[-1]
-]
-
-gdp <- melt(
-  gdp,
-  id.vars = "country",
-  variable.name = "quarter",
-  value.name = "gdp_qoq",
-  variable.factor = FALSE
-)
-
-gdp[
-  , gdp_monthly_equivalent :=
-    100 * ((1 + gdp_qoq / 100)^(1 / 3) - 1)
-]
-
-gdp <- gdp[order(country, quarter)]
-
-names(gdp)
-
-gdp[, .(
-  observations = .N,
-  missing_growth = sum(is.na(gdp_monthly_equivalent))
-)]
-
-gdp[substr(quarter, 6, 7) == "Q1",
-    quarter_end := paste0(substr(quarter, 1, 4), "-03")]
-
-gdp[substr(quarter, 6, 7) == "Q2",
-    quarter_end := paste0(substr(quarter, 1, 4), "-06")]
-
-gdp[substr(quarter, 6, 7) == "Q3",
-    quarter_end := paste0(substr(quarter, 1, 4), "-09")]
-
-gdp[substr(quarter, 6, 7) == "Q4",
-    quarter_end := paste0(substr(quarter, 1, 4), "-12")]
-
-unique(gdp[, .(quarter, quarter_end)])[1:4]
-
-gdp_monthly <- gdp[
-  , .(
-    month_number = 1:3,
-    gdp_monthly_equivalent = gdp_monthly_equivalent
-  ),
-  by = .(country, quarter)
-]
-
-gdp_monthly[substr(quarter, 6, 7) == "Q1",
-            month_number := 1:3, by = .(country, quarter)]
-
-gdp_monthly[substr(quarter, 6, 7) == "Q2",
-            month_number := 4:6, by = .(country, quarter)]
-
-gdp_monthly[substr(quarter, 6, 7) == "Q3",
-            month_number := 7:9, by = .(country, quarter)]
-
-gdp_monthly[substr(quarter, 6, 7) == "Q4",
-            month_number := 10:12, by = .(country, quarter)]
-
-gdp_monthly[
-  , month := paste0(
-    substr(quarter, 1, 4),
-    "-",
-    sprintf("%02d", month_number)
-  )
-]
-
-gdp_monthly <- gdp_monthly[
-  , .(country, month, gdp_monthly_equivalent)
-]
-
-gdp_monthly <- gdp_monthly[order(country, month)]
-
-gdp_monthly[, .(
-  observations = .N,
-  missing_growth = sum(is.na(gdp_monthly_equivalent))
-)]
-
-unzip(
-  "data/raw/Oxford Covid-19 Government Response Tracker (OxCGRT).zip",
-  files = "covid-policy-dataset-main/data/OxCGRT_compact_national_v1.csv",
-  exdir = "data/processed"
-)
-
-covid_raw <- fread(
-  "data/processed/covid-policy-dataset-main/data/OxCGRT_compact_national_v1.csv"
-)
-
-covid <- covid_raw[
-  CountryCode %in% c("DEU", "FRA", "ITA", "POL", "PRT") &
-    Jurisdiction == "NAT_TOTAL",
-  .(
-    country = CountryName,
-    date = Date,
-    stringency = StringencyIndex_Average
-  )
-]
-
-covid[, .N, by = country]
-
-covid[, month := paste0(
-  substr(as.character(date), 1, 4),
-  "-",
-  substr(as.character(date), 5, 6)
-)]
-
-covid_monthly <- covid[
-  , .(
-    covid_stringency = mean(stringency)
-  ),
-  by = .(country, month)
-]
-
-covid_monthly <- covid_monthly[order(country, month)]
-
-covid_monthly[, .(
-  observations = .N,
-  missing_values = sum(is.na(covid_stringency))
-)]
-
-ucdp_raw <- fread(
-  "data/raw/ucdp/annual/GEDEvent_v23_1.csv"
-)
-
-ucdp_raw[
-  , .(
-    events = .N,
-    first_year = min(year),
-    last_year = max(year)
-  )
-]
-
-# List the monthly Candidate files.
-candidate_names <- c(
-  paste0("GEDEvent_v22_0_", 11:12, ".csv"),
-  paste0("GEDEvent_v23_0_", 1:12, ".csv"),
-  paste0("GEDEvent_v24_0_", 1:12, ".csv"),
-  paste0("GEDEvent_v25_0_", 1:12, ".csv")
-)
-
-# Columns required for our conflict calculations.
-required_columns <- c(
-  "id",
-  "country",
-  "type_of_violence",
-  "code_status",
-  "latitude",
-  "longitude",
-  "date_start",
-  "date_end",
-  "date_prec",
-  "where_prec",
-  "best",
-  "low",
-  "high"
-)
-
-# Store one table per monthly release.
+gdp[, quarter_number := as.integer(substr(quarter, 7, 7))]
+
+gdp[, quarter_end := paste0(substr(quarter, 1, 4), "-",
+                            sprintf("%02d", quarter_number * 3))]
+
+gdp[, gdp_monthly_equivalent := 100 * ((1 + gdp_qoq / 100)^(1 / 3) - 1)]
+
+# Save the quarterly identity for later publication-date alignment in script 02.
+
+saveRDS(gdp, file.path(processed, "gdp_quarterly.rds"))
+
+gdp_monthly <- gdp[, .(
+  month_number = (quarter_number - 1) * 3 + 1:3,
+  gdp_monthly_equivalent = gdp_monthly_equivalent
+), by = .(country, quarter)]
+
+gdp_monthly[, month := paste0(substr(quarter, 1, 4), "-",
+                              sprintf("%02d", month_number))]
+
+gdp_monthly <- gdp_monthly[, .(country, month, gdp_monthly_equivalent)]
+
+# 3. COVID ---------------------------------------------------------------
+# Extract on each preparation run so the CSV reflects the supplied ZIP.
+
+unzip(file.path(raw_path, "Oxford Covid-19 Government Response Tracker (OxCGRT).zip"),
+      files = config$sources$covid_member, exdir = processed, overwrite = TRUE)
+
+covid <- fread(file.path(processed, config$sources$covid_member))
+
+covid <- covid[CountryCode %in% c("DEU", "FRA", "ITA", "POL", "PRT") &
+                 Jurisdiction == "NAT_TOTAL",
+               .(country = CountryName, date = Date,
+                 stringency = StringencyIndex_Average)]
+
+covid[, month := paste0(substr(as.character(date), 1, 4), "-",
+                        substr(as.character(date), 5, 6))]
+
+# Preserve the existing missing-data rule; do not silently remove missing days.
+
+covid_monthly <- covid[, .(covid_stringency = mean(stringency)),
+                       by = .(country, month)]
+
+# 4. Annual GED: unzip to generated data, never to the versioned raw folder -
+
+annual_zip <- file.path(raw_path, "ucdp/annual/GEDEvent_v23_1.csv.zip")
+
+if (!file.exists(annual_zip)) stop("Annual GED ZIP missing: ", annual_zip)
+
+zip_members <- unzip(annual_zip, list = TRUE)$Name
+
+csv_member <- zip_members[grepl("\\.csv$", zip_members, ignore.case = TRUE) &
+                            !grepl("__MACOSX/", zip_members)]
+
+if (length(csv_member) != 1) stop("Annual GED ZIP must contain exactly one CSV.")
+
+annual_folder <- file.path(processed, "ucdp_annual")
+
+dir.create(annual_folder, recursive = TRUE, showWarnings = FALSE)
+
+unzip(annual_zip, files = csv_member, exdir = annual_folder, overwrite = TRUE)
+
+annual_path <- file.path(annual_folder, csv_member)
+
+annual_header <- names(fread(annual_path, nrows = 0))
+
+required_columns <- c("id", "country", "type_of_violence", "code_status",
+                      "latitude", "longitude", "date_start", "date_end",
+                      "date_prec", "where_prec", "best", "low", "high")
+
+annual <- fread(annual_path, select = required_columns)
+
+annual[, source_file := "GED_23.1"]
+
+annual <- clean_events(annual, "annual")
+
+# Explicitly retain annual events only through the training reference period.
+
+annual <- annual[event_month >= first & event_month <= config$analysis$training_end]
+
+# 5. Candidate releases ---------------------------------------------------
+# One source-month vector supplies both names and reference-period metadata.
+
+candidate_months <- c("2022-11", "2022-12",
+  paste0("2023-", sprintf("%02d", 1:12)),
+  paste0("2024-", sprintf("%02d", 1:12)),
+  paste0("2025-", sprintf("%02d", 1:12)))
+
+candidate_sources <- data.table(source_month = candidate_months)
+
+candidate_sources[, source_file := paste0("GEDEvent_v", substr(source_month, 3, 4),
+  "_0_", as.integer(substr(source_month, 6, 7)), ".csv")]
+
+candidate_sources[, source_month_id := as.integer(substr(source_month, 1, 4)) * 12 +
+                    as.integer(substr(source_month, 6, 7))]
+
+# Scheduling convention, NOT individually verified historical publication dates.
+
+candidate_sources[, available_forecast_month_id := source_month_id + 2]
+
 candidate_tables <- list()
-
-for (i in 1:length(candidate_names)) {
-  
-  message("Reading: ", candidate_names[i])
-  
-  if (candidate_names[i] == "GEDEvent_v24_0_1.csv") {
-    
-    # January 2024 has no header row.
-    monthly_data <- fread(
-      file.path(
-        "data/raw/ucdp/candidate",
-        candidate_names[i]
-      ),
-      header = FALSE,
-      col.names = names(ucdp_raw)
-    )
-    
+for (i in 1:nrow(candidate_sources)) {
+  filename <- candidate_sources$source_file[i]
+  path <- file.path(raw_path, "ucdp/candidate", filename)
+  if (!file.exists(path)) stop("Candidate file missing: ", filename)
+  if (filename == "GEDEvent_v24_0_1.csv") {
+    # Confirmed headerless file: preserve its first event and annual column order.
+    monthly <- fread(path, header = FALSE, col.names = annual_header)
+    monthly <- monthly[, required_columns, with = FALSE]
   } else {
-    
-    # All other files use their existing header row.
-    monthly_data <- fread(
-      file.path(
-        "data/raw/ucdp/candidate",
-        candidate_names[i]
-      )
-    )
-    
+    monthly <- fread(path, select = required_columns)
   }
-  
-  missing_columns <- required_columns[
-    !required_columns %in% names(monthly_data)
-  ]
-  
-  if (length(missing_columns) > 0) {
-    
-    print(names(monthly_data))
-    
-    stop(
-      "File: ", candidate_names[i],
-      "\nMissing columns: ",
-      paste(missing_columns, collapse = ", "),
-      call. = FALSE
-    )
-  }
-  
-  # Keep the required columns.
-  monthly_data <- monthly_data[
-    , required_columns,
-    with = FALSE
-  ]
-  
-  # Preserve the identity of the release.
-  monthly_data[, source_file := candidate_names[i]]
-  
-  candidate_tables[[i]] <- monthly_data
+  monthly[, source_file := filename]
+  candidate_tables[[i]] <- monthly
 }
 
-candidate_events <- rbindlist(candidate_tables)
+candidate <- rbindlist(candidate_tables)
 
-candidate_events[, date_start := as.Date(date_start)]
-candidate_events[, date_end := as.Date(date_end)]
+candidate <- merge(candidate, candidate_sources, by = "source_file", all.x = TRUE)
 
-# Preserve records that cannot be used in distance calculations.
-candidate_missing_coordinates <- copy(
-  candidate_events[
-    is.na(latitude) | is.na(longitude)
-  ]
-)
+candidate <- clean_events(candidate, "candidate")
 
-saveRDS(
-  candidate_missing_coordinates,
-  "data/processed/ucdp_candidate_missing_coordinates.rds"
-)
+candidate[, event_month_id := as.integer(substr(event_month, 1, 4)) * 12 +
+            as.integer(substr(event_month, 6, 7))]
 
-# Retain events with both coordinates.
-candidate_events <- candidate_events[
-  !is.na(latitude) & !is.na(longitude)
-]
+saveRDS(candidate_sources, file.path(processed, "ucdp_candidate_sources.rds"))
 
-# Confirm that the exclusions were recorded.
-print(nrow(candidate_missing_coordinates))
-
-# Confirm that the remaining events have complete coordinates.
-print(
-  candidate_events[
-    , .(
-      missing_latitude = sum(is.na(latitude)),
-      missing_longitude = sum(is.na(longitude))
-    )
-  ]
-)
-
-ucdp <- ucdp_raw[
-  , .(
-    id,
-    country,
-    type_of_violence,
-    latitude,
-    longitude,
-    date_start,
-    date_end,
-    date_prec,
-    where_prec,
-    best,
-    low,
-    high
-  )
-]
-
-ucdp[, date_start := as.Date(date_start)]
-ucdp[, date_end := as.Date(date_end)]
-
-ucdp[, .(
-  missing_start = sum(is.na(date_start)),
-  missing_end = sum(is.na(date_end))
-)]
-
-ucdp <- ucdp[
-  date_end >= as.Date("2015-01-01") &
-    date_start <= as.Date("2025-12-31")
-]
-
-ucdp[, .(
-  events = .N,
-  missing_latitude = sum(is.na(latitude)),
-  missing_longitude = sum(is.na(longitude))
-)]
-
-ucdp[, month := format(date_start, "%Y-%m")]
-
-ucdp <- ucdp[
-  month >= "2015-01" &
-    month <= "2025-12"
-]
+# 6. Common distance calculation -----------------------------------------
 
 capitals <- data.table(
   country = c("Germany", "France", "Italy", "Poland", "Portugal"),
-  capital = c("Berlin", "Paris", "Rome", "Warsaw", "Lisbon"),
   latitude = c(52.5200, 48.8566, 41.9028, 52.2297, 38.7223),
-  longitude = c(13.4050, 2.3522, 12.4964, 21.0122, -9.1393)
-)
+  longitude = c(13.4050, 2.3522, 12.4964, 21.0122, -9.1393))
 
-country_events <- list()
+annual_tables <- list()
 
+candidate_weights <- list()
 for (i in 1:nrow(capitals)) {
-  
-  events <- copy(ucdp)
-  
-  capital_lat <- capitals$latitude[i]
-  capital_lon <- capitals$longitude[i]
-  
-  events[, a :=
-           sin((latitude - capital_lat) * pi / 180 / 2)^2 +
-           cos(latitude * pi / 180) *
-           cos(capital_lat * pi / 180) *
-           sin((longitude - capital_lon) * pi / 180 / 2)^2
-  ]
-  
-  events[, a := pmin(1, pmax(0, a))]
-  
-  events[, distance_km := 2 * 6371 * asin(sqrt(a))]
-  
-  events[, a := NULL]
-
-  events[, focal_country := capitals$country[i]]
-  
-  country_events[[i]] <- events
+  # Aggregate annual events immediately, avoiding five full copies in memory.
+  weighted <- weight_events(annual, capitals[i])
+  annual_tables[[i]] <- weighted[, .(
+    conflict_500 = sum(weight_500), conflict_1000 = sum(weight_1000),
+    conflict_2000 = sum(weight_2000),
+    conflict_deaths_1000 = sum(deaths_weight_1000)
+  ), by = .(country = focal_country, month = event_month)]
+  candidate_weights[[i]] <- weight_events(candidate, capitals[i])
 }
 
-conflict_events <- rbindlist(country_events)
+conflict_monthly <- rbindlist(annual_tables)
 
-conflict_events[, .(
-  events = .N,
-  missing_distances = sum(is.na(distance_km))
-), by = focal_country]
+candidate_conflict_events <- rbindlist(candidate_weights)
 
-conflict_events[
-  , weight_500 := exp(-distance_km / 500)
-]
+saveRDS(conflict_monthly, file.path(processed, "ucdp_annual_exposure_monthly.rds"))
 
-conflict_events[
-  , weight_1000 := exp(-distance_km / 1000)
-]
+saveRDS(candidate_conflict_events,
+        file.path(processed, "ucdp_candidate_exposure_events.rds"))
 
-conflict_events[
-  , weight_2000 := exp(-distance_km / 2000)
-]
+# 7. Merge and save the preparation panel ---------------------------------
 
-conflict_monthly <- conflict_events[
-  , .(
-    conflict_500 = sum(weight_500),
-    conflict_1000 = sum(weight_1000),
-    conflict_2000 = sum(weight_2000),
-    conflict_deaths_1000 = sum(best * weight_1000)
-  ),
-  by = .(focal_country, month)
-]
+panel <- retail
 
-setnames(conflict_monthly, "focal_country", "country")
-
-conflict_monthly <- conflict_monthly[order(country, month)]
-
-conflict_monthly[, .(
-  observations = .N,
-  missing_deaths_exposure = sum(is.na(conflict_deaths_1000))
-), by = country]
-
-panel <- merge(
-  retail,
-  inflation,
-  by = c("country", "month"),
-  all.x = TRUE
-)
-
-panel <- merge(
-  panel,
-  unemployment,
-  by = c("country", "month"),
-  all.x = TRUE
-)
-
-panel <- merge(
-  panel,
-  gdp_monthly,
-  by = c("country", "month"),
-  all.x = TRUE
-)
-
-panel <- merge(
-  panel,
-  covid_monthly,
-  by = c("country", "month"),
-  all.x = TRUE
-)
-
-panel <- merge(
-  panel,
-  conflict_monthly,
-  by = c("country", "month"),
-  all.x = TRUE
-)
+for (extra in list(inflation, unemployment, gdp_monthly, covid_monthly, conflict_monthly)) {
+  if (anyDuplicated(extra[, .(country, month)])) stop("Duplicate merge keys.")
+  panel <- merge(panel, extra, by = c("country", "month"), all.x = TRUE)
+}
 
 panel <- panel[order(country, month)]
 
-nrow(panel)
+if (nrow(panel) != nrow(retail)) stop("A merge changed the number of retail rows.")
 
-panel[, .N, by = .(country, month)][N > 1]
+if (anyDuplicated(panel[, .(country, month)])) stop("Duplicate panel rows.")
 
-saveRDS(
-  panel,
-  config$paths$prepared_panel
-)
+saveRDS(panel, config$paths$prepared_panel)
+
+print(panel[, .(observations = .N, first_month = min(month),
+                last_month = max(month)), by = sample])
+
+message("Preparation complete. Annual exposure is present only through training.")

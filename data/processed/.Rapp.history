@@ -1,0 +1,1 @@
+load("/Users/andreaibba/Documents/GitHub/retail-demand-forecasting/data/processed/ucdp_candidate_exposure_events.rds")
