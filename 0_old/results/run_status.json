@@ -1,7 +1,0 @@
-{
-  "status": "failed",
-  "input": "original local raw datasets",
-  "stage": "preflight",
-  "at": "2026-11-03 21:22:25 UTC",
-  "detail": "cannot open the connection"
-}

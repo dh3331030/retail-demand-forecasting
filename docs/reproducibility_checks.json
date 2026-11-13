@@ -1,0 +1,25 @@
+{
+  "review_date": "2026-11-13",
+  "R_pipeline_refitted": false,
+  "R_available_in_review_environment": false,
+  "stages": {
+    "development": {
+      "models": 26,
+      "forecasts": 1560,
+      "max_abs_overall_score_difference": 5.10702591327572e-15,
+      "max_abs_country_score_difference": 5.995204332975845e-15,
+      "max_abs_year_score_difference": null,
+      "max_abs_stored_error_difference": 1.021405182655144e-14,
+      "duplicate_forecast_keys": 0
+    },
+    "final": {
+      "models": 6,
+      "forecasts": 720,
+      "max_abs_overall_score_difference": 4.218847493575595e-15,
+      "max_abs_country_score_difference": 5.773159728050814e-15,
+      "max_abs_year_score_difference": 4.884981308350689e-15,
+      "max_abs_stored_error_difference": 9.103828801926284e-15,
+      "duplicate_forecast_keys": 0
+    }
+  }
+}
