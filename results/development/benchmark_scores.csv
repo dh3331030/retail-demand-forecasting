@@ -1,0 +1,3 @@
+model,observations,MAE,RMSE
+zero_growth,60,1.02566104588919,1.37550337916708
+latest_available_growth,60,1.48329056220187,1.82417199208841

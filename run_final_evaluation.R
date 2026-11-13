@@ -1,6 +1,6 @@
 # Entry point for final testing and reporting.
 # Uses the configuration frozen after model development.
-# Does not run training or model selection.
+# Refits frozen specifications monthly; does not select models or tune parameters.
 
 local({
   
@@ -27,8 +27,5 @@ local({
     )
   }
   
-  stop(
-    "Final testing and reporting are not yet implemented.",
-    call. = FALSE
-  )
+  source("scripts/04_final_evaluation.R", local = TRUE)
 })

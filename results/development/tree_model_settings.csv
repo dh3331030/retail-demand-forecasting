@@ -1,0 +1,4 @@
+model,trees,max_depth,minimum_leaf_size,mtry
+tree_without_conflict,1,3,20,
+bagging_without_conflict,500,5,20,5
+forest_without_conflict,500,5,20,2

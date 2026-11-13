@@ -1,0 +1,145 @@
+model,target_month,training_observations,last_eligible_training_month,predictors,coefficients,seed
+zero_growth,2024-01,0,2023-10,none,,
+country_mean,2024-01,500,2023-10,country,5,
+shared_slopes_reduced_macro_only,2024-01,500,2023-10,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-01,500,2023-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20565
+forest_without_conflict,2024-01,500,2023-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20565
+forest_conflict_deaths_1000_lag2,2024-01,500,2023-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20565
+zero_growth,2024-02,0,2023-11,none,,
+country_mean,2024-02,505,2023-11,country,5,
+shared_slopes_reduced_macro_only,2024-02,505,2023-11,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-02,505,2023-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20566
+forest_without_conflict,2024-02,505,2023-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20566
+forest_conflict_deaths_1000_lag2,2024-02,505,2023-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20566
+zero_growth,2024-03,0,2023-12,none,,
+country_mean,2024-03,510,2023-12,country,5,
+shared_slopes_reduced_macro_only,2024-03,510,2023-12,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-03,510,2023-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20567
+forest_without_conflict,2024-03,510,2023-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20567
+forest_conflict_deaths_1000_lag2,2024-03,510,2023-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20567
+zero_growth,2024-04,0,2024-01,none,,
+country_mean,2024-04,515,2024-01,country,5,
+shared_slopes_reduced_macro_only,2024-04,515,2024-01,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-04,515,2024-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20568
+forest_without_conflict,2024-04,515,2024-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20568
+forest_conflict_deaths_1000_lag2,2024-04,515,2024-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20568
+zero_growth,2024-05,0,2024-02,none,,
+country_mean,2024-05,520,2024-02,country,5,
+shared_slopes_reduced_macro_only,2024-05,520,2024-02,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-05,520,2024-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20569
+forest_without_conflict,2024-05,520,2024-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20569
+forest_conflict_deaths_1000_lag2,2024-05,520,2024-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20569
+zero_growth,2024-06,0,2024-03,none,,
+country_mean,2024-06,525,2024-03,country,5,
+shared_slopes_reduced_macro_only,2024-06,525,2024-03,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-06,525,2024-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20570
+forest_without_conflict,2024-06,525,2024-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20570
+forest_conflict_deaths_1000_lag2,2024-06,525,2024-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20570
+zero_growth,2024-07,0,2024-04,none,,
+country_mean,2024-07,530,2024-04,country,5,
+shared_slopes_reduced_macro_only,2024-07,530,2024-04,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-07,530,2024-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20571
+forest_without_conflict,2024-07,530,2024-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20571
+forest_conflict_deaths_1000_lag2,2024-07,530,2024-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20571
+zero_growth,2024-08,0,2024-05,none,,
+country_mean,2024-08,535,2024-05,country,5,
+shared_slopes_reduced_macro_only,2024-08,535,2024-05,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-08,535,2024-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20572
+forest_without_conflict,2024-08,535,2024-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20572
+forest_conflict_deaths_1000_lag2,2024-08,535,2024-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20572
+zero_growth,2024-09,0,2024-06,none,,
+country_mean,2024-09,540,2024-06,country,5,
+shared_slopes_reduced_macro_only,2024-09,540,2024-06,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-09,540,2024-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20573
+forest_without_conflict,2024-09,540,2024-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20573
+forest_conflict_deaths_1000_lag2,2024-09,540,2024-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20573
+zero_growth,2024-10,0,2024-07,none,,
+country_mean,2024-10,545,2024-07,country,5,
+shared_slopes_reduced_macro_only,2024-10,545,2024-07,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-10,545,2024-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20574
+forest_without_conflict,2024-10,545,2024-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20574
+forest_conflict_deaths_1000_lag2,2024-10,545,2024-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20574
+zero_growth,2024-11,0,2024-08,none,,
+country_mean,2024-11,550,2024-08,country,5,
+shared_slopes_reduced_macro_only,2024-11,550,2024-08,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-11,550,2024-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20575
+forest_without_conflict,2024-11,550,2024-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20575
+forest_conflict_deaths_1000_lag2,2024-11,550,2024-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20575
+zero_growth,2024-12,0,2024-09,none,,
+country_mean,2024-12,555,2024-09,country,5,
+shared_slopes_reduced_macro_only,2024-12,555,2024-09,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2024-12,555,2024-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20576
+forest_without_conflict,2024-12,555,2024-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20576
+forest_conflict_deaths_1000_lag2,2024-12,555,2024-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20576
+zero_growth,2025-01,0,2024-10,none,,
+country_mean,2025-01,560,2024-10,country,5,
+shared_slopes_reduced_macro_only,2025-01,560,2024-10,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-01,560,2024-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20577
+forest_without_conflict,2025-01,560,2024-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20577
+forest_conflict_deaths_1000_lag2,2025-01,560,2024-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20577
+zero_growth,2025-02,0,2024-11,none,,
+country_mean,2025-02,565,2024-11,country,5,
+shared_slopes_reduced_macro_only,2025-02,565,2024-11,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-02,565,2024-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20578
+forest_without_conflict,2025-02,565,2024-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20578
+forest_conflict_deaths_1000_lag2,2025-02,565,2024-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20578
+zero_growth,2025-03,0,2024-12,none,,
+country_mean,2025-03,570,2024-12,country,5,
+shared_slopes_reduced_macro_only,2025-03,570,2024-12,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-03,570,2024-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20579
+forest_without_conflict,2025-03,570,2024-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20579
+forest_conflict_deaths_1000_lag2,2025-03,570,2024-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20579
+zero_growth,2025-04,0,2025-01,none,,
+country_mean,2025-04,575,2025-01,country,5,
+shared_slopes_reduced_macro_only,2025-04,575,2025-01,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-04,575,2025-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20580
+forest_without_conflict,2025-04,575,2025-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20580
+forest_conflict_deaths_1000_lag2,2025-04,575,2025-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20580
+zero_growth,2025-05,0,2025-02,none,,
+country_mean,2025-05,580,2025-02,country,5,
+shared_slopes_reduced_macro_only,2025-05,580,2025-02,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-05,580,2025-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20581
+forest_without_conflict,2025-05,580,2025-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20581
+forest_conflict_deaths_1000_lag2,2025-05,580,2025-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20581
+zero_growth,2025-06,0,2025-03,none,,
+country_mean,2025-06,585,2025-03,country,5,
+shared_slopes_reduced_macro_only,2025-06,585,2025-03,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-06,585,2025-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20582
+forest_without_conflict,2025-06,585,2025-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20582
+forest_conflict_deaths_1000_lag2,2025-06,585,2025-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20582
+zero_growth,2025-07,0,2025-04,none,,
+country_mean,2025-07,590,2025-04,country,5,
+shared_slopes_reduced_macro_only,2025-07,590,2025-04,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-07,590,2025-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20583
+forest_without_conflict,2025-07,590,2025-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20583
+forest_conflict_deaths_1000_lag2,2025-07,590,2025-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20583
+zero_growth,2025-08,0,2025-05,none,,
+country_mean,2025-08,595,2025-05,country,5,
+shared_slopes_reduced_macro_only,2025-08,595,2025-05,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-08,595,2025-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20584
+forest_without_conflict,2025-08,595,2025-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20584
+forest_conflict_deaths_1000_lag2,2025-08,595,2025-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20584
+zero_growth,2025-09,0,2025-06,none,,
+country_mean,2025-09,600,2025-06,country,5,
+shared_slopes_reduced_macro_only,2025-09,600,2025-06,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-09,600,2025-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20585
+forest_without_conflict,2025-09,600,2025-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20585
+forest_conflict_deaths_1000_lag2,2025-09,600,2025-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20585
+zero_growth,2025-10,0,2025-07,none,,
+country_mean,2025-10,605,2025-07,country,5,
+shared_slopes_reduced_macro_only,2025-10,605,2025-07,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-10,605,2025-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20586
+forest_without_conflict,2025-10,605,2025-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20586
+forest_conflict_deaths_1000_lag2,2025-10,605,2025-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20586
+zero_growth,2025-11,0,2025-08,none,,
+country_mean,2025-11,610,2025-08,country,5,
+shared_slopes_reduced_macro_only,2025-11,610,2025-08,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-11,610,2025-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20587
+forest_without_conflict,2025-11,610,2025-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20587
+forest_conflict_deaths_1000_lag2,2025-11,610,2025-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20587
+zero_growth,2025-12,0,2025-09,none,,
+country_mean,2025-12,615,2025-09,country,5,
+shared_slopes_reduced_macro_only,2025-12,615,2025-09,"country, inflation_lag2, unemployment_lag3, gdp_available",8,
+forest_reduced_without_gdp,2025-12,615,2025-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,20588
+forest_without_conflict,2025-12,615,2025-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available",,20588
+forest_conflict_deaths_1000_lag2,2025-12,615,2025-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3, gdp_available, conflict_deaths_1000_lag2",,20588

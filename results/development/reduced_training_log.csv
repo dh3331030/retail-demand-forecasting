@@ -1,0 +1,133 @@
+model,target_month,training_observations,last_training_month,predictors,mtry,seed
+country_mean,2023-01,440,2022-10,country,,
+shared_slopes_reduced_retail_only,2023-01,440,2022-10,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-01,440,2022-10,"country, retail_growth_lag3",2,20565
+shared_slopes_reduced_without_inflation,2023-01,440,2022-10,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-01,440,2022-10,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20565
+shared_slopes_reduced_without_unemployment,2023-01,440,2022-10,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-01,440,2022-10,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20565
+shared_slopes_reduced_without_gdp,2023-01,440,2022-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-01,440,2022-10,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20565
+shared_slopes_reduced_macro_only,2023-01,440,2022-10,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-01,440,2022-10,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20565
+country_mean,2023-02,445,2022-11,country,,
+shared_slopes_reduced_retail_only,2023-02,445,2022-11,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-02,445,2022-11,"country, retail_growth_lag3",2,20566
+shared_slopes_reduced_without_inflation,2023-02,445,2022-11,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-02,445,2022-11,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20566
+shared_slopes_reduced_without_unemployment,2023-02,445,2022-11,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-02,445,2022-11,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20566
+shared_slopes_reduced_without_gdp,2023-02,445,2022-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-02,445,2022-11,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20566
+shared_slopes_reduced_macro_only,2023-02,445,2022-11,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-02,445,2022-11,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20566
+country_mean,2023-03,450,2022-12,country,,
+shared_slopes_reduced_retail_only,2023-03,450,2022-12,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-03,450,2022-12,"country, retail_growth_lag3",2,20567
+shared_slopes_reduced_without_inflation,2023-03,450,2022-12,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-03,450,2022-12,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20567
+shared_slopes_reduced_without_unemployment,2023-03,450,2022-12,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-03,450,2022-12,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20567
+shared_slopes_reduced_without_gdp,2023-03,450,2022-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-03,450,2022-12,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20567
+shared_slopes_reduced_macro_only,2023-03,450,2022-12,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-03,450,2022-12,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20567
+country_mean,2023-04,455,2023-01,country,,
+shared_slopes_reduced_retail_only,2023-04,455,2023-01,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-04,455,2023-01,"country, retail_growth_lag3",2,20568
+shared_slopes_reduced_without_inflation,2023-04,455,2023-01,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-04,455,2023-01,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20568
+shared_slopes_reduced_without_unemployment,2023-04,455,2023-01,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-04,455,2023-01,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20568
+shared_slopes_reduced_without_gdp,2023-04,455,2023-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-04,455,2023-01,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20568
+shared_slopes_reduced_macro_only,2023-04,455,2023-01,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-04,455,2023-01,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20568
+country_mean,2023-05,460,2023-02,country,,
+shared_slopes_reduced_retail_only,2023-05,460,2023-02,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-05,460,2023-02,"country, retail_growth_lag3",2,20569
+shared_slopes_reduced_without_inflation,2023-05,460,2023-02,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-05,460,2023-02,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20569
+shared_slopes_reduced_without_unemployment,2023-05,460,2023-02,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-05,460,2023-02,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20569
+shared_slopes_reduced_without_gdp,2023-05,460,2023-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-05,460,2023-02,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20569
+shared_slopes_reduced_macro_only,2023-05,460,2023-02,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-05,460,2023-02,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20569
+country_mean,2023-06,465,2023-03,country,,
+shared_slopes_reduced_retail_only,2023-06,465,2023-03,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-06,465,2023-03,"country, retail_growth_lag3",2,20570
+shared_slopes_reduced_without_inflation,2023-06,465,2023-03,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-06,465,2023-03,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20570
+shared_slopes_reduced_without_unemployment,2023-06,465,2023-03,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-06,465,2023-03,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20570
+shared_slopes_reduced_without_gdp,2023-06,465,2023-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-06,465,2023-03,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20570
+shared_slopes_reduced_macro_only,2023-06,465,2023-03,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-06,465,2023-03,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20570
+country_mean,2023-07,470,2023-04,country,,
+shared_slopes_reduced_retail_only,2023-07,470,2023-04,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-07,470,2023-04,"country, retail_growth_lag3",2,20571
+shared_slopes_reduced_without_inflation,2023-07,470,2023-04,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-07,470,2023-04,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20571
+shared_slopes_reduced_without_unemployment,2023-07,470,2023-04,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-07,470,2023-04,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20571
+shared_slopes_reduced_without_gdp,2023-07,470,2023-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-07,470,2023-04,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20571
+shared_slopes_reduced_macro_only,2023-07,470,2023-04,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-07,470,2023-04,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20571
+country_mean,2023-08,475,2023-05,country,,
+shared_slopes_reduced_retail_only,2023-08,475,2023-05,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-08,475,2023-05,"country, retail_growth_lag3",2,20572
+shared_slopes_reduced_without_inflation,2023-08,475,2023-05,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-08,475,2023-05,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20572
+shared_slopes_reduced_without_unemployment,2023-08,475,2023-05,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-08,475,2023-05,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20572
+shared_slopes_reduced_without_gdp,2023-08,475,2023-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-08,475,2023-05,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20572
+shared_slopes_reduced_macro_only,2023-08,475,2023-05,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-08,475,2023-05,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20572
+country_mean,2023-09,480,2023-06,country,,
+shared_slopes_reduced_retail_only,2023-09,480,2023-06,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-09,480,2023-06,"country, retail_growth_lag3",2,20573
+shared_slopes_reduced_without_inflation,2023-09,480,2023-06,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-09,480,2023-06,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20573
+shared_slopes_reduced_without_unemployment,2023-09,480,2023-06,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-09,480,2023-06,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20573
+shared_slopes_reduced_without_gdp,2023-09,480,2023-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-09,480,2023-06,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20573
+shared_slopes_reduced_macro_only,2023-09,480,2023-06,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-09,480,2023-06,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20573
+country_mean,2023-10,485,2023-07,country,,
+shared_slopes_reduced_retail_only,2023-10,485,2023-07,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-10,485,2023-07,"country, retail_growth_lag3",2,20574
+shared_slopes_reduced_without_inflation,2023-10,485,2023-07,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-10,485,2023-07,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20574
+shared_slopes_reduced_without_unemployment,2023-10,485,2023-07,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-10,485,2023-07,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20574
+shared_slopes_reduced_without_gdp,2023-10,485,2023-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-10,485,2023-07,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20574
+shared_slopes_reduced_macro_only,2023-10,485,2023-07,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-10,485,2023-07,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20574
+country_mean,2023-11,490,2023-08,country,,
+shared_slopes_reduced_retail_only,2023-11,490,2023-08,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-11,490,2023-08,"country, retail_growth_lag3",2,20575
+shared_slopes_reduced_without_inflation,2023-11,490,2023-08,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-11,490,2023-08,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20575
+shared_slopes_reduced_without_unemployment,2023-11,490,2023-08,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-11,490,2023-08,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20575
+shared_slopes_reduced_without_gdp,2023-11,490,2023-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-11,490,2023-08,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20575
+shared_slopes_reduced_macro_only,2023-11,490,2023-08,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-11,490,2023-08,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20575
+country_mean,2023-12,495,2023-09,country,,
+shared_slopes_reduced_retail_only,2023-12,495,2023-09,"country, retail_growth_lag3",,
+forest_reduced_retail_only,2023-12,495,2023-09,"country, retail_growth_lag3",2,20576
+shared_slopes_reduced_without_inflation,2023-12,495,2023-09,"country, retail_growth_lag3, unemployment_lag3, gdp_available",,
+forest_reduced_without_inflation,2023-12,495,2023-09,"country, retail_growth_lag3, unemployment_lag3, gdp_available",2,20576
+shared_slopes_reduced_without_unemployment,2023-12,495,2023-09,"country, retail_growth_lag3, inflation_lag2, gdp_available",,
+forest_reduced_without_unemployment,2023-12,495,2023-09,"country, retail_growth_lag3, inflation_lag2, gdp_available",2,20576
+shared_slopes_reduced_without_gdp,2023-12,495,2023-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",,
+forest_reduced_without_gdp,2023-12,495,2023-09,"country, retail_growth_lag3, inflation_lag2, unemployment_lag3",2,20576
+shared_slopes_reduced_macro_only,2023-12,495,2023-09,"country, inflation_lag2, unemployment_lag3, gdp_available",,
+forest_reduced_macro_only,2023-12,495,2023-09,"country, inflation_lag2, unemployment_lag3, gdp_available",2,20576

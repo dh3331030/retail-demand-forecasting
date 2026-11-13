@@ -93,7 +93,58 @@ config <- list(
       "conflict_2000",
       "conflict_deaths_1000"
     ),
-    model_specifications = NULL,
-    evaluation_protocol = NULL
+    model_specifications = list(
+      
+      selected_models = c(
+        "zero_growth",
+        "country_mean",
+        "shared_slopes_reduced_macro_only",
+        "forest_reduced_without_gdp",
+        "forest_without_conflict",
+        "forest_conflict_deaths_1000_lag2"
+      ),
+      
+      macro_regression_predictors = c(
+        "country",
+        "inflation_lag2",
+        "unemployment_lag3",
+        "gdp_available"
+      ),
+      
+      forest_settings = list(
+        num_trees = 500L,
+        mtry = 2L,
+        max_depth = 5L,
+        min_node_size = 40L,
+        min_bucket = 20L,
+        sample_fraction = 1,
+        replace = TRUE
+      )
+    ),
+    evaluation_protocol = list(
+      
+      primary_metric = "RMSE",
+      secondary_metric = "MAE",
+      
+      validation_period = "2023",
+      testing_period = "2024-2025",
+      
+      estimation = "Expanding window, refitted monthly",
+      
+      outcome_availability_lag_months = 3L,
+      
+      reporting = "Overall and separately by country",
+      
+      model_selection =
+        "Finalists selected using 2023 validation; no selection using test scores",
+      
+      evaluation_type =
+        "Retrospective chronological holdout with revised historical data and publication-delay conventions",
+      
+      early_test_limitation =
+        "Complete 2023 validation outcomes were not all published before the earliest 2024 forecast dates",
+      
+      forest_seed_base = 20564L
+    )
   )
 )
