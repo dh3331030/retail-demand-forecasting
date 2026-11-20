@@ -1,8 +1,13 @@
+# Configuration for European retail-demand forecasting project
+# creates the "config" list object
+
 config <- list(
   
+#file paths 
   paths = list(
     raw = "data/raw",
     processed = "data/processed",
+    # versions of the data at various stages
     prepared_panel = "data/processed/prepared_panel.rds",
     analysis_panel = "data/processed/analysis_panel.rds",
     model_panel = "data/processed/model_panel.rds",
@@ -12,8 +17,9 @@ config <- list(
     frozen_config = "results/development/frozen_config.rds"
   ),
   
+#data sources
   sources = list(
-    
+    #number of databases we used
     expected_count = 6L,
     
     expected_prefixes = c(
@@ -24,18 +30,19 @@ config <- list(
       "Oxford Covid-19 Government Response Tracker",
       "Household final consumption expenditure.xlsx"
     ),
-    
+    # names of the sheets we use
     ucdp_sheet = "GEDEvent_v26_1",
     eurostat_sheet = "Sheet 1",
     gdp_sheet = "Sheet 2",
-    
+    # path of the COVID CSV within the archive
     covid_member =
       "covid-policy-dataset-main/data/OxCGRT_compact_national_v1.csv",
     
     headline_inflation_sheet = "Sheet 16",
     unemployment_sheet = "Sheet 1"
   ),
-  
+
+#research design: forecast next-month retail-volume growth for 5 countries
   analysis = list(
     countries = c(
       "Germany",
@@ -44,37 +51,49 @@ config <- list(
       "Poland",
       "Portugal"
     ),
+    #the analysis window
     sample_start = "2015-01",
     sample_end = "2025-12",
+    #one-month-ahead forecast horizon
     forecast_horizon = 1L,
+    #the target is 100-times log change in the retail volume index
+    #because objective is to forecast changes in consumer demand,
+    #trying to predict whether activity will go up or down next month
     target_definition =
       "100 * log(retail_index / previous_month_retail_index)",
+    #training from 2015-01 to 2022-12. validation on 2023. testing until 2025-12
     training_end = "2022-12",
     validation_end = "2023-12",
     test_end = "2025-12",
     predictor_specification = list(
+      #predictors that are shared by the models  
       common_predictors = c(
         "retail_growth_lag3",
         "inflation_lag2",
         "unemployment_lag3",
         "gdp_available"
       ),
+      #conflict-exposure measures used in comparisons
       conflict_alternatives = c(
         "conflict_500_lag2",
         "conflict_1000_lag2",
         "conflict_2000_lag2",
         "conflict_deaths_1000_lag2"
       ),
+      # records of where time-varying predictors came from
       provenance_columns = c(
         "gdp_source_quarter",
         "conflict_source"
       )
     ),
+    #avoiding look-ahead bias
     predictor_availability_rules = list(
+      #forecasts use information available before the target month begins
       forecast_origin = "End of the month preceding the target month",
       retail_lag_months = 3L,
       inflation_lag_months = 2L,
       unemployment_lag_months = 3L,
+      #publication delay for the quarterly GDP info
       gdp_rule =
         "Latest quarter eligible from quarter-end month plus four months",
       conflict_reference_lag_months = 2L,
@@ -85,16 +104,19 @@ config <- list(
       timing_status =
         "Conservative scheduling conventions; individual release dates not fully reconstructed"
     ),
+    #ARE THESE NECESSARY? #########################?????????
     frequency_conversion_rules = NULL,
     missing_value_rules = NULL,
+    #names of the conflict indicators
     conflict_definition = c(
       "conflict_500",
       "conflict_1000",
       "conflict_2000",
       "conflict_deaths_1000"
     ),
+#Model specifications    
     model_specifications = list(
-      
+      #baseline, regression and random-forest variants
       selected_models = c(
         "zero_growth",
         "country_mean",
@@ -103,14 +125,14 @@ config <- list(
         "forest_without_conflict",
         "forest_conflict_deaths_1000_lag2"
       ),
-      
+      # the covariates used by the macro-only regression benchmark
       macro_regression_predictors = c(
         "country",
         "inflation_lag2",
         "unemployment_lag3",
         "gdp_available"
       ),
-      
+      #fixed forest hyper-parameters for replicable comparisons
       forest_settings = list(
         num_trees = 500L,
         mtry = 2L,
@@ -121,26 +143,27 @@ config <- list(
         replace = TRUE
       )
     ),
+#evaluation: performance and selection
     evaluation_protocol = list(
-      
+      #lower RMSE and MAE indicates better predictive accuracy
       primary_metric = "RMSE",
       secondary_metric = "MAE",
-      
+      #validation for selecting candidate models, 2024-2025 for testing.
       validation_period = "2023",
       testing_period = "2024-2025",
-      
+      #refit each month using the expanding eligible history
       estimation = "Expanding window, refitted monthly",
-      
+      #the delay before a target becomes available for model refitting
       outcome_availability_lag_months = 3L,
       
       reporting = "Overall and separately by country",
-      
+      #we avoid selecting finalist models using test-set performance
       model_selection =
         "Finalists selected using 2023 validation; no selection using test scores",
       
       evaluation_type =
         "Retrospective chronological holdout with revised historical data and publication-delay conventions",
-      
+      #caveat for the earliest test forecasts(KNOWN LIMITATION)
       early_test_limitation =
         "Complete 2023 validation outcomes were not all published before the earliest 2024 forecast dates",
       
@@ -148,3 +171,12 @@ config <- list(
     )
   )
 )
+
+#completion message
+message(sprintf(
+  "[00_config.R] Done: configuration loaded for %d countries (%s to %s); %d-month forecast horizon. No analysis was run.",
+  length(config$analysis$countries),
+  config$analysis$sample_start,
+  config$analysis$sample_end,
+  config$analysis$forecast_horizon
+))
