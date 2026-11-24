@@ -67,6 +67,46 @@ panel[
   by = country
 ]
 
+#charts
+local({
+  library(ggplot2)
+  pretty_model <- function(x) {
+    replacements <- c(country_mean="Country historical mean", zero_growth="Zero growth",
+      latest_available_growth="Latest available growth", shared_slopes_reduced_macro_only="Macro-only regression",
+      country_specific_without_conflict="Country-specific regression", shared_slopes="Shared-slope regression",
+      forest="Random forest", bagging="Bagging", tree="Decision tree", reduced="reduced predictors",
+      conflict_deaths="conflict deaths", without_conflict="without conflict", lag2="(2-month lag)",
+      `1000`="1,000 km", `2000`="2,000 km", `500`="500 km", gdp="GDP")
+    for (key in names(replacements)) x <- gsub(key, replacements[[key]], x, fixed=TRUE)
+    gsub("_", " ", x, fixed=TRUE)
+  }
+  pct_label <- function(x) ifelse(abs(x) < 0.01 & x != 0,
+    ifelse(x > 0, "+<0.01%", "-<0.01%"), sprintf("%+.2f%%", x))
+  d <- data.table::copy(panel[is.finite(retail_growth)])
+  d[, date := as.Date(paste0(month, "-01"))]
+  p <- ggplot(d, aes(date, retail_growth)) +
+    geom_vline(xintercept=as.Date(paste0(c(config$analysis$training_end, config$analysis$validation_end), "-01")) + 31, colour="grey50", linetype="dashed") +
+    geom_hline(yintercept = 0, colour = "grey65") +
+    geom_line(colour = "#075A9C", linewidth = 0.6) +
+    facet_wrap(~country, ncol = 1) +
+    labs(title = "The forecasting target: monthly retail growth", x = "Month",
+         y = "Growth (log percentage points)",
+         caption = "Growth = 100 x log(current index / previous index).
+Unavailable first observations omitted. Dashed lines start validation and testing.")
+  p <- p + theme_minimal(base_size = 10.5) +
+    theme(
+          panel.grid.minor = element_blank(), legend.position = "bottom",
+          plot.caption = element_text(hjust = 0, size=8), plot.title.position="plot", plot.margin=margin(8,12,8,8), strip.text = element_text(face = "bold"), strip.text.y = element_text(angle=0), plot.title=element_text(size=13, face="bold", colour="#082B50"))
+  dir.create("results/figures/data", recursive = TRUE, showWarnings = FALSE)
+  
+  if (interactive()) print(p)
+  ggsave(paste0("results/figures/data/", "retail_growth_history", ".png"), plot = p,
+         width=7, height = 7, dpi = 300, bg = "white")
+  ggsave(paste0("results/figures/data/", "retail_growth_history", ".pdf"), plot = p,
+         width=7, height = 7, bg = "white")
+})
+
+
 #apply predictor publication lags (see Technical Report, Section 3.2)
 #shift retail growth by 3 months within each country
 panel[

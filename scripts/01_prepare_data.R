@@ -31,6 +31,41 @@ retail <- read_eurostat(
   config$sources$eurostat_sheet, countries, first, last, "month", "retail_index"
 )
 
+local({
+  library(ggplot2)
+  pretty_model <- function(x) {
+    replacements <- c(country_mean="Country historical mean", zero_growth="Zero growth",
+      latest_available_growth="Latest available growth", shared_slopes_reduced_macro_only="Macro-only regression",
+      country_specific_without_conflict="Country-specific regression", shared_slopes="Shared-slope regression",
+      forest="Random forest", bagging="Bagging", tree="Decision tree", reduced="reduced predictors",
+      conflict_deaths="conflict deaths", without_conflict="without conflict", lag2="(2-month lag)",
+      `1000`="1,000 km", `2000`="2,000 km", `500`="500 km", gdp="GDP")
+    for (key in names(replacements)) x <- gsub(key, replacements[[key]], x, fixed=TRUE)
+    gsub("_", " ", x, fixed=TRUE)
+  }
+  pct_label <- function(x) ifelse(abs(x) < 0.01 & x != 0,
+    ifelse(x > 0, "+<0.01%", "-<0.01%"), sprintf("%+.2f%%", x))
+  d <- data.table::copy(retail)
+  d[, date := as.Date(paste0(month, "-01"))]
+  p <- ggplot(d, aes(date, retail_index)) +
+    geom_line(colour = "#075A9C", linewidth = 0.6) +
+    facet_wrap(~country, ncol = 1) +
+    labs(title = "Historical retail volume", x = "Month", y = "Retail volume index",
+         subtitle = "Food, beverages and tobacco | Five European countries",
+         caption = "Seasonally and calendar-adjusted index levels; these are not growth forecasts.")
+  p <- p + theme_minimal(base_size = 10.5) +
+    theme(
+          panel.grid.minor = element_blank(), legend.position = "bottom",
+          plot.caption = element_text(hjust = 0, size=8), plot.title.position="plot", plot.margin=margin(8,12,8,8), strip.text = element_text(face = "bold"), strip.text.y = element_text(angle=0), plot.title=element_text(size=13, face="bold", colour="#082B50"))
+  dir.create("results/figures/data", recursive = TRUE, showWarnings = FALSE)
+
+  if (interactive()) print(p)
+  ggsave(paste0("results/figures/data/", "retail_index_history", ".png"), plot = p,
+         width=7, height = 7, dpi = 300, bg = "white")
+  ggsave(paste0("results/figures/data/", "retail_index_history", ".pdf"), plot = p,
+         width=7, height = 7, bg = "white")
+})
+
 #call the same helper to load monthly YoY headline inflation
 inflation <- read_eurostat(
   file.path(raw_path, "Headline inflation.xlsx"),
