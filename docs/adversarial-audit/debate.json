@@ -1,0 +1,42 @@
+[
+  {
+    "challenge": "Does forest drift mean the data or entire analysis is wrong?",
+    "exchange": "Data reviewer 2 and methods reviewer 3 challenged reproduction reviewer 4 to separate data reconstruction, saved-score arithmetic and fresh model reproduction. Reviewer 4 accepted that all ten processed datasets match while forest forecasts differ.",
+    "resolution": "A real numerical reproducibility and package-consistency issue remains. The main pooled conclusions survive; there is no demonstrated preprocessing failure or reason to restart the project."
+  },
+  {
+    "challenge": "Can stable headline rankings justify ignoring the score difference?",
+    "exchange": "Methods reviewer 3 questioned whether the issue invalidates the scientific story; reproduction reviewer 4 and rules reviewer 1 pointed to the changed 2025 winner and the requirement to reproduce submitted numbers. The report reviewer accepted the need to reconcile forest-dependent claims.",
+    "resolution": "Resolve the final output set and align CSVs, plots, report and slides. Keep the frozen model choices. Describe overall stability and the changed subgroup result separately."
+  },
+  {
+    "challenge": "Has a package-version problem been proved?",
+    "exchange": "Reviewers 2 and 3 challenged reviewer 4’s diagnosis boundary. Reviewer 4 confirmed that no original software environment was established and that the cause has not been isolated.",
+    "resolution": "Software/environment drift remains a hypothesis. Record tested versions and the observed discrepancy without presenting a suspected cause as fact. A lockfile is useful, but it is not an explicit professor requirement."
+  },
+  {
+    "challenge": "Did an unchanged freeze-time score file prove numerical reproduction?",
+    "exchange": "Data reviewer 2 challenged reproduction reviewer 4 because frozen_finalists_validation_scores.csv stays unchanged while regenerated validation scores differ. Reviewer 4 checked that the normal runner deliberately preserves the original freeze artifacts.",
+    "resolution": "Treat the frozen configuration and freeze-time score summary as historical decision evidence, not freshly regenerated output. If adopting rerun results, distinguish the original selection evidence from current reproduction scores; do not silently rewrite the selection history."
+  },
+  {
+    "challenge": "Are a six-model table, new significance tests or additional methods mandatory?",
+    "exchange": "Rules reviewer 1, data reviewer 2 and methods reviewer 3 challenged report reviewer 5 to distinguish communication advice from written deliverables. Reviewer 5 defended the full table as a clarity improvement and agreed that no fixed table/figure count or new inference exercise is required.",
+    "resolution": "A compact complete-finalist table is recommended. New model searches, neural networks or significance tests are not requirements found in the inspected project rules. Continue to qualify small score differences."
+  },
+  {
+    "challenge": "Do the report’s wording errors establish new leakage or a wrong growth calculation?",
+    "exchange": "The report reviewer challenged the data and methods reviewers on index rebasing, conflict-source chronology and the already-disclosed retrospective design. They agreed that the constant index base does not change log growth, and that the annual/Candidate sentence misdescribes the implemented sources.",
+    "resolution": "Correct the report descriptions. Preserve the retrospective-information limitations. These wording errors do not establish a new preprocessing or timing failure in the code."
+  },
+  {
+    "challenge": "Are the report and slides absent, unfinished or merely unavailable in GitHub?",
+    "exchange": "Rules reviewer 1 and report reviewer 5 challenged any carryover claim that the PDF still needs its first export or that an unseen deck is missing work. David confirmed the local report is latest, and reviewer 5 visually checked all ten pages.",
+    "resolution": "Report writing and initial PDF export are done; corrections and final collection remain. Adina’s deck is reported mostly done but uninspected. The required final ZIP must contain both; GitHub publication itself is not a professor requirement."
+  },
+  {
+    "challenge": "Which presentation timing applies?",
+    "exchange": "Rules and report reviewers compared the older 15-minute syllabus/outline with the newer announcement supplied by David. They also challenged the suggestion that all members must speak or that extra question time is guaranteed.",
+    "resolution": "Use ten minutes, with questions during or after as stated in the announcement. The group may select representatives. The unseen actual deck needs a timed check; the stale outline does not prove that Adina’s presentation is too long."
+  }
+]

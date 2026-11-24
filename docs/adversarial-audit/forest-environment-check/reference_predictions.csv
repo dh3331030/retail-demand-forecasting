@@ -1,0 +1,11 @@
+model,country,month,published_prediction,windows_reference_prediction
+forest_without_conflict,France,2023-01,0.0486942008653507,0.0798499235443619
+forest_without_conflict,Germany,2023-01,0.21232059818794,0.18281309721694
+forest_without_conflict,Italy,2023-01,-0.173312544241854,-0.169010014164206
+forest_without_conflict,Poland,2023-01,0.284447891984864,0.221036266134653
+forest_without_conflict,Portugal,2023-01,0.100842588570007,0.0983222463422907
+forest_reduced_without_gdp,France,2023-01,0.0287629800941384,0.0371571475637433
+forest_reduced_without_gdp,Germany,2023-01,0.183881770159505,0.10909644250881
+forest_reduced_without_gdp,Italy,2023-01,-0.217668732678385,-0.214254798212139
+forest_reduced_without_gdp,Poland,2023-01,0.330846161236181,0.264159585501984
+forest_reduced_without_gdp,Portugal,2023-01,0.108260300838411,0.0850733512789224

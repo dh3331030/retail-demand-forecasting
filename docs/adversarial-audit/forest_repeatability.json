@@ -1,0 +1,62 @@
+{
+  "test": "Two fresh independent R processes; modeling stages03,03a,04 on same committed model_panel and frozen configuration",
+  "commit": "6208b1e923e3de9f5cd741d31fc0d70002256343",
+  "R": "4.6.1",
+  "ranger": "0.18.0",
+  "data.table": "1.18.6.1",
+  "ggplot2": "4.0.3",
+  "stages": {
+    "validation": {
+      "rows": 1560,
+      "keys_equal": true,
+      "max_prediction_difference_between_fresh_runs": 0.0,
+      "max_prediction_difference_from_existing_local_outputs": 1.0269562977782698e-15,
+      "trial_a_sha256": "fb6f173d4e2b6fa50e1bbc14026d2631e123939364bf0525a9d984c4a0c68bef",
+      "trial_b_sha256": "fb6f173d4e2b6fa50e1bbc14026d2631e123939364bf0525a9d984c4a0c68bef"
+    },
+    "test": {
+      "rows": 720,
+      "keys_equal": true,
+      "max_prediction_difference_between_fresh_runs": 0.0,
+      "max_prediction_difference_from_existing_local_outputs": 0.0,
+      "trial_a_sha256": "597ee440682ec64000a9fbc8881dab34bd7d51d96fada7bab8c6e672b9369557",
+      "trial_b_sha256": "597ee440682ec64000a9fbc8881dab34bd7d51d96fada7bab8c6e672b9369557"
+    }
+  },
+  "working_doc_section": "5.2",
+  "original_environment_known": false,
+  "trial_a_success": true,
+  "trial_b_success": true,
+  "GDP_removal_validation": {
+    "published_original_forest_RMSE": 1.39298442247284,
+    "published_reduced_forest_RMSE": 1.3889601740303,
+    "published_improvement_percent": 0.288894001800554,
+    "repeated_original_forest_RMSE": 1.38940939500976,
+    "repeated_reduced_forest_RMSE": 1.38939387524857,
+    "repeated_improvement_percent": 0.0011170041922636323
+  },
+  "original_artifact_metadata": {
+    "inspection": "R infoRDS() on exact committed files",
+    "last_changed_commit": "79ebc6a",
+    "writer_version": "4.6.2",
+    "files": [
+      "data/processed/model_panel.rds",
+      "results/development/frozen_config.rds",
+      "results/final/evaluation_settings.rds"
+    ],
+    "limitation": "Serialization writer version identifies the R version that saved these artifacts; it does not establish the ranger version or prove the cause of changed forest fits."
+  },
+  "historical_session_file": {
+    "commit": "42bbcf243387c10633f59d6a9319ac71204f59c8",
+    "path": "results/session_info.txt",
+    "R": "4.6.1",
+    "ranger_listed": false,
+    "scope": "Earlier ARIMA/ETS/Theta workflow, not the November13 forest evaluation"
+  },
+  "source_code_history_check": {
+    "baseline_commit": "79ebc6a",
+    "ranger_calls_unchanged": true,
+    "configuration_values_identical": true,
+    "scope": "Parsed R expressions compared by independent methods reviewer; recent changes are comments, plots and messages."
+  }
+}

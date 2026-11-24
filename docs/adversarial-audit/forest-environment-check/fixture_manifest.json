@@ -1,0 +1,17 @@
+{
+  "source_commit": "79ebc6ac1260ce23b492afdaf75d1e21194b6af2",
+  "fixture_training_rows": 440,
+  "fixture_forecast_rows": 5,
+  "forecast_month": "2023-01",
+  "forest_seed": 20565,
+  "reference_R": "4.6.1",
+  "reference_ranger": "0.18.0",
+  "reference_data_table": "1.18.6.1",
+  "files": {
+    "README.html": "3ff0f9d76ebbb1684a9ca2381a2da82a6b517985d98610dd4e9faf90af4d2ba4",
+    "Check_forest_environment.R": "b571ae44d6817462d0184cc7a5a2a7771c46869d48d7f221a222a40215dd2cf0",
+    "forest_fixture.rds": "77adae794d266542765f023fea4891203aff0984c29bc0319998b1f2cbc1c025",
+    "reference_predictions.csv": "bd24fc1ac3ddca2ed082b452d6c89f6c3ea6da840da90eeec760399a7e24f88a",
+    "reference_inbag_counts.rds": "73df55f06fc20cf6aec20ab5e89585970eed551b050862c2da949dc626ec5bfd"
+  }
+}
