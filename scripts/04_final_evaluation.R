@@ -1,70 +1,87 @@
-# READING GUIDE: This script expects `frozen_config` from its wrapper script.
-# Test outcomes are scored, never used to select or retune finalist models.
+#six prespecified finalists; chronological holdout scoring
 
-# Called by run_final_evaluation.R after the configuration guard passes.
-# Six prespecified finalists; chronological holdout scoring, no model selection.
-# Require the wrapper to have loaded a frozen configuration; stop if this stage is run in isolation.
-if (!exists("frozen_config")) stop("Run run_final_evaluation.R, not file 04 alone.")
-# Check whether the `ranger` random-forest package is available.
+#required to have loaded a frozen configuration from previous scripts
+#stop if this stage is run in isolation.
+if (!exists("frozen_config"))
+  stop("Run run_final_evaluation.R, not file 04 alone.")
+
+#check if `ranger` random-forest package is available.
 if (!requireNamespace("ranger", quietly = TRUE)) {
-  # Install `ranger` from CRAN only when it is missing.
+  #else install `ranger` from CRAN only when it is missing.
   install.packages("ranger", repos = "https://cloud.r-project.org")
 }
-# Abort if the package still cannot be loaded after installation.
-if (!requireNamespace("ranger", quietly = TRUE)) stop("ranger installation incomplete.")
-# Attach `data.table` for panel manipulation and accuracy summaries.
+
+#STOP1 abort if the package still cannot be loaded after installation.
+if (!requireNamespace("ranger", quietly = TRUE))
+  stop("ranger installation incomplete.")
+
 library(data.table)
 
-# Extract frozen model definitions and tuning choices into a local variable.
+#extract frozen configs into local variables.
 spec <- frozen_config$analysis$model_specifications
-# Extract frozen release-delay and evaluation settings.
 protocol <- frozen_config$analysis$evaluation_protocol
-# Retrieve the frozen finalist model names.
+
+#retrieve the frozen finalist model names.
 selected <- spec$selected_models
-# Declare the six supported model specifications for an explicit compatibility check.
+
+#six supported model specifications for a compatibility check.
 supported <- c("zero_growth", "country_mean", "shared_slopes_reduced_macro_only",
                "forest_reduced_without_gdp", "forest_without_conflict",
                "forest_conflict_deaths_1000_lag2")
-# Reject frozen configurations with missing, extra or unsupported finalists.
+
+#STOP2 reject frozen configurations with missing, extra or unsupported finalists.
 if (length(selected) != 6 || !setequal(selected, supported)) {
-  # Stop before reading test outcomes if the finalist list is inconsistent.
   stop("Frozen finalist list differs from the six supported specifications.")
 }
-# Zero growth was the RMSE winner in validation; comparators are not reselected here.
-# Fix zero predicted growth as the primary model based on the development selection.
+
+
+#zero growth was the winner in validation
+#set zero predicted growth as the primary model
 primary_model <- "zero_growth"
-# Read the frozen number of months before a retail outcome becomes training-eligible.
+
+#reads the frozen number of months before a retail outcome becomes training-eligible.
 retail_lag <- protocol$outcome_availability_lag_months
-# Require this delay to be one nonmissing integer equal to three months.
+
+#STOP3 require this delay to be one non-missing integer equal to three months.
 if (length(retail_lag) != 1 || is.na(retail_lag) || retail_lag != 3L) {
-  # Stop if the frozen availability rule is inconsistent with the evaluation code.
   stop("Expected the frozen three-month retail-outcome availability rule.")
 }
-# Read the frozen random-forest hyperparameters.
+
+#read the frozen random-forest hyperparameters.
 forest_settings <- spec$forest_settings
-# Load the complete modelling panel, including the final holdout.
+
+#load the complete modelling panel, including the final holdout.
 all_data <- as.data.table(readRDS(frozen_config$paths$model_panel))
-# Treat country as a categorical rather than a continuous predictor.
+
+#treat country as a categorical rather than a continuous predictor.
 all_data[, country := factor(country)]
-# Sort all observations by country and month index.
+#sort all observations by country and month index.
 all_data <- all_data[order(country, month_id)]
-# Stop if more than one observation exists for any country-month.
-if (anyDuplicated(all_data[, .(country, month_id)])) stop("Duplicate modeling rows.")
-# List the outcome and all predictors needed by the finalist models.
+
+#STOP4 if more than one observation exists for any country-month.
+if (anyDuplicated(all_data[, .(country, month_id)]))
+  stop("Duplicate modeling rows.")
+
+#list the outcome and all predictors needed by the finalist models.
 required <- c("retail_growth", "retail_growth_lag3", "inflation_lag2",
               "unemployment_lag3", "gdp_available", "conflict_deaths_1000_lag2")
-# Reject missing values in these final-evaluation variables.
-if (anyNA(all_data[, required, with = FALSE])) stop("Missing final-evaluation model values.")
-# Select the testing portion of the panel only.
+
+#and reject missing values in these final-evaluation variables.
+if (anyNA(all_data[, required, with = FALSE]))
+  stop("Missing final-evaluation model values.")
+
+#then select the testing portion of the panel only.
 test_rows <- all_data[sample == "testing"]
-# Get the sorted set of unique test month identifiers.
+
+#getting the sorted set of unique test month identifiers.
 test_months <- sort(unique(test_rows$month_id))
-# Check the assumed test shape: 24 months times five countries equals 120 rows.
+
+#STOP5 when the holdout is not 24 months times five countries equals 120 rows
 if (length(test_months) != 24 || nrow(test_rows) != 120) {
-  # Stop when the holdout is incomplete or unexpectedly sized.
   stop("Expected 24 test months and 120 country-month observations.")
 }
-# Define the exact predictor columns used by each of the three finalist forests.
+
+#define the exact predictor columns used by each of the three finalist forests.
 forest_predictors <- list(
   forest_reduced_without_gdp = c("country", "retail_growth_lag3",
                                  "inflation_lag2", "unemployment_lag3"),
@@ -73,72 +90,73 @@ forest_predictors <- list(
   forest_conflict_deaths_1000_lag2 = c("country", "retail_growth_lag3",
     "inflation_lag2", "unemployment_lag3", "gdp_available", "conflict_deaths_1000_lag2")
 )
-# Construct the reduced macroeconomic OLS model formula from frozen predictor names.
+
+#now construct the reduced macroeconomic OLS model formula from frozen predictor names.
 regression_formula <- as.formula(paste(
   "retail_growth ~", paste(spec$macro_regression_predictors, collapse = " + ")
 ))
-# Initialize a list of month-by-month test forecast tables.
+
+#initialize a list of month-by-month test forecast tables and training audit log
 prediction_tables <- list()
-# Initialize a list of model-training audit records.
 training_records <- list()
 
-# Evaluate the chosen six models separately for each chronological test month.
+#evaluate the chosen six models separately for each chronological test month.
 for (i in 1:length(test_months)) {
-  # Read the current target month ID.
+  #read month ID.
   target_month <- test_months[i]
-  # Earlier test outcomes become training observations only after publication.
-  # Create an expanding fit window of all outcomes known at least three months before the target.
+  #earlier test outcomes become training observations only after publication.
+  #create fit window of all outcomes known at least three months before the target.
   training <- all_data[month_id <= target_month - retail_lag]
-  # Select the current target month's country observations to forecast.
+  #select the current target month's country observations to forecast.
   forecast_rows <- test_rows[month_id == target_month]
-  # Confirm that all configured countries are present in this month of the test sample.
+  #confirm that all configured countries are present in this month of the test sample.
   if (nrow(forecast_rows) != length(frozen_config$analysis$countries)) {
     # Stop if the expected country coverage is incomplete.
     stop("Incomplete country coverage for test month ID ", target_month)
   }
-  # Stop if any target country has no historical training records.
+  #stop if any target country has no historical training records.
   if (!all(forecast_rows$country %in% training$country)) stop("Missing country history.")
-  # Set a deterministic monthly random-forest seed from the frozen base seed.
+  #and sett a deterministic monthly random-forest seed from the frozen base seed.
   model_seed <- protocol$forest_seed_base + i
 
-  # Loop over each of the six preselected finalist specifications.
+  #loop over each of the six preselected finalist specifications.
   for (j in 1:length(selected)) {
-    # Identify the current finalist's label.
+    #identify the current finalist's label.
     label <- selected[j]
-    # Initialize the coefficient-count field to missing; tree models have no OLS coefficient count.
+    #initialize the coefficient-count field to missing; tree models have no OLS coefficient count.
     coefficients <- NA_integer_
-    # Initialize predictor metadata to `none`, appropriate for the zero-growth benchmark.
+    #initialize predictor metadata to `none`, appropriate for the zero-growth benchmark.
     predictors <- "none"
-    # Branch to the zero-growth benchmark when the current label matches.
+    #branch to the zero-growth benchmark when the current label matches.
     if (label == "zero_growth") {
-      # Produce one zero forecast for each target-country row without fitting a model.
+      #produce one zero forecast for each target-country row without fitting a model.
       values <- rep(0, nrow(forecast_rows))
     } else if (label == "country_mean") {
-      # For the country-mean model, fit country-only OLS on the eligible training window.
+      #for the country-mean model, fit country-only OLS on the eligible training window.
       fit <- lm(retail_growth ~ country, data = training, na.action = na.fail)
-      # Predict test values from the fitted country-mean OLS.
+      #predict test values from the fitted country-mean OLS.
       values <- as.numeric(predict(fit, newdata = forecast_rows))
-      # Count the fitted regression coefficients for the audit log.
+      #count the fitted regression coefficients for the audit log.
       coefficients <- length(coef(fit))
-      # Record that this benchmark uses country membership as its only predictor.
+      #record that this benchmark uses country membership as its only predictor.
       predictors <- "country"
     } else if (label == "shared_slopes_reduced_macro_only") {
-      # For the reduced macro regression, estimate the frozen formula on eligible history.
+      #for the reduced macro regression, estimate the frozen formula on eligible history.
       fit <- lm(regression_formula, data = training, na.action = na.fail)
-      # Stop if its design matrix is rank deficient and coefficients are unidentified.
+      #stop if its design matrix is rank deficient and coefficients are unidentified.
       if (fit$rank < length(coef(fit))) stop("Unidentified final regression coefficients.")
-      # Generate numeric test-month predictions from the regression.
+      #generate numeric test-month predictions from the regression.
       values <- as.numeric(predict(fit, newdata = forecast_rows))
-      # Record how many regression coefficients were fitted.
+      #record how many regression coefficients were fitted.
       coefficients <- length(coef(fit))
-      # Store the actual macro predictor names used by the regression.
+      #store the actual macro predictor names used by the regression.
       predictors <- paste(spec$macro_regression_predictors, collapse = ", ")
     } else {
-      # For a forest model, look up its named frozen predictor set.
+      #for a forest model, look up its named frozen predictor set.
       inputs <- forest_predictors[[label]]
-      # Build a response formula dynamically from those forest inputs.
+      #build a response formula dynamically from those forest inputs.
       formula <- as.formula(paste("retail_growth ~", paste(inputs, collapse = " + ")))
-      # Fit `ranger` using all frozen forest settings, a monthly seed and single-thread execution.
+      #fit `ranger` using all frozen forest settings, a monthly seed and single-thread execution.
       fit <- ranger::ranger(
         formula, data = training,
         num.trees = forest_settings$num_trees, mtry = forest_settings$mtry,
@@ -148,31 +166,31 @@ for (i in 1:length(test_months)) {
         splitrule = "variance", respect.unordered.factors = "partition",
         seed = model_seed, num.threads = 1L, oob.error = FALSE
       )
-      # Predict retail growth for the test-country observations with the fitted forest.
+      #predict retail growth for the test-country observations with the fitted forest.
       values <- as.numeric(predict(fit, data = forecast_rows)$predictions)
-      # Log the forest's predictor column names.
+      #log the forest's predictor column names.
       predictors <- paste(inputs, collapse = ", ")
     }
-    # Check that the model returned one finite prediction per country.
+    #check that the model returned one finite prediction per country.
     if (length(values) != nrow(forecast_rows) || any(!is.finite(values))) {
-      # Stop if predictions are missing, infinite or the wrong length.
+      #stop if predictions are missing, infinite or the wrong length.
       stop("Invalid forecasts for ", label)
     }
-    # Create the current month/model table containing actual growth and observation keys.
+    #create the current month/model table containing actual growth and observation keys.
     predictions <- forecast_rows[, .(country, month, actual = retail_growth)]
-    # Add the current finalist model name to those observations.
+    #add the current finalist model name to those observations.
     predictions[, model := label]
-    # Store the vector of predicted retail growth.
+    #store the vector of predicted retail growth.
     predictions[, prediction := values]
-    # Calculate the error between observed growth and its forecast.
+    #calculate the error between observed growth and its forecast.
     predictions[, error := actual - prediction]
-    # Mark predictions from the predefined primary model.
+    #mark predictions from the predefined primary model.
     predictions[, primary := model == primary_model]
-    # Compute a unique list index for this month-model combination.
+    #compute a unique list index for this month-model combination.
     index <- (i - 1) * length(selected) + j
-    # Store the completed model forecast table at that index.
+    #store the completed model forecast table at that index.
     prediction_tables[[index]] <- predictions
-    # Record training sample size, last eligible month, predictors, coefficients and seed.
+    #record training sample size, last eligible month, predictors, coefficients and seed.
     training_records[[index]] <- data.table(
       model = label, target_month = forecast_rows$month[1],
       training_observations = if (label == "zero_growth") 0L else nrow(training),
@@ -182,12 +200,13 @@ for (i in 1:length(test_months)) {
     )
   }
 }
-# Combine all individual monthly finalist predictions into one test table.
+#combine all individual monthly finalist predictions into one test table.
 test_predictions <- rbindlist(prediction_tables)
-# Combine the per-month model audit records into a training log.
+#dombine the per-month model audit records into a training log.
 test_training_log <- rbindlist(training_records)
-# Reject duplicate `(model, country, month)` test forecasts.
-if (anyDuplicated(test_predictions[, .(model, country, month)])) stop("Duplicate test forecasts.")
+#reject duplicate `(model, country, month)` test forecasts.
+if (anyDuplicated(test_predictions[, .(model, country, month)]))
+  stop("Duplicate test forecasts.")
 
 #charts
 local({
@@ -252,22 +271,23 @@ shared scales across models.")
   }
 })
 
-# Calculate each finalist's total forecast count, MAE and RMSE, ranked by RMSE.
+#calculate each finalist's total forecast count, MAE and RMSE, ranked by RMSE.
 test_scores <- test_predictions[, .(
   observations = .N, MAE = mean(abs(error)), RMSE = sqrt(mean(error^2))
 ), by = model][order(RMSE)]
-# Verify that each finalist produced all 120 expected test forecasts.
+#verify that each finalist produced all 120 expected test forecasts.
 if (any(test_scores$observations != 120)) stop("Unequal test forecast counts.")
-# Extract the zero-growth benchmark RMSE for relative comparisons.
+
+#extract the zero-growth benchmark RMSE for relative comparisons.
 zero_rmse <- test_scores[model == "zero_growth", RMSE]
-# Create a numeric column for percentage improvement relative to zero growth.
+#create a numeric column for percentage improvement relative to zero growth.
 test_scores[, RMSE_improvement_vs_zero_pct := NA_real_]
-# Compute that improvement only when the baseline RMSE is greater than zero.
+#compute that improvement only when the baseline RMSE is greater than zero.
 if (zero_rmse > 0) {
-  # Convert each RMSE to a percentage improvement over zero-growth RMSE.
+  #convert each RMSE to a percentage improvement over zero-growth RMSE.
   test_scores[, RMSE_improvement_vs_zero_pct := 100 * (1 - RMSE / zero_rmse)]
 }
-# Mark the predefined primary model in the overall score table.
+#then mark the predefined primary model in the overall score table.
 test_scores[, primary := model == primary_model]
 
 #charts
@@ -382,11 +402,12 @@ local({
 
 
 
-# Calculate forecast count, MAE and RMSE separately by model and country.
+#calculate forecast count, MAE and RMSE separately by model and country.
 test_country_scores <- test_predictions[, .(
   observations = .N, MAE = mean(abs(error)), RMSE = sqrt(mean(error^2))
 ), by = .(model, country)][order(country, RMSE)]
 
+#charts
 local({
   library(ggplot2)
   pretty_model <- function(x) {
@@ -425,14 +446,15 @@ local({
   ggsave("results/figures/final/test_country_improvement.pdf",p,width=7,height=5,bg="white")
 })
 
-# Extract each prediction's year from its month string.
+#extract each prediction's year from its month string.
 test_predictions[, year := substr(month, 1, 4)]
-# Calculate model-level forecast performance separately by calendar year.
+#and calculate model-level forecast performance separately by calendar year.
 test_year_scores <- test_predictions[, .(
   observations = .N, MAE = mean(abs(error)), RMSE = sqrt(mean(error^2))
 ), by = .(model, year)][order(year, RMSE)]
 
 
+#charts
 local({
   library(ggplot2)
   pretty_model <- function(x) {
@@ -472,26 +494,27 @@ local({
   ggsave("results/figures/final/test_year_improvement.pdf",p,width=7,height=5,bg="white")
 })
 
-# Read the frozen final-output destination.
+#read the frozen final-output destination.
 final_path <- frozen_config$paths$final
-# Create the final-results folder if it does not yet exist.
+
+#then create the final-results folder if it does not yet exist.
 dir.create(final_path, recursive = TRUE, showWarnings = FALSE)
-# Collect prediction tables, score tables and training audit logs under export names.
+#collect prediction tables, score tables and training audit logs under export names.
 outputs <- list(test_predictions = test_predictions, test_scores = test_scores,
   test_country_scores = test_country_scores, test_year_scores = test_year_scores,
   test_training_log = test_training_log)
-# Write each named final output table to a separate CSV file.
+
+#write each named final output table to a separate CSV file.
 for (name in names(outputs)) fwrite(outputs[[name]], file.path(final_path, paste0(name, ".csv")))
-# Save the frozen configuration, primary-model identity and monthly seed rule together in an RDS.
+#save the frozen configuration, primary-model identity and monthly seed rule together in an RDS.
 saveRDS(list(config = frozen_config, primary_model = primary_model,
              seed_rule = "forest_seed_base + test-month index (January 2024 = 1)"),
         file.path(final_path, "evaluation_settings.rds"))
-# Display the overall finalist test scores.
-print(test_scores)
-# Display each country's test scores.
-print(test_country_scores)
-# Display the year-by-year test scores.
-print(test_year_scores)
-# Confirm that holdout scoring ended without further model selection or retuning.
-message("Final holdout evaluation complete. These scores do not select or retune models.")
 
+#display the overall finalist, each country, and the year-by-year test scores.
+print(test_scores)
+print(test_country_scores)
+print(test_year_scores)
+
+#confirm that holdout scoring ended without further model selection or retuning.
+message("Final holdout evaluation complete.")
