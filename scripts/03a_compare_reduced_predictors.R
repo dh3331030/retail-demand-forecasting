@@ -1,9 +1,6 @@
-# READING GUIDE: This is an extension of the development workflow and requires objects
-# created by 03_train_validate.R to exist in the same R session.
+#run after script 03 in the same R session
 
-# Run from the END of 03_train_validate.R, after the existing comparisons.
-# Compare a predefined small set; retain identical rows and training cutoffs.
-# Define five reduced predictor sets to test whether individual macro variables improve forecasting.
+#define five reduced predictor sets to compare forecasting accuracy
 reduced_sets <- list(
   retail_only = "retail_growth_lag3",
   without_inflation = c("retail_growth_lag3", "unemployment_lag3", "gdp_available"),
@@ -11,50 +8,63 @@ reduced_sets <- list(
   without_gdp = c("retail_growth_lag3", "inflation_lag2", "unemployment_lag3"),
   macro_only = c("inflation_lag2", "unemployment_lag3", "gdp_available")
 )
-# Reuse the validated no-conflict random-forest configuration from the preceding script.
+
+#reuse the settings of the random forest without conflict predictors
 forest_settings <- tree_settings[model == "forest_without_conflict"]
-# Create a list to accumulate predictions for reduced models.
+
+#initialize a list to store the forecasts
 reduced_results <- list()
-# Create a list to accumulate reduced-model training metadata.
+
+#initialize a list to store the training details
 reduced_training_records <- list()
 
-# Common prediction format, also used for the country-mean benchmark.
-# Define a shared helper that checks forecast validity and formats country-month predictions.
+#define a function to check and organize each model's forecasts
 record_reduced_forecast <- function(label, values, rows) {
-  # Verify there is exactly one finite numeric forecast per supplied target observation.
+  
+#check that forecasts are finite and match the number of observations
   if (length(values) != nrow(rows) || any(!is.finite(values))) {
-    # Stop if the forecast vector has the wrong length or invalid values.
+    
+#stop if the forecasts fail these checks
     stop("Invalid forecasts for ", label)
   }
-  # Construct the country-month table of observed growth for these predictions.
+  
+#retain country, month and observed retail growth
   result <- rows[, .(country, month, actual = retail_growth)]
-  # Add the supplied model name to the prediction rows.
+  
+#add the model name
   result[, model := label]
-  # Coerce and store the forecast vector as numeric values.
+  
+#store the predicted growth values as numbers
   result[, prediction := as.numeric(values)]
-  # Compute actual-minus-prediction errors.
+  
+#calculate forecast errors as observed minus predicted growth
   result[, error := actual - prediction]
-  # Return the formatted prediction table to the caller.
+  
+#return the completed forecast table
   result
 }
 
-# Move across the validation months in chronological order.
+#repeat the forecasting process for each validation month
 for (i in 1:length(validation_months)) {
-  # Choose the target month for the current iteration.
+  
+#select the current forecast month
   target_month <- validation_months[i]
-  # Use only historical outcomes old enough to satisfy the configured retail release delay.
+  
+#retain training observations available under the retail publication lag
   available_training <- development[month_id <= target_month - retail_release_lag]
-  # Extract the target-month validation observations for prediction.
+  
+#select the validation observations for the current month
   forecast_rows <- development[sample == "validation" & month_id == target_month]
 
-  # Country intercepts only: equivalent to each country's available historical mean.
-  # Fit country-only OLS, giving each country its available-history mean as a benchmark.
+#fit a historical mean benchmark for each country
   mean_fit <- lm(retail_growth ~ country, data = available_training, na.action = na.fail)
-  # Call the formatting helper on the country-mean forecasts and append the result.
+  
+#generate and store the country-mean forecasts
   reduced_results[[length(reduced_results) + 1]] <- record_reduced_forecast(
     "country_mean", predict(mean_fit, newdata = forecast_rows), forecast_rows
   )
-  # Record country-mean forecast date, training count, last eligible month and settings.
+  
+#record the training sample and settings for the country-mean benchmark
   reduced_training_records[[length(reduced_training_records) + 1]] <- data.table(
     model = "country_mean", target_month = forecast_rows$month[1],
     training_observations = nrow(available_training),
@@ -62,23 +72,29 @@ for (i in 1:length(validation_months)) {
     predictors = "country", mtry = NA_integer_, seed = NA_integer_
   )
 
-  # Iterate through the five predefined reduced predictor combinations.
+#repeat the estimation for each reduced predictor set
   for (subset_name in names(reduced_sets)) {
-    # Add the country categorical variable to the selected numerical predictors.
+    
+#include country alongside the selected predictors
     predictors <- c("country", reduced_sets[[subset_name]])
-    # Build a model formula from that predictor list using `paste()` and `as.formula()`.
+    
+#build the model formula from the selected predictors
     model_formula <- as.formula(paste("retail_growth ~", paste(predictors, collapse = " + ")))
-    # Fit a reduced pooled-slope OLS model on the eligible training rows.
+    
+#fit a regression with country intercepts and shared predictor coefficients
     regression_fit <- lm(model_formula, data = available_training, na.action = na.fail)
-    # Verify that the reduced regression coefficients can be identified.
+    
+#check that the regression coefficients can be estimated separately
     if (regression_fit$rank < length(coef(regression_fit))) {
-      # Stop if the current reduced formula produces a rank-deficient regression.
+      
+#stop if the regression coefficients cannot be estimated separately
       stop("Unidentified reduced regression: ", subset_name, " at ", forecast_rows$month[1])
     }
-    # Keep the existing forest configuration. Only cap mtry if necessary.
-    # Limit the number of considered split variables to the predictors actually available.
+    
+#limit mtry to the number of available predictors
     used_mtry <- min(forest_settings$mtry, length(predictors))
-    # Fit a fixed-parameter random forest using this reduced set and monthly random seed.
+    
+#fit a random forest using the reduced predictors and existing settings
     forest_fit <- ranger::ranger(
       model_formula, data = available_training,
       num.trees = forest_settings$trees, mtry = used_mtry,
@@ -88,20 +104,25 @@ for (i in 1:length(validation_months)) {
       respect.unordered.factors = "partition",
       seed = 20564L + i, num.threads = 1L, oob.error = FALSE
     )
-    # Collect held-out numeric forecasts from the reduced regression and forest.
+    
+#predict validation growth using the regression and random forest
     forecasts <- list(
       shared_slopes = as.numeric(predict(regression_fit, newdata = forecast_rows)),
       forest = as.numeric(predict(forest_fit, data = forecast_rows)$predictions)
     )
-    # Loop over these two model families to record both types of forecast.
+    
+#store the results for both model types
     for (family in names(forecasts)) {
-      # Make a unique readable label from the model family and reduced-set name.
+      
+#label the model using its type and predictor set
       label <- paste0(family, "_reduced_", subset_name)
-      # Append this model's forecasts after calling the common validation/formatting helper.
+      
+#check and store the model's forecasts
       reduced_results[[length(reduced_results) + 1]] <- record_reduced_forecast(
         label, forecasts[[family]], forecast_rows
       )
-      # Record its training cutoff, predictor set and (for forests) mtry and seed.
+      
+#record the training sample, predictors and forest settings
       reduced_training_records[[length(reduced_training_records) + 1]] <- data.table(
         model = label, target_month = forecast_rows$month[1],
         training_observations = nrow(available_training),
@@ -113,28 +134,35 @@ for (i in 1:length(validation_months)) {
     }
   }
 }
-# Row-bind all reduced-model predictions into one table.
+
+#combine all reduced-model and country-mean forecasts
 reduced_predictions <- rbindlist(reduced_results)
-# Row-bind all training records from the reduced experiments.
+
+#combine the training records
 reduced_training_log <- rbindlist(reduced_training_records)
-# Safe to rerun: replace earlier predictions from this module.
-# Remove prior runs of these model labels from the combined forecasts before appending fresh results.
+
+#replace earlier forecasts for these models and append the new results
 validation_predictions <- rbindlist(list(
   validation_predictions[!model %in% unique(reduced_predictions$model)],
   reduced_predictions
 ), use.names = TRUE)
-# Check that model-country-month keys remain unique after replacement.
+
+#check for duplicate forecasts for the same model, country and month
 if (anyDuplicated(validation_predictions[, .(model, country, month)])) {
-  # Stop if the combined forecasts contain duplicate keys.
+  
+#stop if duplicate forecasts are found
   stop("Duplicate validation forecasts.")
 }
-# Calculate overall RMSE, MAE and observation counts for every combined validation model.
+
+#calculate overall forecast errors and rank models by RMSE
 validation_scores <- validation_predictions[, .(
   observations = .N, MAE = mean(abs(error)), RMSE = sqrt(mean(error^2))
 ), by = model][order(RMSE)]
-# Ensure each model predicted exactly the expected number of observations.
+
+#stop if any model has an unexpected number of forecasts
 if (any(validation_scores$observations != expected_rows)) stop("Unequal forecast counts.")
-# Calculate RMSE and MAE separately by country for the expanded model set.
+
+#calculate forecast errors and rank models within each country
 validation_country_scores <- validation_predictions[, .(
   observations = .N, MAE = mean(abs(error)), RMSE = sqrt(mean(error^2))
 ), by = .(model, country)][order(country, RMSE)]
@@ -172,7 +200,7 @@ local({
           panel.grid.minor = element_blank(), legend.position = "bottom",
           plot.caption = element_text(hjust = 0, size=8), plot.title.position="plot", plot.margin=margin(8,12,8,8), strip.text = element_text(face = "bold"), strip.text.y = element_text(angle=0), plot.title=element_text(size=13, face="bold", colour="#082B50"))
   dir.create("results/figures/development", recursive = TRUE, showWarnings = FALSE)
-  # Explicit print displays the figure when sourcing in RStudio.
+
   if (interactive()) print(p)
   ggsave(paste0("results/figures/development/", "validation_complete_accuracy", ".png"), plot = p,
          width=7, height = 11, dpi = 300, bg = "white")
@@ -180,8 +208,7 @@ local({
          width=7, height = 11, bg = "white")
 })
 
-# Compare each reduced regression/forest with its full no-conflict version.
-# Map the country-mean benchmark to zero growth and each reduced model to its full no-conflict counterpart.
+#assign a baseline to each reduced model and the country-mean benchmark
 baseline_map <- data.table(
   model = c("country_mean", paste0("shared_slopes_reduced_", names(reduced_sets)),
             paste0("forest_reduced_", names(reduced_sets))),
@@ -189,15 +216,20 @@ baseline_map <- data.table(
     rep("shared_slopes_without_conflict", length(reduced_sets)),
     rep("forest_without_conflict", length(reduced_sets)))
 )
-# Extract baseline model names and RMSEs from the overall scores.
+
+#extract the model names and RMSE values for the baseline comparison
 baselines <- validation_scores[, .(baseline_model = model, baseline_RMSE = RMSE)]
-# Merge reduced-model scores with their comparison baseline mapping.
+
+#join each model's accuracy scores to its assigned baseline
 reduced_comparison <- merge(baseline_map, validation_scores, by = "model")
-# Join baseline RMSE into each reduced-model result.
+
+#add the RMSE of the corresponding baseline
 reduced_comparison <- merge(reduced_comparison, baselines, by = "baseline_model")
-# Calculate percentage RMSE improvement relative to the corresponding baseline.
+
+#calculate the percentage improvement in RMSE over the baseline
 reduced_comparison[, RMSE_improvement_pct := 100 * (1 - RMSE / baseline_RMSE)]
-# Sort comparisons first by baseline, then by RMSE.
+
+#sort the comparisons by baseline and RMSE
 reduced_comparison <- reduced_comparison[order(baseline_model, RMSE)]
 
 #charts
@@ -231,7 +263,7 @@ Observed differences; no significance test.")
           panel.grid.minor = element_blank(), legend.position = "bottom",
           plot.caption = element_text(hjust = 0, size=8), plot.title.position="plot", plot.margin=margin(8,12,8,8), strip.text = element_text(face = "bold"), strip.text.y = element_text(angle=0), plot.title=element_text(size=13, face="bold", colour="#082B50"))
   dir.create("results/figures/development", recursive = TRUE, showWarnings = FALSE)
-  # Explicit print displays the figure when sourcing in RStudio.
+# Explicit print displays the figure when sourcing in RStudio.
   if (interactive()) print(p)
   ggsave(paste0("results/figures/development/", "validation_reduced_comparison", ".png"), plot = p,
          width=7, height = 8, dpi = 300, bg = "white")
@@ -239,22 +271,23 @@ Observed differences; no significance test.")
          width=7, height = 8, bg = "white")
 })
 
-# Print the full validation score ranking.
+#display the overall model ranking
 print(validation_scores)
-# Print the reduced-versus-full predictor comparisons.
+
+#display the RMSE comparisons with the assigned baselines
 print(reduced_comparison)
 
-# Refresh overall outputs and save the additional module-specific results.
-# Collect reduced-model forecasts, training logs and refreshed validation summaries for export.
+#collect the forecasts, training records and accuracy comparisons for export
 reduced_outputs <- list(
   reduced_predictions = reduced_predictions, reduced_training_log = reduced_training_log,
   reduced_comparison = reduced_comparison, validation_predictions = validation_predictions,
   validation_scores = validation_scores, validation_country_scores = validation_country_scores
 )
-# Loop through the named result objects.
+
+#loop through the output tables
 for (name in names(reduced_outputs)) {
-  # Write each object to its own CSV in the development folder.
+#save each table as a CSV in the development folder
   fwrite(reduced_outputs[[name]], file.path(config$paths$development, paste0(name, ".csv")))
 }
-# Report that reduced-predictor comparisons have completed.
+#display a completion message
 message("Reduced-predictor comparison complete: country mean plus ten fitted specifications.")
