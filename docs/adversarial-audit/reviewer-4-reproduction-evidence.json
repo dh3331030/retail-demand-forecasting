@@ -1,0 +1,605 @@
+{
+  "commit": "6208b1e923e3de9f5cd741d31fc0d70002256343",
+  "pipeline_status": "success",
+  "start_utc": "2026-11-24 17:00:06",
+  "finish_utc": "2026-11-24 17:03:05",
+  "R": "4.6.1",
+  "packages": {
+    "data.table": "1.18.6.1",
+    "readxl": "1.5.0",
+    "rpart": "4.1.27",
+    "ranger": "0.18.0",
+    "ggplot2": "4.0.3"
+  },
+  "processed_rds_comparison": [
+    {
+      "file": "data/processed/analysis_panel.rds",
+      "rows_original": "660",
+      "rows_reproduced": "660",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/gdp_quarterly.rds",
+      "rows_original": "220",
+      "rows_reproduced": "220",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/model_panel.rds",
+      "rows_original": "630",
+      "rows_reproduced": "630",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/model_panel_excluded_rows.rds",
+      "rows_original": "30",
+      "rows_reproduced": "30",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/prepared_panel.rds",
+      "rows_original": "660",
+      "rows_reproduced": "660",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/ucdp_annual_exposure_monthly.rds",
+      "rows_original": "480",
+      "rows_reproduced": "480",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/ucdp_annual_missing_coordinates.rds",
+      "rows_original": "0",
+      "rows_reproduced": "0",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/ucdp_candidate_exposure_events.rds",
+      "rows_original": "389750",
+      "rows_reproduced": "389750",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/ucdp_candidate_missing_coordinates.rds",
+      "rows_original": "2",
+      "rows_reproduced": "2",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    },
+    {
+      "file": "data/processed/ucdp_candidate_sources.rds",
+      "rows_original": "38",
+      "rows_reproduced": "38",
+      "all_equal_within_1e_10": "TRUE",
+      "difference": "none"
+    }
+  ],
+  "result_csv_comparison": [
+    {
+      "file": "results/development/benchmark_country_scores.csv",
+      "rows": "10",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/benchmark_predictions.csv",
+      "rows": "120",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/benchmark_scores.csv",
+      "rows": "2",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/conflict_comparison.csv",
+      "rows": "8",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.472822632855241",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/conflict_predictions.csv",
+      "rows": "480",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.145422177931624",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/frozen_finalists_validation_scores.csv",
+      "rows": "6",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/reduced_comparison.csv",
+      "rows": "11",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.70719509763355",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/reduced_predictions.csv",
+      "rows": "660",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.119021519522997",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/reduced_training_log.csv",
+      "rows": "132",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/regression_predictions.csv",
+      "rows": "120",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "9.99200722162641e-15",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/regression_training_log.csv",
+      "rows": "24",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/tree_model_settings.csv",
+      "rows": "3",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/tree_predictions.csv",
+      "rows": "180",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.12464985976578",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/tree_training_log.csv",
+      "rows": "36",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/development/validation_country_scores.csv",
+      "rows": "130",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.03961209127614",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/validation_predictions.csv",
+      "rows": "1560",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.145422177931624",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/development/validation_scores.csv",
+      "rows": "26",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.00832658124777996",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/final/test_country_scores.csv",
+      "rows": "30",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.0188767731394801",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/final/test_predictions.csv",
+      "rows": "720",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.12349975248637",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/final/test_scores.csv",
+      "rows": "6",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.447478199107776",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    },
+    {
+      "file": "results/final/test_training_log.csv",
+      "rows": "144",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "TRUE"
+    },
+    {
+      "file": "results/final/test_year_scores.csv",
+      "rows": "12",
+      "same_columns": "TRUE",
+      "same_rows": "TRUE",
+      "max_abs_numeric_difference": "0.0121367406168961",
+      "text_and_key_columns_equal": "TRUE",
+      "all_equal_within_1e_10": "FALSE"
+    }
+  ],
+  "validation_published_vs_rerun": {
+    "zero_growth": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "latest_available_growth": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "shared_slopes_without_conflict": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "country_specific_without_conflict": {
+      "max_prediction_difference": 4.704570066849101e-15,
+      "changed_predictions": 0
+    },
+    "tree_without_conflict": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "bagging_without_conflict": {
+      "max_prediction_difference": 0.12464985976578,
+      "changed_predictions": 60
+    },
+    "forest_without_conflict": {
+      "max_prediction_difference": 0.11735236314304691,
+      "changed_predictions": 60
+    },
+    "shared_slopes_conflict_500_lag2": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "forest_conflict_500_lag2": {
+      "max_prediction_difference": 0.12529574913692648,
+      "changed_predictions": 60
+    },
+    "shared_slopes_conflict_1000_lag2": {
+      "max_prediction_difference": 1.0547118733938987e-15,
+      "changed_predictions": 0
+    },
+    "forest_conflict_1000_lag2": {
+      "max_prediction_difference": 0.145422177931623,
+      "changed_predictions": 60
+    },
+    "shared_slopes_conflict_2000_lag2": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "forest_conflict_2000_lag2": {
+      "max_prediction_difference": 0.122191852553511,
+      "changed_predictions": 60
+    },
+    "shared_slopes_conflict_deaths_1000_lag2": {
+      "max_prediction_difference": 1.0269562977782698e-15,
+      "changed_predictions": 0
+    },
+    "forest_conflict_deaths_1000_lag2": {
+      "max_prediction_difference": 0.10513125341634502,
+      "changed_predictions": 60
+    },
+    "country_mean": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "shared_slopes_reduced_retail_only": {
+      "max_prediction_difference": 1.0269562977782698e-15,
+      "changed_predictions": 0
+    },
+    "forest_reduced_retail_only": {
+      "max_prediction_difference": 0.10743264161447699,
+      "changed_predictions": 60
+    },
+    "shared_slopes_reduced_without_inflation": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "forest_reduced_without_inflation": {
+      "max_prediction_difference": 0.11902151952299739,
+      "changed_predictions": 60
+    },
+    "shared_slopes_reduced_without_unemployment": {
+      "max_prediction_difference": 1.0547118733938987e-15,
+      "changed_predictions": 0
+    },
+    "forest_reduced_without_unemployment": {
+      "max_prediction_difference": 0.092995695363154,
+      "changed_predictions": 60
+    },
+    "shared_slopes_reduced_without_gdp": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "forest_reduced_without_gdp": {
+      "max_prediction_difference": 0.0912391206030608,
+      "changed_predictions": 60
+    },
+    "shared_slopes_reduced_macro_only": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "forest_reduced_macro_only": {
+      "max_prediction_difference": 0.09108163149184198,
+      "changed_predictions": 60
+    }
+  },
+  "test_published_vs_rerun": {
+    "zero_growth": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "country_mean": {
+      "max_prediction_difference": 1.0130785099704553e-15,
+      "changed_predictions": 0
+    },
+    "shared_slopes_reduced_macro_only": {
+      "max_prediction_difference": 9.992007221626409e-16,
+      "changed_predictions": 0
+    },
+    "forest_reduced_without_gdp": {
+      "max_prediction_difference": 0.090530874918239,
+      "changed_predictions": 120
+    },
+    "forest_without_conflict": {
+      "max_prediction_difference": 0.12349975248636479,
+      "changed_predictions": 120
+    },
+    "forest_conflict_deaths_1000_lag2": {
+      "max_prediction_difference": 0.10052547327210004,
+      "changed_predictions": 120
+    }
+  },
+  "test_local_vs_rerun": {
+    "zero_growth": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "country_mean": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "shared_slopes_reduced_macro_only": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "forest_reduced_without_gdp": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "forest_without_conflict": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    },
+    "forest_conflict_deaths_1000_lag2": {
+      "max_prediction_difference": 0,
+      "changed_predictions": 0
+    }
+  },
+  "test_scores_published": [
+    {
+      "model": "country_mean",
+      "observations": "120",
+      "MAE": "0.904360170154368",
+      "RMSE": "1.25304271464646",
+      "RMSE_improvement_vs_zero_pct": "1.16492813931366",
+      "primary": "FALSE"
+    },
+    {
+      "model": "shared_slopes_reduced_macro_only",
+      "observations": "120",
+      "MAE": "0.907770543736709",
+      "RMSE": "1.25681456025787",
+      "RMSE_improvement_vs_zero_pct": "0.867419820009729",
+      "primary": "FALSE"
+    },
+    {
+      "model": "zero_growth",
+      "observations": "120",
+      "MAE": "0.919684367644679",
+      "RMSE": "1.26781181118854",
+      "RMSE_improvement_vs_zero_pct": "0",
+      "primary": "TRUE"
+    },
+    {
+      "model": "forest_without_conflict",
+      "observations": "120",
+      "MAE": "0.924216380652584",
+      "RMSE": "1.27120559463005",
+      "RMSE_improvement_vs_zero_pct": "-0.26768826505339",
+      "primary": "FALSE"
+    },
+    {
+      "model": "forest_conflict_deaths_1000_lag2",
+      "observations": "120",
+      "MAE": "0.928507258774398",
+      "RMSE": "1.2824686010858",
+      "RMSE_improvement_vs_zero_pct": "-1.15606983370193",
+      "primary": "FALSE"
+    },
+    {
+      "model": "forest_reduced_without_gdp",
+      "observations": "120",
+      "MAE": "0.933444207176275",
+      "RMSE": "1.28744639148391",
+      "RMSE_improvement_vs_zero_pct": "-1.54869832589484",
+      "primary": "FALSE"
+    }
+  ],
+  "test_scores_rerun": [
+    {
+      "model": "country_mean",
+      "observations": "120",
+      "MAE": "0.904360170154368",
+      "RMSE": "1.25304271464646",
+      "RMSE_improvement_vs_zero_pct": "1.16492813931365",
+      "primary": "FALSE"
+    },
+    {
+      "model": "shared_slopes_reduced_macro_only",
+      "observations": "120",
+      "MAE": "0.907770543736709",
+      "RMSE": "1.25681456025787",
+      "RMSE_improvement_vs_zero_pct": "0.867419820009707",
+      "primary": "FALSE"
+    },
+    {
+      "model": "zero_growth",
+      "observations": "120",
+      "MAE": "0.919684367644679",
+      "RMSE": "1.26781181118854",
+      "RMSE_improvement_vs_zero_pct": "0",
+      "primary": "TRUE"
+    },
+    {
+      "model": "forest_without_conflict",
+      "observations": "120",
+      "MAE": "0.925484841683185",
+      "RMSE": "1.27687877609083",
+      "RMSE_improvement_vs_zero_pct": "-0.715166464161166",
+      "primary": "FALSE"
+    },
+    {
+      "model": "forest_conflict_deaths_1000_lag2",
+      "observations": "120",
+      "MAE": "0.928022571331911",
+      "RMSE": "1.28454184172336",
+      "RMSE_improvement_vs_zero_pct": "-1.3195988858268",
+      "primary": "FALSE"
+    },
+    {
+      "model": "forest_reduced_without_gdp",
+      "observations": "120",
+      "MAE": "0.928342451177011",
+      "RMSE": "1.28788762396764",
+      "RMSE_improvement_vs_zero_pct": "-1.5835010055852",
+      "primary": "FALSE"
+    }
+  ],
+  "figures": 46,
+  "test_score_differences_by_model": {
+    "country_mean": {
+      "MAE": 0.0,
+      "RMSE": 0.0
+    },
+    "shared_slopes_reduced_macro_only": {
+      "MAE": 0.0,
+      "RMSE": 0.0
+    },
+    "zero_growth": {
+      "MAE": 0.0,
+      "RMSE": 0.0
+    },
+    "forest_without_conflict": {
+      "MAE": 0.0012684610306009647,
+      "RMSE": 0.005673181460779997
+    },
+    "forest_conflict_deaths_1000_lag2": {
+      "MAE": -0.00048468744248697515,
+      "RMSE": 0.002073240637560092
+    },
+    "forest_reduced_without_gdp": {
+      "MAE": -0.0051017559992639905,
+      "RMSE": 0.0004412324837299586
+    }
+  },
+  "subgroup_winner_change": {
+    "period": "2025",
+    "published_winner": "forest_without_conflict",
+    "published_winner_RMSE": 1.0396320223826,
+    "rerun_winner": "country_mean",
+    "rerun_winner_RMSE": 1.04142573011199,
+    "country_winner_identities_changed": false,
+    "published_2025_winner_margin_to_runnerup": 0.001793707729389915,
+    "rerun_2025_winner_margin_to_runnerup": 0.0032200835604399014
+  },
+  "retained_reference_files": [
+    {
+      "file": "results/development/frozen_config.rds",
+      "role": "Original frozen model/configuration record; preserved, not regenerated."
+    },
+    {
+      "file": "results/development/frozen_finalists_validation_scores.csv",
+      "role": "Original freeze-time validation scores; preserved, not independently regenerated by the normal two-master reproduction. Current rerun scores are validation_scores.csv."
+    }
+  ],
+  "rerun_validation_top_three": [
+    {
+      "model": "zero_growth",
+      "RMSE": 1.37550337916708
+    },
+    {
+      "model": "country_mean",
+      "RMSE": 1.38630029738748
+    },
+    {
+      "model": "shared_slopes_reduced_macro_only",
+      "RMSE": 1.38816194077221
+    }
+  ]
+}

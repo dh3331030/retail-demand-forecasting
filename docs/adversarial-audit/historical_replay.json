@@ -1,0 +1,27 @@
+{
+  "historical_commit": "79ebc6ac1260ce23b492afdaf75d1e21194b6af2",
+  "comparisons": {
+    "validation": {
+      "rows": 1560,
+      "historical_local_vs_historical_global_max_prediction_difference": 0.0,
+      "historical_global_vs_current_repeat_max_prediction_difference": 0.0,
+      "historical_global_vs_saved_original_max_prediction_difference": 0.145422177931623
+    },
+    "test": {
+      "rows": 720,
+      "historical_local_vs_historical_global_max_prediction_difference": 0.0,
+      "historical_global_vs_current_repeat_max_prediction_difference": 0.0,
+      "historical_global_vs_saved_original_max_prediction_difference": 0.12349975248636479
+    }
+  },
+  "diagnostic_package": "Forest_environment_check.zip",
+  "diagnostic_local_result": {
+    "training_rows": 440,
+    "target_rows": 5,
+    "max_prediction_difference_from_current_reference": 3.3306690738754696e-16,
+    "max_effect_of_recording_bootstrap_counts": 0,
+    "bootstrap_counts_match_reference": true
+  },
+  "diagnostic_package_extracted_and_executed_successfully": true,
+  "diagnostic_package_manifest_hashes_verified": true
+}

@@ -1,3 +1,6 @@
+# Run this script in order to check if required packages are installed.
+# also checks if the script is ran from inside the Rproj.
+
 if (!file.exists("Retail_forecasting.Rproj") ||
     !dir.exists("scripts")) {
   
@@ -24,8 +27,10 @@ package_status <- data.frame(
   installed = installed
 )
 
+# prints a table with columns: package and installed
 print(package_status, row.names = FALSE)
 
+# if any are not installed, install packages
 if (any(!installed)) {
   
   missing_packages <- required_packages[!installed]
@@ -44,7 +49,7 @@ if (any(!installed)) {
     logical(1),
     quietly = TRUE
   )
-  
+# shows errors in case there are any  
   if (any(!installed)) {
     stop(
       "Could not install: ",

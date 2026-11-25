@@ -1,0 +1,16 @@
+Original-code fixed-seed January 2023 diagnostic
+Training rows: 440
+Forecast rows: 5
+Seed: 20565
+Maximum difference from published predictions: 0.074785327650694886
+Maximum difference from Windows reference predictions: 3.3306690738754696e-16
+Maximum effect of keeping bootstrap counts: 0
+forest_without_conflict bootstrap counts equal to Windows reference: TRUE
+forest_without_conflict largest bootstrap-count difference: 0
+forest_reduced_without_gdp bootstrap counts equal to Windows reference: TRUE
+forest_reduced_without_gdp largest bootstrap-count difference: 0
+
+Different bootstrap counts identify a difference in random sampling for this fixture.
+They do not, by themselves, identify whether package version or compiler/library caused it.
+Equal bootstrap counts with different predictions point to a later fitting difference.
+This small diagnostic does not replace the complete project rerun.

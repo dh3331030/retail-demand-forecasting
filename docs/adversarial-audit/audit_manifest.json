@@ -1,0 +1,243 @@
+{
+  "date": "2026-11-24",
+  "commit": "6208b1e923e3de9f5cd741d31fc0d70002256343",
+  "deadline": "2026-11-26T16:00:00+01:00",
+  "presentation_minutes": 10,
+  "report_user_confirmed_latest": true,
+  "slides": "Mostly done on Adina computer; not inspected",
+  "checks": [
+    {
+      "requirement": "Question and scope",
+      "area": "Analysis",
+      "status": "Verified",
+      "evidence": "The question concerns next-month growth in food, beverages and tobacco retail volume in five countries. It is framed as prediction, with limitations acknowledged.",
+      "remaining": "Keep the narrower sector and growth target clear; the title “FMCG” is broader than the measured sector.",
+      "owner": "Andrea / presenters",
+      "source": "Syllabus p.5: appropriate question and data; report §§1,3; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/README.txt\" target=\"_blank\" rel=\"noopener\">README.txt</a>"
+    },
+    {
+      "requirement": "Real data and source documentation",
+      "area": "Analysis",
+      "status": "Verified",
+      "evidence": "45 raw files accounted for. Seven hashes match directly; 38 Candidate CSV hashes match after Windows line-ending normalization.",
+      "remaining": "Use these exact snapshots in the submission. Preserve the source register and preprocessing documentation.",
+      "owner": "Data / package owner",
+      "source": "Syllabus p.5; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/docs/data_source_register.json\" target=\"_blank\" rel=\"noopener\">docs/data_source_register.json</a>"
+    },
+    {
+      "requirement": "Preparation and common sample",
+      "area": "Analysis",
+      "status": "Verified",
+      "evidence": "660 country-month rows; 630 complete model rows and 30 initial exclusions. Independent target, lag, GDP and conflict checks passed.",
+      "remaining": "Explain the six excluded initial months per country in plain language.",
+      "owner": "Presenters",
+      "source": "Syllabus pp.4–5; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/scripts/02_construct_model_data.R\" target=\"_blank\" rel=\"noopener\">scripts/02_construct_model_data.R</a>"
+    },
+    {
+      "requirement": "Appropriate course methods",
+      "area": "Analysis",
+      "status": "Verified",
+      "evidence": "Benchmarks, panel-style regressions, a tree, bagging and random forests are implemented. Twenty-six development specifications are evaluated.",
+      "remaining": "Explain why these methods answer the question and why simple methods can win. No located rule requires using every course topic.",
+      "owner": "Presenters",
+      "source": "Syllabus p.5; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/scripts/03_train_validate.R\" target=\"_blank\" rel=\"noopener\">scripts/03_train_validate.R</a>; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/scripts/03a_compare_reduced_predictors.R\" target=\"_blank\" rel=\"noopener\">scripts/03a_compare_reduced_predictors.R</a>"
+    },
+    {
+      "requirement": "Chronological validation and frozen comparison",
+      "area": "Analysis",
+      "status": "Verified with limits",
+      "evidence": "Validation uses 2023; testing uses 2024–2025. Current and frozen configurations match; refit cutoffs respect the stated outcome-delay rule.",
+      "remaining": "Keep the retrospective caveat: revised historical data and complete 2023 validation were not all available at the earliest 2024 origins.",
+      "owner": "Andrea / presenters",
+      "source": "Syllabus p.5: evaluation rigor; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/scripts/00_config.R\" target=\"_blank\" rel=\"noopener\">scripts/00_config.R</a>; report §§3,6"
+    },
+    {
+      "requirement": "Saved score arithmetic",
+      "area": "Analysis",
+      "status": "Verified",
+      "evidence": "1,560 validation and 720 test forecasts have unique keys. Saved MAE/RMSE recalculate within about 5.2×10⁻¹⁵.",
+      "remaining": "Use one consistent set of numbers after resolving the rerun difference below.",
+      "owner": "Analysis / package owner",
+      "source": "<a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/results/development/validation_predictions.csv\" target=\"_blank\" rel=\"noopener\">results/development/validation_predictions.csv</a>; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/results/final/test_predictions.csv\" target=\"_blank\" rel=\"noopener\">results/final/test_predictions.csv</a>"
+    },
+    {
+      "requirement": "Complete top-to-bottom run",
+      "area": "Reproducibility",
+      "status": "Verified with limits",
+      "evidence": "Both master scripts completed in an isolated copy in 179 seconds. Ten processed RDS datasets agree within 10⁻¹⁰; 46 figure files were generated.",
+      "remaining": "The environment already had required packages. This verifies execution here, not installation on a fresh computer.",
+      "owner": "Code / package owner",
+      "source": "Syllabus p.5; <a href=\"adversarial-audit/reproduction.log\">Full execution log</a>"
+    },
+    {
+      "requirement": "Reproduce submitted model numbers",
+      "area": "Reproducibility",
+      "status": "Needs action",
+      "evidence": "All 360 final forest forecasts differ from published GitHub values; the other 360 final forecasts agree to numerical precision. Rerun predictions match the pre-existing local results exactly.",
+      "remaining": "Choose and document one authoritative output set; align report, slides, CSVs and figures. Record versions and the unresolved source of drift. Preserve frozen model definitions.",
+      "owner": "Analysis / package owner",
+      "source": "Syllabus p.5; introduction slide11; <a href=\"adversarial-audit/reviewer-4-reproduction-evidence.json\">Rerun evidence</a>"
+    },
+    {
+      "requirement": "Packages and a reliable run guide",
+      "area": "Reproducibility",
+      "status": "Needs action",
+      "evidence": "README.txt exists and its two main commands work. It omits ggplot2, now used by plotting code. PROJECT_GUIDE.txt points to absent README.md and repeats stages already called by the master.",
+      "remaining": "List ggplot2 and tested versions; retain one accurate run order and update stale descriptions of plotting and rerun status. README.txt is an acceptable format.",
+      "owner": "Code / package owner",
+      "source": "Syllabus p.5; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/README.txt\" target=\"_blank\" rel=\"noopener\">README.txt</a>; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/PROJECT_GUIDE.txt\" target=\"_blank\" rel=\"noopener\">PROJECT_GUIDE.txt</a>"
+    },
+    {
+      "requirement": "Numbers and figures can be regenerated",
+      "area": "Reproducibility",
+      "status": "Verified with limits",
+      "evidence": "The rerun generated 23 PNG and 23 PDF figures. The published scripts contain plotting code, although the published tree lacks the generated figure exports.",
+      "remaining": "Inspect Adina’s actual visuals and map each to the chosen result set. Custom slide visuals need their source data and regeneration method.",
+      "owner": "Adina / analysis team",
+      "source": "Introduction slide11; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/scripts/04_final_evaluation.R\" target=\"_blank\" rel=\"noopener\">scripts/04_final_evaluation.R</a>"
+    },
+    {
+      "requirement": "Technical report PDF",
+      "area": "Deliverables",
+      "status": "Needs action",
+      "evidence": "The current 10-page Big Data Working Paper PDF exists locally, is exported and readable, and covers question, data, methods, results and limitations. David confirmed this is the latest report. It is absent from verified GitHub main.",
+      "remaining": "Correct the factual descriptions below and include the final PDF in the shared submission package. GitHub publication itself is not a professor requirement.",
+      "owner": "Andrea",
+      "source": "Syllabus p.5; <a href=\"../Big%20Data%20Working%20Paper.pdf\">Current local PDF</a>"
+    },
+    {
+      "requirement": "Presentation slides",
+      "area": "Deliverables",
+      "status": "Reported mostly done",
+      "evidence": "David says the presentation is mostly done on Adina’s computer. Its content, duration and final visuals were unavailable to this audit.",
+      "remaining": "Collect the final file; cross-check numbers, sources, limitations and 10-minute timing. This is an inspection/handoff gap, not evidence that slides have not been made.",
+      "owner": "Adina",
+      "source": "Latest professor announcement supplied by David; syllabus p.5"
+    },
+    {
+      "requirement": "Individual contribution statement",
+      "area": "Deliverables",
+      "status": "Needs action",
+      "evidence": "The committed contribution template contains placeholders. The report cover lists five names but no description of their work.",
+      "remaining": "Write a short factual statement covering each of the five members. Confirm actual tasks with them; replace the empty template.",
+      "owner": "All five members / coordinator",
+      "source": "Syllabus pp.5,7; introduction slide11; <a href=\"https://github.com/dh3331030/retail-demand-forecasting/blob/6208b1e923e3de9f5cd741d31fc0d70002256343/docs/CONTRIBUTIONS_TEMPLATE.md\" target=\"_blank\" rel=\"noopener\">docs/CONTRIBUTIONS_TEMPLATE.md</a>"
+    },
+    {
+      "requirement": "Group size and official enrollment",
+      "area": "Submission",
+      "status": "Unverified",
+      "evidence": "The report lists five members, which fits the required group size of 3–6. The course enrollment sheet was not inspected.",
+      "remaining": "Confirm all five students are recorded under Group02 on the official sheet.",
+      "owner": "Coordinator",
+      "source": "Syllabus p.5; introduction slide10"
+    },
+    {
+      "requirement": "Single correctly named archive",
+      "area": "Submission",
+      "status": "Unverified",
+      "evidence": "No complete final submission ZIP was verified. Existing downloaded/legacy project archives do not establish a complete final package.",
+      "remaining": "Create “20564 – Group Project – Group 02.zip” with report, slides, code, data, README and contributions; extract and inspect it.",
+      "owner": "Coordinator / package owner",
+      "source": "Submission protocol p.1"
+    },
+    {
+      "requirement": "Upload destination and deadline",
+      "area": "Submission",
+      "status": "Unverified",
+      "evidence": "The latest announcement fixes Thursday26November2026 at16:00. The protocol names the Group Projects Submission Folder on Google Drive. No upload was checked.",
+      "remaining": "Upload the final ZIP to the official folder by the cutoff; retain confirmation and verify the uploaded file can be downloaded and opened.",
+      "owner": "Uploader to confirm",
+      "source": "Submission protocol p.1; latest professor announcement"
+    },
+    {
+      "requirement": "Ten-minute presentation and questions",
+      "area": "Presentation",
+      "status": "Unverified",
+      "evidence": "The newest announcement allows 10 minutes and any choice of presenters. Repository outline still proposes about13:45, based on older15-minute guidance.",
+      "remaining": "Time the actual deck to10minutes; agree speakers and prepare answers about methods, limitations and the benchmark result. Do not apply the obsolete15-minute plan.",
+      "owner": "Adina / selected presenters",
+      "source": "Latest announcement supersedes syllabus p.5 and introduction slides10–11 on duration"
+    },
+    {
+      "requirement": "Room PC preparation",
+      "area": "Presentation",
+      "status": "Unverified",
+      "evidence": "The professor asks groups to upload their presentation to the room PC in advance. This could not be inspected.",
+      "remaining": "Copy and open the final deck on the room PC before the session; check fonts, figures and any animations.",
+      "owner": "Presenter / coordinator",
+      "source": "Latest professor announcement"
+    }
+  ],
+  "report_pdf_sha256": "3dc83d18c15d7c248acdea39ca4e713fbb19f1678d31bb4b56acafeb53c950ab",
+  "reviewer_count": 5,
+  "debate": [
+    {
+      "challenge": "Does forest drift mean the data or entire analysis is wrong?",
+      "exchange": "Data reviewer 2 and methods reviewer 3 challenged reproduction reviewer 4 to separate data reconstruction, saved-score arithmetic and fresh model reproduction. Reviewer 4 accepted that all ten processed datasets match while forest forecasts differ.",
+      "resolution": "A real numerical reproducibility and package-consistency issue remains. The main pooled conclusions survive; there is no demonstrated preprocessing failure or reason to restart the project."
+    },
+    {
+      "challenge": "Can stable headline rankings justify ignoring the score difference?",
+      "exchange": "Methods reviewer 3 questioned whether the issue invalidates the scientific story; reproduction reviewer 4 and rules reviewer 1 pointed to the changed 2025 winner and the requirement to reproduce submitted numbers. The report reviewer accepted the need to reconcile forest-dependent claims.",
+      "resolution": "Resolve the final output set and align CSVs, plots, report and slides. Keep the frozen model choices. Describe overall stability and the changed subgroup result separately."
+    },
+    {
+      "challenge": "Has a package-version problem been proved?",
+      "exchange": "Reviewers 2 and 3 challenged reviewer 4’s diagnosis boundary. Reviewer 4 confirmed that no original software environment was established and that the cause has not been isolated.",
+      "resolution": "Software/environment drift remains a hypothesis. Record tested versions and the observed discrepancy without presenting a suspected cause as fact. A lockfile is useful, but it is not an explicit professor requirement."
+    },
+    {
+      "challenge": "Did an unchanged freeze-time score file prove numerical reproduction?",
+      "exchange": "Data reviewer 2 challenged reproduction reviewer 4 because frozen_finalists_validation_scores.csv stays unchanged while regenerated validation scores differ. Reviewer 4 checked that the normal runner deliberately preserves the original freeze artifacts.",
+      "resolution": "Treat the frozen configuration and freeze-time score summary as historical decision evidence, not freshly regenerated output. If adopting rerun results, distinguish the original selection evidence from current reproduction scores; do not silently rewrite the selection history."
+    },
+    {
+      "challenge": "Are a six-model table, new significance tests or additional methods mandatory?",
+      "exchange": "Rules reviewer 1, data reviewer 2 and methods reviewer 3 challenged report reviewer 5 to distinguish communication advice from written deliverables. Reviewer 5 defended the full table as a clarity improvement and agreed that no fixed table/figure count or new inference exercise is required.",
+      "resolution": "A compact complete-finalist table is recommended. New model searches, neural networks or significance tests are not requirements found in the inspected project rules. Continue to qualify small score differences."
+    },
+    {
+      "challenge": "Do the report’s wording errors establish new leakage or a wrong growth calculation?",
+      "exchange": "The report reviewer challenged the data and methods reviewers on index rebasing, conflict-source chronology and the already-disclosed retrospective design. They agreed that the constant index base does not change log growth, and that the annual/Candidate sentence misdescribes the implemented sources.",
+      "resolution": "Correct the report descriptions. Preserve the retrospective-information limitations. These wording errors do not establish a new preprocessing or timing failure in the code."
+    },
+    {
+      "challenge": "Are the report and slides absent, unfinished or merely unavailable in GitHub?",
+      "exchange": "Rules reviewer 1 and report reviewer 5 challenged any carryover claim that the PDF still needs its first export or that an unseen deck is missing work. David confirmed the local report is latest, and reviewer 5 visually checked all ten pages.",
+      "resolution": "Report writing and initial PDF export are done; corrections and final collection remain. Adina’s deck is reported mostly done but uninspected. The required final ZIP must contain both; GitHub publication itself is not a professor requirement."
+    },
+    {
+      "challenge": "Which presentation timing applies?",
+      "exchange": "Rules and report reviewers compared the older 15-minute syllabus/outline with the newer announcement supplied by David. They also challenged the suggestion that all members must speak or that extra question time is guaranteed.",
+      "resolution": "Use ten minutes, with questions during or after as stated in the announcement. The group may select representatives. The unseen actual deck needs a timed check; the stale outline does not prove that Adina’s presentation is too long."
+    }
+  ],
+  "cleanup": [
+    "Replaced 23 November status assessment at same path",
+    "Removed superseded local PROJECT_GUIDE.txt",
+    "Removed temporary isolated source and reproduction copies after retaining audit evidence"
+  ],
+  "remote_rechecked": "main still 6208b1e923e3de9f5cd741d31fc0d70002256343 at final audit verification",
+  "followup": {
+    "word_section": "5.2",
+    "repeat_test": "forest_repeatability.json",
+    "two_fresh_process_prediction_difference": 0,
+    "original_RDS_writer_version": "4.6.2",
+    "original_ranger_version": "not established"
+  },
+  "historical_investigation": {
+    "commits": [
+      "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "b6567bb7ee703ba50dc313ec70610280374562c3",
+      "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "79ebc6ac1260ce23b492afdaf75d1e21194b6af2",
+      "1b2bd8e9a43accc743312b94a95c0c21a23c448d"
+    ],
+    "published_results_origin": "79ebc6a",
+    "old_vs_current_replay_max_prediction_difference": 0,
+    "original_ranger_version_recovered": false,
+    "evidence": "historical_replay.json",
+    "diagnostic_package": "Forest_environment_check.zip"
+  }
+}

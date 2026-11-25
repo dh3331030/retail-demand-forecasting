@@ -1,0 +1,11 @@
+file,rows_original,rows_reproduced,all_equal_within_1e_10,difference
+data/processed/analysis_panel.rds,660,660,TRUE,none
+data/processed/gdp_quarterly.rds,220,220,TRUE,none
+data/processed/model_panel.rds,630,630,TRUE,none
+data/processed/model_panel_excluded_rows.rds,30,30,TRUE,none
+data/processed/prepared_panel.rds,660,660,TRUE,none
+data/processed/ucdp_annual_exposure_monthly.rds,480,480,TRUE,none
+data/processed/ucdp_annual_missing_coordinates.rds,0,0,TRUE,none
+data/processed/ucdp_candidate_exposure_events.rds,389750,389750,TRUE,none
+data/processed/ucdp_candidate_missing_coordinates.rds,2,2,TRUE,none
+data/processed/ucdp_candidate_sources.rds,38,38,TRUE,none

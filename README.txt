@@ -6,7 +6,7 @@ The code predicts monthly growth, not retail index levels. This is a retrospecti
 
 ## Quick start
 
-1. Extract the complete project, preserving its directories. Copy this documentation package into that project root.
+1. Extract the complete project, preserving its directories. Keep all project folders together.
 2. Open `Retail_forecasting.Rproj` in RStudio. Alternatively, set R's working directory to the directory containing that file.
 3. Keep the supplied raw snapshots and `results/development/frozen_config.rds` in place.
 4. Run the following in the R console:
@@ -19,7 +19,7 @@ source("run_development.R")
 source("run_final_evaluation.R")
 ```
 
-The commands above recreate the existing experiment. They overwrite generated datasets and result CSVs in their established locations. They do not revise the finalist definitions in response to test scores. Keep a backup if you want to compare a reproduction with the submitted outputs.
+The commands above rerun the experiment; numerical forest results may differ across environments. They overwrite generated datasets and result CSVs in their established locations. They do not revise the finalist definitions in response to test scores. Keep a backup if you want to compare a reproduction with the submitted outputs.
 
 Do not rerun `03b_freeze_development.R` during normal reproduction. A freeze is already included. That script deliberately stops if the frozen configuration exists.
 
@@ -27,7 +27,7 @@ Do not rerun `03b_freeze_development.R` during normal reproduction. A freeze is 
 
 - R and a working internet connection if required packages are not installed.
 - RStudio is recommended, but not required.
-- Packages: `data.table`, `readxl`, `rpart`, `ranger`. No Python is needed to run the project.
+- Packages: `data.table`, `readxl`, `rpart`, `ranger`, `ggplot2`. No Python is needed to run the project.
 - `00_setup.R` checks/installs `data.table` and `readxl`. Script `03` checks/installs `rpart` and `ranger`. The final evaluation also checks `ranger`.
 - Initial installations use `https://cloud.r-project.org`. Some platforms may require their normal R compilation tools if a binary is unavailable.
 
@@ -35,7 +35,7 @@ Do not rerun `03b_freeze_development.R` during normal reproduction. A freeze is 
 
 `Retail_forecasting.Rproj` | RStudio project, with workspace restoration disabled|
 `00_setup.R` | Project-location and dependency checks|
-`run_development.R` | Runs setup, config, preflight, helpers, preparation and stage 02|
+`run_development.R` | Runs setup, config, preflight, helpers, preparation, stage 02, validation and reduced-predictor comparisons|
 `run_final_evaluation.R` | Checks current/frozen configuration equality, then runs stage 04|
 `scripts/00_config.R` | Paths, countries, sample dates, predictors, finalists and protocol|
 `scripts/00_preflight.R` | Checks source inventory, sheets, COVID member and annual GED ZIP|
@@ -135,7 +135,7 @@ Use the Quick start commands. Preserve the included frozen configuration. Script
 
 Use the same fixed configuration and run preparation, `03`, and `03a`. Then run `source("scripts/03b_freeze_development.R")` once before final evaluation. This reconstructs the already specified freeze; it is not a reason to reconsider finalists after seeing test performance.
 
-### Reproduce final numbers from the supplied processed data
+### Refit final models from the supplied processed data
 
 If the purpose is only to reproduce the six test models and the included `model_panel.rds` is present:
 
@@ -162,26 +162,26 @@ The master checks that the current configuration equals `results/development/fro
 | `results/final/test_year_scores.csv` | 60 observations per model/year |
 | `results/final/test_training_log.csv` | Training cutoffs, predictors, sizes and seeds |
 
-Reference overall test results from the submitted files:
+Reference overall test results from the current local result files:
 
 | Model | MAE | RMSE |
 |---|---:|---:|
 | Country mean | 0.9043602 | 1.253043 |
 | Macro-only regression | 0.9077705 | 1.256815 |
 | Zero growth | 0.9196844 | 1.267812 |
-| Forest without conflict | 0.9242164 | 1.271206 |
-| Forest with conflict deaths | 0.9285073 | 1.282469 |
-| Forest without GDP | 0.9334442 | 1.287446 |
+| Forest without conflict | 0.9254848 | 1.276879 |
+| Forest with conflict deaths | 0.9280226 | 1.284542 |
+| Forest without GDP | 0.9283425 | 1.287888 |
 
 These displayed numbers are rounded. Use the full-precision CSVs for numerical comparisons. MAE and RMSE are both in the target's log-percentage-point units. Positive `RMSE_improvement_vs_zero_pct` means lower RMSE than zero growth.
 
-This documentation review independently recomputed scores from saved forecasts; it did not refit the R models. In the supplied files the recalculated overall validation/test metrics agree within 1e-12 and forecast keys have no duplicates. A complete R rerun still needs to be checked in the user's original environment.
+The local results are the reference for the updated working paper. In 2023 validation the forest without conflict has RMSE 1.3894093950 and the forest without GDP has RMSE 1.3893938752: a 0.001117% reduction, calculated against the forest without conflict. Both round to 1.389 at three decimals. The earlier GitHub results instead show 1.3929844225 and 1.3889601740 (0.288894%); do not mix figures or report text from the two sets.
+
+The saved predictions reproduce their score tables. Two independent runs on this computer produced identical forest predictions to each other, but different forest predictions from the earlier GitHub outputs. The tested environment used R 4.6.1, ranger 0.18.0, data.table 1.18.6.1 and ggplot2 4.0.3 on Windows. The reason for the cross-environment difference is unconfirmed. A fixed seed alone does not establish identical output across environments. Record `sessionInfo()` when refitting, and preserve the supplied predictions and scores before running the pipeline. The frozen configuration and original freeze evidence record the historical model selection.
 
 ## Figures and writing deliverables
 
-The supplied modeling scripts write CSV/RDS outputs. They do not currently export presentation figures. The report and slides are prepared separately by the group. [REPORT_OUTLINE.md](docs/REPORT_OUTLINE.md) and [PRESENTATION_OUTLINE.md](docs/PRESENTATION_OUTLINE.md) propose their structure and specify the exact CSVs from which to create figures.
-
-When adding figures, save the figure-generating R code with the project and fix its output paths, rather than submitting screenshots with no regeneration instructions. No further model search or block-bootstrap uncertainty analysis is part of this submission package.
+The analysis scripts export figures to `results/figures/` during their normal stages; see `docs/CHART_GUIDE.html`. Running the master scripts to regenerate figures also refits models and overwrites result tables. Confirm the figures, working paper and presentation all use the same result set. The PowerPoint is held separately by Adina. The working paper PDF must be re-exported after editing the Word document.
 
 ## Interpretation and limitations
 

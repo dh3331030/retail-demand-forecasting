@@ -1,0 +1,293 @@
+{
+  "version_search": [
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "00_setup.R",
+      "blob": "00a199480032a143a4a0f350b49eaa1a97f173fc",
+      "matches": [
+        {
+          "line": 79,
+          "text": "message(\"R version: \", R.version.string)"
+        }
+      ]
+    },
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "0_old/00_setup.R",
+      "blob": "522960834179ced06d22c6ada2d44ecdea6378be",
+      "matches": [
+        {
+          "line": 21,
+          "text": "        cat(\"R version:\", R.version.string, \"\\n\")"
+        }
+      ]
+    },
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "0_old/run_project.R",
+      "blob": "a1cbcb73facf20111c9aff8996ce5f315168bbf7",
+      "matches": [
+        {
+          "line": 81,
+          "text": "      capture.output(sessionInfo(), file = \"results/session_info.txt\")"
+        }
+      ]
+    },
+    {
+      "first_seen": "b6567bb7ee703ba50dc313ec70610280374562c3",
+      "path": "00_setup.R",
+      "blob": "3f3f56473f1e13cbab608bf65648c0b6b49ff41d",
+      "matches": [
+        {
+          "line": 59,
+          "text": "message(\"R version: \", R.version.string)"
+        }
+      ]
+    },
+    {
+      "first_seen": "1b2bd8e9a43accc743312b94a95c0c21a23c448d",
+      "path": "README.txt",
+      "blob": "15b5284644c8864d05079fa7778c59f70de8c560",
+      "matches": [
+        {
+          "line": 32,
+          "text": "- Initial installations use `https://cloud.r-project.org`. Some platforms may require their normal R compilation tools if a binary is unavailable."
+        }
+      ]
+    },
+    {
+      "first_seen": "1b2bd8e9a43accc743312b94a95c0c21a23c448d",
+      "path": "docs/REPRODUCIBILITY_REVIEW.md",
+      "blob": "9ab06ea29d20f1771b3b3358e3c8a2dfeca4eb5e",
+      "matches": [
+        {
+          "line": 28,
+          "text": "2. Save `sessionInfo.txt` and `package_versions.csv` using the README commands. The archive contains no dependency lockfile or complete software-version record. RDS serialization headers report writer R 4.6.2, which is not a complete package/environment specification."
+        }
+      ]
+    }
+  ],
+  "RDS_header_inventory": [
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "0_old/data/processed/approved_covid_country_month.rds",
+      "blob": "3be2907430802731fce6e5e438826abe04190b15",
+      "size": 85475,
+      "writer_R": "4.6.1",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "0_old/data/processed/approved_retail_country_month.rds",
+      "blob": "1eec4d8d77311134bc19049b3e7b4f2c2191d494",
+      "size": 114540,
+      "writer_R": "4.6.1",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "0_old/data/processed/approved_ucdp_global_month.rds",
+      "blob": "b19700a6a5caae590a2e9bd4cee808e44a964594",
+      "size": 6338,
+      "writer_R": "4.6.1",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "0_old/data/processed/approved_workbook_observations.rds",
+      "blob": "3951033f945105ff6fd7ae497e63404b5d776ca9",
+      "size": 135397,
+      "writer_R": "4.6.1",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "path": "data/processed/prepared_panel.rds",
+      "blob": "d0287d07ad1ecd7f74d44ddac307650bc232ffab",
+      "size": 27207,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "b6567bb7ee703ba50dc313ec70610280374562c3",
+      "path": "data/processed/prepared_panel.rds",
+      "blob": "455fc75089ad337cea617f608ee1f060e21862f7",
+      "size": 21742,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "b6567bb7ee703ba50dc313ec70610280374562c3",
+      "path": "data/processed/ucdp_candidate_missing_coordinates.rds",
+      "blob": "2ff20ad4ed5d8f229d07c743913384e5e3d670ab",
+      "size": 408,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/analysis_panel.rds",
+      "blob": "eca4424ed15e95dcb0a037d1542d6ae7a4260125",
+      "size": 30056,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/gdp_quarterly.rds",
+      "blob": "acbbfaa2198a9e9b523fc5bdc1c64d4d30514ed5",
+      "size": 1744,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/model_panel.rds",
+      "blob": "0a2eb138db9911132c5229d365be4a65a0f1bbd9",
+      "size": 29035,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/model_panel_excluded_rows.rds",
+      "blob": "17849b54fb4d7511759e5a16f539dd15f111c84b",
+      "size": 1539,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/ucdp_annual_exposure_monthly.rds",
+      "blob": "1b1cf69ccf44dda98d5b54f3cfe5d5decf01edac",
+      "size": 15393,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/ucdp_annual_missing_coordinates.rds",
+      "blob": "c04e5100997f23e32783c14b47e91905b63f9661",
+      "size": 283,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/ucdp_candidate_exposure_events.rds",
+      "blob": "8fa38acecc839b8c6da2d70e2ef8e6ed5100b217",
+      "size": 13235319,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/ucdp_candidate_missing_coordinates.rds",
+      "blob": "40ca0289999fff54e6cf45cec733420998e1e020",
+      "size": 495,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/ucdp_candidate_sources.rds",
+      "blob": "1f4f0f6d241b427b63310ac4bbeb7845dd952775",
+      "size": 556,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "79ebc6ac1260ce23b492afdaf75d1e21194b6af2",
+      "path": "results/development/frozen_config.rds",
+      "blob": "dd01893ca18b658cab5c9cfde2d84fa27c78086c",
+      "size": 1803,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    },
+    {
+      "first_seen": "79ebc6ac1260ce23b492afdaf75d1e21194b6af2",
+      "path": "results/final/evaluation_settings.rds",
+      "blob": "1bf48ab9adf7aa18d679641888a1e30266a48a31",
+      "size": 1862,
+      "writer_R": "4.6.2",
+      "min_reader_R": "3.5.0"
+    }
+  ],
+  "history_summary": [
+    {
+      "first_seen": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "path": "data/processed/.Rapp.history",
+      "blob": "c2863892843702fcae5331be70c06327bab9f363",
+      "lines": 1
+    }
+  ],
+  "lineage_comparison_to_main": [
+    {
+      "commit": "1546a79fe9ffe84a9cbb6f8b047e25e24320d2b1",
+      "raw_files": 7,
+      "raw_blobs_identical_to_current": 6,
+      "processed_RDS_files": 1,
+      "processed_RDS_blobs_identical_to_current": 0,
+      "results_CSV_files": 0,
+      "results_CSV_blobs_identical_to_current": 0
+    },
+    {
+      "commit": "b6567bb7ee703ba50dc313ec70610280374562c3",
+      "raw_files": 45,
+      "raw_blobs_identical_to_current": 45,
+      "processed_RDS_files": 2,
+      "processed_RDS_blobs_identical_to_current": 1,
+      "results_CSV_files": 0,
+      "results_CSV_blobs_identical_to_current": 0
+    },
+    {
+      "commit": "59bc668426bfa23dac3f80f69dc586c29f2f8384",
+      "raw_files": 45,
+      "raw_blobs_identical_to_current": 45,
+      "processed_RDS_files": 10,
+      "processed_RDS_blobs_identical_to_current": 10,
+      "results_CSV_files": 0,
+      "results_CSV_blobs_identical_to_current": 0
+    },
+    {
+      "commit": "79ebc6ac1260ce23b492afdaf75d1e21194b6af2",
+      "raw_files": 45,
+      "raw_blobs_identical_to_current": 45,
+      "processed_RDS_files": 10,
+      "processed_RDS_blobs_identical_to_current": 10,
+      "results_CSV_files": 22,
+      "results_CSV_blobs_identical_to_current": 22
+    },
+    {
+      "commit": "1b2bd8e9a43accc743312b94a95c0c21a23c448d",
+      "raw_files": 45,
+      "raw_blobs_identical_to_current": 45,
+      "processed_RDS_files": 10,
+      "processed_RDS_blobs_identical_to_current": 10,
+      "results_CSV_files": 22,
+      "results_CSV_blobs_identical_to_current": 22
+    },
+    {
+      "commit": "6208b1e923e3de9f5cd741d31fc0d70002256343",
+      "raw_files": 45,
+      "raw_blobs_identical_to_current": 45,
+      "processed_RDS_files": 10,
+      "processed_RDS_blobs_identical_to_current": 10,
+      "results_CSV_files": 22,
+      "results_CSV_blobs_identical_to_current": 22
+    }
+  ],
+  "training_log_headers": {
+    "results/development/reduced_training_log.csv": "model,target_month,training_observations,last_training_month,predictors,mtry,seed",
+    "results/development/regression_training_log.csv": "model,target_month,training_observations,last_training_month,coefficients",
+    "results/development/tree_model_settings.csv": "model,trees,max_depth,minimum_leaf_size,mtry",
+    "results/development/tree_training_log.csv": "model,target_month,training_observations,last_training_month,seed",
+    "results/final/test_training_log.csv": "model,target_month,training_observations,last_eligible_training_month,predictors,coefficients,seed"
+  },
+  "conclusions": {
+    "original_ranger_version_found": false,
+    "serialization_header_caveat": "writer R version is not a complete package specification and does not prove which environment computed a CSV",
+    "platform_trace": "One-line .Rapp.history loads an RDS from a /Users/.../Documents/GitHub/... path; this is a Mac-style clue but not proof of the forest-training platform. Personal path intentionally omitted.",
+    "old_run_status": "0_old/results/run_status.json records failed preflight on 2026-11-03, not forest software versions."
+  }
+}
