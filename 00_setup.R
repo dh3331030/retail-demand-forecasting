@@ -12,7 +12,10 @@ if (!file.exists("Retail_forecasting.Rproj") ||
 
 required_packages <- c(
   "data.table",
-  "readxl"
+  "readxl",
+  "ggplot2",
+  "rpart",
+  "ranger"
 )
 
 installed <- vapply(
