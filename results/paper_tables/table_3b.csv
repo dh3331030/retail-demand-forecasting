@@ -1,0 +1,6 @@
+"Conflict exposure","Linear RMSE","Linear gain (%)","Forest RMSE","Forest gain (%)"
+"No conflict (baseline)","1.4048","—","1.3894","—"
+"Events, 500 km","1.4039","0.06","1.3933","-0.28"
+"Events, 1,000 km","1.4058","-0.08","1.3936","-0.30"
+"Events, 2,000 km","1.4056","-0.06","1.3951","-0.41"
+"Death-weighted, 1,000 km","1.3943","0.74","1.3966","-0.52"

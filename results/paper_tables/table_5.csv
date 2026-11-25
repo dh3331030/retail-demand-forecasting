@@ -1,0 +1,7 @@
+"Model","France","Germany","Italy","Poland","Portugal"
+"Country mean","0.7568","1.0886","0.9016","2.0866","0.9623"
+"Shared slopes: macroeconomic only","0.7553","1.0870","0.9058","2.0988","0.9594"
+"Zero growth (primary)","0.7790","1.0925","0.8995","2.0896","1.0300"
+"Random forest: no conflict","0.8103","1.1012","0.8994","2.1176","0.9948"
+"Random forest: death-weighted conflict","0.7918","1.1209","0.8913","2.1339","1.0093"
+"Random forest: without GDP","0.8366","1.1131","0.8645","2.1461","1.0007"

@@ -1,0 +1,3 @@
+"Reduced specification","Baseline RMSE","Reduced RMSE","Gain (%)"
+"Shared slopes: macroeconomic only","1.404778","1.388162","1.1828"
+"Random forest: without GDP","1.389409","1.389394","0.0011"

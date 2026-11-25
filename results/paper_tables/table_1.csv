@@ -1,0 +1,5 @@
+"Partition","Period","Months per country","Countries","Observations"
+"Training","Jul 2015–Dec 2022",90,5,450
+"Validation","Jan–Dec 2023",12,5,60
+"Test","Jan 2024–Dec 2025",24,5,120
+"Total","Jul 2015–Dec 2025",126,5,630

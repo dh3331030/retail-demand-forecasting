@@ -1,0 +1,7 @@
+"Model","MAE","RMSE","Gain (%)"
+"Country mean","0.9044","1.2530","1.16"
+"Shared slopes: macroeconomic only","0.9078","1.2568","0.87"
+"Zero growth (primary)","0.9197","1.2678","0.00"
+"Random forest: no conflict","0.9255","1.2769","-0.72"
+"Random forest: death-weighted conflict","0.9280","1.2845","-1.32"
+"Random forest: without GDP","0.9283","1.2879","-1.58"
