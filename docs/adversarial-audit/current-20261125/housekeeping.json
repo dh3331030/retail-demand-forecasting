@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-25",
+  "removed_obsolete_instructions": [
+    "PROJECT_GUIDE.txt",
+    "docs/REPRODUCIBILITY_REVIEW.md",
+    "docs/PRESENTATION_OUTLINE.md"
+  ],
+  "status_report": "Replaced with latest audit",
+  "index": "Points to latest audit",
+  "analysis_and_deliverables_changed": false
+}

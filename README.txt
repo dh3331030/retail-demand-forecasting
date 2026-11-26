@@ -60,7 +60,7 @@ Do not rerun `03b_freeze_development.R` during normal reproduction. A freeze is 
 - `results/figures/`: 23 figures, each supplied as PNG and PDF; see [chart guide](docs/CHART_GUIDE.html).
 - `Big Data Working Paper.docx` and `Big Data Working Paper.pdf`: the local editable report and PDF export.
 - Presentation files in the project root: see the dated file/status note below; a file prefixed `backup_` is not automatically the final submission copy.
-- `docs/`: source descriptions/register, preprocessing, data dictionary, contribution template, chart guide, audit evidence and manual correction guide.
+- `docs/`: source descriptions/register, preprocessing, data dictionary, contribution statement, chart guide, audit evidence and manual correction guide.
 - `index.html`: entry point to the internal submission audit.
 
 Run scripts from the project root. Neither filenames nor numeric prefixes execute files automatically.
@@ -231,12 +231,13 @@ Local file check on 25 November 2026:
 
 - [Editable report](Big%20Data%20Working%20Paper.docx) and [report PDF](Big%20Data%20Working%20Paper.pdf) are present. Re-export the PDF after any subsequent Word edits and inspect the actual PDF placed in the submission. File presence is not certification that all report corrections are complete.
 - Presentation exports found in the root: `backup_Forecasting monthly retail growth in volume of FMCG.pdf`. A `backup_` prefix identifies a recovery copy; confirm and clearly designate the final presentation file before packaging. No assumption is made that the editable deck is available only on another member's computer.
-- The contribution statement remains incomplete in the local template. See the contribution section below.
+- The contribution statement is available as PDF and editable Word, based on completed work evidenced in the group chat. See the contribution section below.
 - No correctly named final submission archive was present at this check. Archive assembly, extraction checks, rehearsal and upload are separate completion steps, not established by the existence of this project folder.
 
 Documentation by purpose:
 
 - [DATA_SOURCES.md](docs/DATA_SOURCES.md), [source register](docs/data_source_register.json), [PREPROCESSING.md](docs/PREPROCESSING.md) and [DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md): exact input snapshots, transformations, availability rules and analysis columns.
+- [Contribution statement PDF](docs/Group_02_Contribution_Statement.pdf) and [editable Word copy](docs/Group_02_Contribution_Statement.docx): individual roles and shared decisions, prepared from the WhatsApp export and checked against the syllabus and submission protocol.
 - [MANUAL_FIX_GUIDE.html](docs/MANUAL_FIX_GUIDE.html): manual report/slide/setup corrections that preserve the experiment. Some steps may already have been completed; check the actual current file.
 - [PROJECT_REQUIREMENTS_STATUS.html](docs/PROJECT_REQUIREMENTS_STATUS.html): dated internal adversarial audit and closure checklist. It is not the submitted technical report and does not automatically update when a member edits a file.
 - `docs/adversarial-audit/`: dated verification evidence and historical reviewer records. Historical records and `docs/reproducibility_checks.json` retain their original scope/date; do not treat every old status statement or score as current.
@@ -267,4 +268,4 @@ An operational forecast today would require updating all input series, filling t
 
 ## Group contributions
 
-The existing [contribution template](docs/CONTRIBUTIONS_TEMPLATE.md) still contains placeholders and only four example rows, while the group has five members. Create a completed short HTML contribution statement covering all five members’ confirmed work and shared decisions. Different roles according to strengths do not require equal hours, identical tasks or invented percentages. Have everyone confirm the wording, include the finished statement in the ZIP, then remove the unused blank template. Member names on the report cover alone do not satisfy this requirement.
+Include [Group_02_Contribution_Statement.pdf](docs/Group_02_Contribution_Statement.pdf) in the submission ZIP. The [Word copy](docs/Group_02_Contribution_Statement.docx) is available for any agreed edits; re-export the PDF after changing it. The one-page statement covers completed work evidenced in the WhatsApp export for all five members and describes shared decisions. It does not assign hours, percentages or identical tasks, or claim collective final approval. All members should check the wording before upload. The blank template has been removed. The syllabus requires a brief statement of individual contributions and does not prescribe HTML.

@@ -1,0 +1,563 @@
+{
+  "audit_date_user_timezone": "2026-11-25 Europe/Berlin",
+  "evidence_written_utc": "2026-11-25T14:02:53.356464+00:00",
+  "project_root": "C:\\Users\\Pengchen-David Hu\\OneDrive\\Bocconi - MSc\\Yr 2, S1\\Big Data for Business Decisions\\retail-demand-forecasting",
+  "scope": {
+    "fresh_raw_pipeline_rebuild": false,
+    "fresh_fitted_finalists_from_supplied_model_panel": true,
+    "raw_snapshot_content_verified_against_register": true,
+    "target_lag_and_GDP_construction_verified_against_prepared_data": true,
+    "historical_release_dates_reconstructed": false,
+    "write_producing_analysis_scripts_run": false,
+    "configuration_only_sourced": true,
+    "production_files_modified_by_this_reviewer": false,
+    "model_result_files_written_by_this_reviewer": false,
+    "notes": "Read-only R snippets refitted models in memory and printed checks. No write-producing source scripts were run. No scratch script files were created. This JSON is the only file created by the methods reviewer."
+  },
+  "environment": {
+    "R": "4.6.1 (2026-06-24 ucrt)",
+    "platform": "Windows",
+    "ranger": "0.18.0",
+    "data.table": "1.18.6.1",
+    "readxl": "1.5.0",
+    "ggplot2": "4.0.3",
+    "forest_threads": 1,
+    "R_startup_warnings": "LC_COLLATE, LC_CTYPE, LC_MONETARY and LC_TIME C.UTF-8 locale could not be set"
+  },
+  "configuration": {
+    "current_equals_frozen": true
+  },
+  "sample": {
+    "training": 450,
+    "validation": 60,
+    "testing": 120,
+    "total": 630,
+    "countries": 5,
+    "rows_per_country": 126
+  },
+  "construction_checks": {
+    "target_max_absolute_difference": 0,
+    "retail_growth_lag3_max_absolute_difference": 0,
+    "inflation_lag2_max_absolute_difference": 0,
+    "unemployment_lag3_max_absolute_difference": 0,
+    "GDP_source_quarter_eligibility_violations": 0,
+    "GDP_value_max_absolute_difference": 0,
+    "conflict_source_counts": {
+      "training_annual_GED_23.1": 450,
+      "validation_monthly_Candidate": 60,
+      "testing_monthly_Candidate": 120
+    }
+  },
+  "saved_prediction_arithmetic": {
+    "validation": {
+      "rows": 1560,
+      "models": 26,
+      "unique_model_country_month_keys": 1560,
+      "maximum_error_column_difference": 1.021405e-14,
+      "maximum_MAE_difference": 4.884981e-15,
+      "maximum_RMSE_difference": 5.107026e-15
+    },
+    "test": {
+      "rows": 720,
+      "models": 6,
+      "unique_model_country_month_keys": 720,
+      "maximum_error_column_difference": 9.547918e-15,
+      "maximum_MAE_difference": 5.551115e-16,
+      "maximum_RMSE_difference": 4.218847e-15
+    }
+  },
+  "fresh_refits": {
+    "method": "Each final model formula/settings were reconstructed from current code/config; each test-month fit uses model-panel outcomes through target minus 3. In-memory forecasts compared by model/country/month keys.",
+    "country_mean": {
+      "monthly_fits": 24,
+      "forecasts": 120,
+      "max_absolute_prediction_difference": 4.996004e-16
+    },
+    "shared_slopes_reduced_macro_only": {
+      "monthly_fits": 24,
+      "forecasts": 120,
+      "max_absolute_prediction_difference": 5.273559e-16
+    },
+    "forest_reduced_without_gdp": {
+      "monthly_fits": 24,
+      "forecasts": 120,
+      "max_absolute_prediction_difference": 4.996004e-16,
+      "fresh_RMSE_rounded": 1.287888
+    },
+    "forest_without_conflict": {
+      "monthly_fits": 24,
+      "forecasts": 120,
+      "max_absolute_prediction_difference": 4.996004e-16,
+      "fresh_RMSE_rounded": 1.276879
+    },
+    "forest_conflict_deaths_1000_lag2": {
+      "monthly_fits": 24,
+      "forecasts": 120,
+      "max_absolute_prediction_difference": 4.996004e-16,
+      "fresh_RMSE_rounded": 1.284542
+    },
+    "forest_refit_elapsed_seconds": 8.95
+  },
+  "training_log_checks": {
+    "first_validation_target": "2023-01",
+    "first_validation_fitted_training_rows": 440,
+    "first_validation_last_training_month": "2022-10",
+    "first_test_target": "2024-01",
+    "first_test_fitted_training_rows": 500,
+    "first_test_last_training_month": "2023-10"
+  },
+  "interpretation_checks": {
+    "Poland_share_zero_growth_test_squared_error_rounded": 0.5433093,
+    "country_RMSE_winners": {
+      "France": "shared_slopes_reduced_macro_only",
+      "Germany": "shared_slopes_reduced_macro_only",
+      "Italy": "forest_reduced_without_gdp",
+      "Poland": "country_mean",
+      "Portugal": "shared_slopes_reduced_macro_only"
+    },
+    "validation_RMSE_winner": "zero_growth",
+    "validation_MAE_winner": "forest_conflict_deaths_1000_lag2",
+    "universal_validation_claim_requires_RMSE_qualification": true
+  },
+  "raw_register_verification": {
+    "files": 45,
+    "exact_byte_hash_matches": 7,
+    "additional_matches_after_CRLF_to_LF_normalization": 38,
+    "content_mismatches_after_normalization": 0,
+    "detail": [
+      {
+        "path": "data/raw/(new)Gross domestic product (GDP) and main components (output, expenditure and income)(namq_10_gdp__custom_7680558_spreadsheet).xlsx",
+        "registered_bytes": 176568,
+        "actual_bytes": 176568,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/Headline inflation.xlsx",
+        "registered_bytes": 1451372,
+        "actual_bytes": 1451372,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": false
+      },
+      {
+        "path": "data/raw/Household final consumption expenditure.xlsx",
+        "registered_bytes": 179028,
+        "actual_bytes": 179028,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/Retail trade volume of sales - food, beverages and tobacco(sts_trtu_m__custom_22913457_spreadsheet).xlsx",
+        "registered_bytes": 161956,
+        "actual_bytes": 161956,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/Unemployment.xlsx",
+        "registered_bytes": 119765,
+        "actual_bytes": 119765,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/Oxford Covid-19 Government Response Tracker (OxCGRT).zip",
+        "registered_bytes": 69550557,
+        "actual_bytes": 69550557,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": false
+      },
+      {
+        "path": "data/raw/ucdp/annual/GEDEvent_v23_1.csv.zip",
+        "registered_bytes": 25193966,
+        "actual_bytes": 25193966,
+        "exact_sha256_match": true,
+        "LF_normalized_size_and_sha256_match": false
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v22_0_11.csv",
+        "registered_bytes": 1408706,
+        "actual_bytes": 1410767,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v22_0_12.csv",
+        "registered_bytes": 1143525,
+        "actual_bytes": 1145124,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_1.csv",
+        "registered_bytes": 1203241,
+        "actual_bytes": 1204963,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_10.csv",
+        "registered_bytes": 1780598,
+        "actual_bytes": 1783413,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_11.csv",
+        "registered_bytes": 1640935,
+        "actual_bytes": 1643386,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_12.csv",
+        "registered_bytes": 1355766,
+        "actual_bytes": 1357882,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_2.csv",
+        "registered_bytes": 1156910,
+        "actual_bytes": 1158683,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_3.csv",
+        "registered_bytes": 1224546,
+        "actual_bytes": 1226628,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_4.csv",
+        "registered_bytes": 1273936,
+        "actual_bytes": 1275994,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_5.csv",
+        "registered_bytes": 1247176,
+        "actual_bytes": 1249304,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_6.csv",
+        "registered_bytes": 1418974,
+        "actual_bytes": 1421330,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_7.csv",
+        "registered_bytes": 1644902,
+        "actual_bytes": 1647822,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_8.csv",
+        "registered_bytes": 1509659,
+        "actual_bytes": 1512090,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v23_0_9.csv",
+        "registered_bytes": 1509250,
+        "actual_bytes": 1511665,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_1.csv",
+        "registered_bytes": 1355431,
+        "actual_bytes": 1357327,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_10.csv",
+        "registered_bytes": 2268616,
+        "actual_bytes": 2271458,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_11.csv",
+        "registered_bytes": 2007920,
+        "actual_bytes": 2010710,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_12.csv",
+        "registered_bytes": 1583545,
+        "actual_bytes": 1585987,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_2.csv",
+        "registered_bytes": 1323142,
+        "actual_bytes": 1325034,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_3.csv",
+        "registered_bytes": 1573205,
+        "actual_bytes": 1575399,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_4.csv",
+        "registered_bytes": 1446763,
+        "actual_bytes": 1448752,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_5.csv",
+        "registered_bytes": 1589853,
+        "actual_bytes": 1592373,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_6.csv",
+        "registered_bytes": 1694364,
+        "actual_bytes": 1696801,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_7.csv",
+        "registered_bytes": 1532624,
+        "actual_bytes": 1534968,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_8.csv",
+        "registered_bytes": 1705265,
+        "actual_bytes": 1707507,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v24_0_9.csv",
+        "registered_bytes": 1853945,
+        "actual_bytes": 1856386,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_1.csv",
+        "registered_bytes": 1561692,
+        "actual_bytes": 1564367,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_10.csv",
+        "registered_bytes": 1761645,
+        "actual_bytes": 1765123,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_11.csv",
+        "registered_bytes": 1427790,
+        "actual_bytes": 1430922,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_12.csv",
+        "registered_bytes": 1413937,
+        "actual_bytes": 1416513,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_2.csv",
+        "registered_bytes": 1342270,
+        "actual_bytes": 1344537,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_3.csv",
+        "registered_bytes": 1676506,
+        "actual_bytes": 1679490,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_4.csv",
+        "registered_bytes": 1829518,
+        "actual_bytes": 1833190,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_5.csv",
+        "registered_bytes": 1631527,
+        "actual_bytes": 1634852,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_6.csv",
+        "registered_bytes": 1647781,
+        "actual_bytes": 1650898,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_7.csv",
+        "registered_bytes": 1789307,
+        "actual_bytes": 1792622,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_8.csv",
+        "registered_bytes": 1819031,
+        "actual_bytes": 1822142,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      },
+      {
+        "path": "data/raw/ucdp/candidate/GEDEvent_v25_0_9.csv",
+        "registered_bytes": 1848780,
+        "actual_bytes": 1851949,
+        "exact_sha256_match": false,
+        "LF_normalized_size_and_sha256_match": true
+      }
+    ]
+  },
+  "snapshot_hashes": {
+    "00_setup.R": {
+      "size_bytes": 1436,
+      "sha256": "4242ef06fffbafa234729ed759e1d5f40fd6cbc7e116ba464e7057b94591566e"
+    },
+    "run_development.R": {
+      "size_bytes": 700,
+      "sha256": "98cb36eea3cae5cff6ec901a8a1edf26d070ccb8381efd9fd62db5ec8d7cfb98"
+    },
+    "run_final_evaluation.R": {
+      "size_bytes": 916,
+      "sha256": "9978a491fe1b39a4da10ae358b56fa71739d9589df9f81e64832107fa9c0ec25"
+    },
+    "scripts/00_config.R": {
+      "size_bytes": 6501,
+      "sha256": "c21206b1e19b121b1fbf93e922702d70f70a3ba7b5a0f5c10e3d1ef868fe3756"
+    },
+    "scripts/00_preflight.R": {
+      "size_bytes": 2618,
+      "sha256": "75e93d1ae5e1aeccf11fc46d55c6aa8cac513681e7393f81e175fe69ca538a48"
+    },
+    "scripts/01_prepare_helpers.R": {
+      "size_bytes": 5971,
+      "sha256": "18c08c1c01ba135d8d13bc750990e6ca4a51a362ebfecbb066ac2dc3b9feedf0"
+    },
+    "scripts/01_prepare_data.R": {
+      "size_bytes": 15834,
+      "sha256": "740de5043c7a96bfbe4773091a998958525da0252118338e73eb34fc7f788103"
+    },
+    "scripts/02_construct_model_data.R": {
+      "size_bytes": 13240,
+      "sha256": "d9c5389c94cb31168e06b3bdbef165273c01d6264980fea44d63c8e7364306cf"
+    },
+    "scripts/03_train_validate.R": {
+      "size_bytes": 30260,
+      "sha256": "561246bab8351f6faa776571106605ee20a58f167ad91fa92bceb568b06d616e"
+    },
+    "scripts/03a_compare_reduced_predictors.R": {
+      "size_bytes": 14480,
+      "sha256": "9655610851b240923f7e970d724a6af5de47304e6019c1a149f1570c8b5cceb9"
+    },
+    "scripts/03b_freeze_development.R": {
+      "size_bytes": 2159,
+      "sha256": "dfb035600356e7cbf85be91c0f16cd896b323ffaf50698c2c727834280b6415d"
+    },
+    "scripts/04_final_evaluation.R": {
+      "size_bytes": 31213,
+      "sha256": "78982e894b88f0bd351e41dad8564a98eecfcdeace9a6fc88a33e082f9ef12fa"
+    },
+    "data/processed/prepared_panel.rds": {
+      "size_bytes": 21739,
+      "sha256": "a238c85efc484d476dadd37582a3cdb6fc1b8cee14aca569e0a4e419f0463775"
+    },
+    "data/processed/analysis_panel.rds": {
+      "size_bytes": 30057,
+      "sha256": "8b7f395658093bfe3e98b159be58c3b0c62f59f0c6e86c6086f48c8ffd04f0bf"
+    },
+    "data/processed/model_panel.rds": {
+      "size_bytes": 29035,
+      "sha256": "c11c437a2849ed7400e0338ad3d45300f2ed91fb15c3e9be7362d306d39cf78b"
+    },
+    "data/processed/gdp_quarterly.rds": {
+      "size_bytes": 1744,
+      "sha256": "23deebf3109984a7bb8615c8f48a78de8e62946ffdd499950c8900759dc989a7"
+    },
+    "results/development/frozen_config.rds": {
+      "size_bytes": 1803,
+      "sha256": "fd38e4dcb437eaedae38fe79b2f767761d67cd2dab68a96ad66bf44c9f1a0978"
+    },
+    "results/development/validation_predictions.csv": {
+      "size_bytes": 155250,
+      "sha256": "50838bfdac6249f2e3d3f596030c68ae8d5cd05061aad440f39313ae5588a4f9"
+    },
+    "results/development/validation_scores.csv": {
+      "size_bytes": 1779,
+      "sha256": "bacf7ba0130b69da50c35cc801df2682cdff9d438469866bfce3daf3c10bee56"
+    },
+    "results/development/frozen_finalists_validation_scores.csv": {
+      "size_bytes": 398,
+      "sha256": "a489ef3708080814bbc79c1d39e504ae9dce7ad82baa99e7770fecf697ca2eed"
+    },
+    "results/final/test_predictions.csv": {
+      "size_bytes": 73504,
+      "sha256": "597ee440682ec64000a9fbc8881dab34bd7d51d96fada7bab8c6e672b9369557"
+    },
+    "results/final/test_scores.csv": {
+      "size_bytes": 573,
+      "sha256": "9977939e163188ba44a94e47a34a0bd9c3d7995b5744bf725d1d5c316ff865c9"
+    },
+    "results/final/test_training_log.csv": {
+      "size_bytes": 14980,
+      "sha256": "20f5effa0599b16e6e43f45647c617211cfcb97187ca77b42eb430eaaffba70f"
+    },
+    "docs/data_source_register.json": {
+      "size_bytes": 47878,
+      "sha256": "40c6a4d704a239bd1721803f05d3084365b66db2a2ea752db6c641ae2e5a2b11"
+    },
+    "Big Data Working Paper.docx": {
+      "hash_unavailable": "File open returned PermissionError during evidence capture; no change attempted."
+    },
+    "Big Data Working Paper.pdf": {
+      "size_bytes": 299406,
+      "sha256": "8378a8e2c64ef84f9dc28f04b8486dc6d1b251219534401d174323161ae20111"
+    },
+    "Forecasting monthly retail growth in volume of FMCG (1).pptx": {
+      "size_bytes": 1839238,
+      "sha256": "4a098dd6fd6207717514e457062a35d172e455c7b9fe1abe99b18e062e622cf7"
+    }
+  },
+  "remaining_limits": [
+    "Not a fresh end-to-end raw rebuild.",
+    "Cross-environment forest identity not established; prior drift remains documented.",
+    "Conventions do not recreate historical data vintages or exact release dates.",
+    "Complete 2023 validation outcomes unavailable at earliest 2024 forecast origins.",
+    "Report section 4 describes earlier exploratory use of 2024-2025 scores; unqualified project-wide unseen-data claims are unsupported.",
+    "No statistical-significance or forecast-uncertainty inference performed."
+  ],
+  "presentation_timing": "Follow current user correction: 15 minutes. Numerical checks establish no separate timing rule."
+}

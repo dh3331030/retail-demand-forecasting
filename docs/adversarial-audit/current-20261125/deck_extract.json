@@ -1,0 +1,879 @@
+{
+  "deck": "C:\\Users\\Pengchen-David Hu\\OneDrive\\Bocconi - MSc\\Yr 2, S1\\Big Data for Business Decisions\\retail-demand-forecasting\\Forecasting monthly retail growth in volume of FMCG (1).pptx",
+  "sha256": "4a098dd6fd6207717514e457062a35d172e455c7b9fe1abe99b18e062e622cf7",
+  "size": {
+    "cx": "18288000",
+    "cy": "10287000"
+  },
+  "slides": [
+    {
+      "slide": 1,
+      "blocks": [
+        [
+          "Forecasting monthly retail growth in volume of FMCG"
+        ],
+        [
+          "A retrospective forecasting evaluation performed on five European countries "
+        ],
+        [
+          "20564 - Big Data for Business Decisions"
+        ],
+        [
+          "Group 2"
+        ],
+        [
+          "Pengchen-David Hu",
+          "Adina-Maria Iaciu",
+          "Andrea Ibba",
+          "Enid Lohja",
+          "Minh Hang Nguyen"
+        ],
+        [
+          "3331030",
+          "3188336",
+          "3363601",
+          "3341285",
+          "3233080 "
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image3.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image4.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 2,
+      "blocks": [
+        [
+          "Anticipating fluctuations in retail volumes can help businesses prepare for economic and geopolitical disruptions."
+        ],
+        [
+          "Why forecast FMCG retail demand? "
+        ],
+        [
+          "The challenge"
+        ],
+        [
+          "Operational efficiency"
+        ],
+        [
+          "Managing uncertainty"
+        ],
+        [
+          "More accurate forecasts can support inventory management, procurement and supply-chain planning. "
+        ],
+        [
+          "Anticipating changes in retail volumes can support better business decisions, particularly in uncertain economic environments."
+        ],
+        [
+          "Monthly retail growth is difficult to predict, especially when relevant economic data becomes available with a delay. "
+        ],
+        [
+          "Research question:"
+        ],
+        [
+          "Can macroeconomic indicators and geographically weighted conflict exposure improve monthly retail volume growth forecasts for food, beverages and tobacco beyond simple benchmarks?"
+        ],
+        [
+          "Project overview:"
+        ],
+        [
+          "5 countries"
+        ],
+        [
+          "France, Germany, Italy, Poland, Portugal"
+        ],
+        [
+          "Timeline"
+        ],
+        [
+          "2015-2025 ",
+          "monthly observations"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image5.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image6.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId6",
+          "Target": "../media/image7.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId7",
+          "Target": "../media/image8.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId8",
+          "Target": "../media/image9.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId9",
+          "Target": "../media/image10.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 3,
+      "blocks": [
+        [
+          "1) "
+        ],
+        [
+          "Historical retail growth"
+        ],
+        [
+          "2)"
+        ],
+        [
+          "Macroeconomic indicators"
+        ],
+        [
+          "Data sources and forecasting variables"
+        ],
+        [
+          "Predictors"
+        ],
+        [
+          "Previously observed monthly changes in retail volume",
+          "Source: Eurostat"
+        ],
+        [
+          "Headline inflation, unemployment and real GDP growth",
+          "Source: Eurostat"
+        ],
+        [
+          "Conflict events weighted by geographical distance and, alternatively, fatalities",
+          "Source: UCDP"
+        ],
+        [
+          "3)"
+        ],
+        [
+          "Geopolitical conflict exposure"
+        ],
+        [
+          "Target Variable"
+        ],
+        [
+          "Monthly retail volume growth"
+        ],
+        [
+          "Month-on-month log change in the seasonally and calendar-adjusted retail volume index for food, beverages and tobacco",
+          "Source: Eurostat"
+        ],
+        [
+          "Final dataset: 630 country-month observations"
+        ],
+        [
+          "July 2015 - December 2025"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image11.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image12.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 4,
+      "blocks": [
+        [
+          "Forecasting methodology: Publication lags and out-of-sample evaluation"
+        ],
+        [
+          "Economic and conflict data are not immediately available after their reference period. To avoid using information that would not have yet been published, predictors were shifted backward according to assumed reporting delays. "
+        ],
+        [
+          "Retail growth & unemployment"
+        ],
+        [
+          "3-month lag"
+        ],
+        [
+          "Inflation & conflict exposure"
+        ],
+        [
+          "2-month lag"
+        ],
+        [
+          "GDP growth"
+        ],
+        [
+          "Latest eligible quarter"
+        ],
+        [
+          "Chronological evaluation"
+        ],
+        [
+          "Training"
+        ],
+        [
+          "Validation"
+        ],
+        [
+          "Testing"
+        ],
+        [
+          "2015-2022",
+          "450 observations"
+        ],
+        [
+          "2023"
+        ],
+        [
+          "2024-2025"
+        ],
+        [
+          "Expanding-window forecasting"
+        ],
+        [
+          "Models were re-estimated as newly available historical observations entered the training window, while the forecasting specifications remained fixed during testing."
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image13.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image14.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 5,
+      "blocks": [
+        [
+          "Forecasting models and experimental design"
+        ],
+        [
+          "Simple benchmarks"
+        ],
+        [
+          "Linear regressions"
+        ],
+        [
+          "Tree-based models"
+        ],
+        [
+          "Zero growth, latest available retail growth and country-specific historical mean"
+        ],
+        [
+          "Panel models with shared coefficients or country-specific relationships"
+        ],
+        [
+          "Decision-tree bagging and random forests to capture nonlinear relationships"
+        ],
+        [
+          "Model development experiments"
+        ],
+        [
+          "Conflict augmentation"
+        ],
+        [
+          "Add alternative conflict exposure measures to assess their incremental predictive value"
+        ],
+        [
+          "Predictor reduction"
+        ],
+        [
+          "Remove selected predictors to assess whether simpler specifications generalize better"
+        ],
+        [
+          "Model selection"
+        ],
+        [
+          "Compare validation performance using RMSE, then evaluate a fixed set of models on the 2024-2025 test period."
+        ],
+        [
+          "RMSE was used for model selection because it gives greater weight to large forecasting errors; MAE was used as a complementary accuracy measure."
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image15.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image16.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 6,
+      "blocks": [
+        [
+          "Validation results: Zero growth outperforms more complex models"
+        ],
+        [
+          "The 2023 validation period was used to compare forecasting approaches and select the primary model. "
+        ],
+        [
+          "Key finding"
+        ],
+        [
+          "Reducing predictor sets improved selected models, but none of the developed specifications outperformed zero growth during validation."
+        ],
+        [
+          "Overall model performance - 2023 validation"
+        ],
+        [
+          "RMSE improvement (%) relative to each model's original specification. Positive = better accuracy."
+        ],
+        [
+          "Each predictor reduction is evaluated separately against its corresponding baseline model."
+        ],
+        [
+          "+1.18% RMSE improvement ",
+          "Shared-slope regression after removing lagged retail growth"
+        ],
+        [
+          "Model",
+          "RMSE",
+          "Zero growth",
+          "1.3755",
+          "Country mean",
+          "1.3863",
+          "Shared-slope regression — macro only",
+          "1.3882",
+          "Random forest - without GDP",
+          "1.389"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image17.jpeg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image18.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image19.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 7,
+      "blocks": [
+        [
+          "Does geopolitical conflict exposure improve forecasting accuracy?"
+        ],
+        [
+          "Key finding"
+        ],
+        [
+          "Conflict exposure slightly improved selected linear regressions but worsened all tested random forests. No consistent predictive benefit was identified."
+        ],
+        [
+          "2023 out-of-sample validation"
+        ],
+        [
+          "Distance-weighted events"
+        ],
+        [
+          "Conflict events weighted by distance from each country’s capital."
+        ],
+        [
+          "Fatality-weighted events"
+        ],
+        [
+          "Conflict exposure also accounting for estimated deaths."
+        ],
+        [
+          "+0.74% RMSE improvement ",
+          "Shared-slope regression + fatality-weighted conflict"
+        ],
+        [
+          "VS"
+        ],
+        [
+          "-0.52% RMSE improvement ",
+          "Random forest + fatality-weighted conflict"
+        ],
+        [
+          "500 · 1,000 · 2,000 km decay scales"
+        ],
+        [
+          "1,000 km decay scale"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image20.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 8,
+      "blocks": [
+        [
+          "Out-of-sample testing: How well do our models perform on unseen data?"
+        ],
+        [
+          "120 country-month forecasts across five European countries"
+        ],
+        [
+          "Key finding"
+        ],
+        [
+          "The country meand and macro-only regression slightly outperformed zero growth during testing, but neither was selected as the primary model during validation."
+        ],
+        [
+          "Model",
+          "Interpretation",
+          "Test RMSE",
+          "Zero growth",
+          "Selected during validation",
+          "1.2678",
+          "Country mean",
+          "Lowest test error",
+          "1.2530",
+          "Macro-only regression",
+          "Best developed model on test",
+          "1.2568"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image21.jpeg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image22.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image23.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 9,
+      "blocks": [
+        [
+          "Does forecasting accuracy differ across countries?"
+        ],
+        [
+          "Forecasting accuracy varies across the five countries, with no single approach consistently outperforming the benchmarks in every market."
+        ],
+        [
+          "Key finding"
+        ],
+        [
+          "Model performance is country-dependent. Poland’s larger forecasting errors heavily influence pooled results, highlighting the importance of examining accuracy beyond aggregate metrics."
+        ],
+        [
+          "3 of 5",
+          "countries had their lowest test RMSE under the macro-only regression: France, Germany and Portugal"
+        ],
+        [
+          "~54%",
+          "of the pooled squared error under zero growth came from Poland, despite each country contributing the same number of forecasts"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image24.jpeg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 10,
+      "blocks": [
+        [
+          "1) "
+        ],
+        [
+          "Short evaluation period"
+        ],
+        [
+          "2)"
+        ],
+        [
+          "Retrospective data limitations"
+        ],
+        [
+          "Limitations & Conclusion"
+        ],
+        [
+          "Testing covers only 24 months, with possible common shocks across countries, limiting confidence in the observed differences."
+        ],
+        [
+          "Revised historical values, approximate publication lags and differing conflict sources limit how closely the exercise reflects real-time forecasting."
+        ],
+        [
+          "Annual finalized and monthly preliminary conflict records differ in accuracy. Distance to capital cities may not fully capture economic exposure."
+        ],
+        [
+          "3)"
+        ],
+        [
+          "Conflict measurement"
+        ],
+        [
+          "Conclusion: "
+        ],
+        [
+          "Limited predictive gains: No developed model outperformed zero growth during validation. Small improvements in testing suggest that greater model complexity and conflict indicators offer no consistent forecasting advantage."
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image11.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image12.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId6",
+          "Target": "../media/image25.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    },
+    {
+      "slide": 11,
+      "blocks": [
+        [
+          "Thank You!"
+        ]
+      ],
+      "notes": [],
+      "relationships": [
+        {
+          "Id": "rId1",
+          "Target": "../slideLayouts/slideLayout7.xml",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+        },
+        {
+          "Id": "rId2",
+          "Target": "../media/image1.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId3",
+          "Target": "../media/image2.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId4",
+          "Target": "../media/image3.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId5",
+          "Target": "../media/image4.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId6",
+          "Target": "../media/image22.png",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        },
+        {
+          "Id": "rId7",
+          "Target": "../media/image23.svg",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+        }
+      ]
+    }
+  ],
+  "media": [
+    {
+      "name": "ppt/media/image1.png",
+      "size": 3492,
+      "sha256": "a06d5ca6df383d83ac282042add5c5ff2358810621233649b024fa04c6a688de"
+    },
+    {
+      "name": "ppt/media/image2.svg",
+      "size": 572,
+      "sha256": "0ca82122a6e695dc4fee3a1c68c818c23b5e14597a6a9af92234c2803dfa34c8"
+    },
+    {
+      "name": "ppt/media/image3.png",
+      "size": 44102,
+      "sha256": "387910b2ae120c98e488468d360cf9fb10519b900e41efa07bfa8257162505af"
+    },
+    {
+      "name": "ppt/media/image4.svg",
+      "size": 2519,
+      "sha256": "5b68520a6b3f8c6ee31a9e0b7ab2e2cc860be05beb4b081c9fc6af799db82ac7"
+    },
+    {
+      "name": "ppt/media/image5.png",
+      "size": 46642,
+      "sha256": "323b8c102bd63c76993f363540bf0ed035e499fe9a8256033c37689c70d8d2bc"
+    },
+    {
+      "name": "ppt/media/image6.svg",
+      "size": 6278,
+      "sha256": "d62259e0b436a219c5f77253bd3abfac5334ad28e753c8f2d15e5fe854543b46"
+    },
+    {
+      "name": "ppt/media/image7.png",
+      "size": 2140,
+      "sha256": "1aee64fb3a70331848ecaed6ec2495413eb296c0c826067e994da007fd0f8063"
+    },
+    {
+      "name": "ppt/media/image8.svg",
+      "size": 695,
+      "sha256": "42833ff1b4938eeee9b1974dcc5000c17bb274cd89b1028e2948e037a92482c5"
+    },
+    {
+      "name": "ppt/media/image9.png",
+      "size": 314,
+      "sha256": "285c32dc322fbbdba1348761a3c4a2987c5f84494b83b0ef08b1c536c00cb34f"
+    },
+    {
+      "name": "ppt/media/image10.svg",
+      "size": 1941,
+      "sha256": "5f7760563779aa83764b3c35e1ef49e81bbcc4b950ae2d1773604d9f8d6768b8"
+    },
+    {
+      "name": "ppt/media/image11.png",
+      "size": 46688,
+      "sha256": "1afebc6d134d02b151f3e620c7c4b5714845d9a3acec858aaaba87642a4f5ba8"
+    },
+    {
+      "name": "ppt/media/image12.svg",
+      "size": 1923,
+      "sha256": "f2e88662934d13dd9e9109c20185b6b25ce4d36e87b36a26b3690cbd272b70fe"
+    },
+    {
+      "name": "ppt/media/image13.png",
+      "size": 53722,
+      "sha256": "07389933ffdf6988c5faf7bcdf24e7671aefa309ce36f9a48120d5ae6bd48ebd"
+    },
+    {
+      "name": "ppt/media/image14.svg",
+      "size": 4015,
+      "sha256": "692a736dcc8279567285e86c7ebed102623a5cc9c99a43ce88b65a9c06b3cc56"
+    },
+    {
+      "name": "ppt/media/image15.png",
+      "size": 79247,
+      "sha256": "f1f9ac9e0ac5f02221491446c1ed008ef2b38feb4fbf29ed3e1e79bafb18545c"
+    },
+    {
+      "name": "ppt/media/image16.svg",
+      "size": 4930,
+      "sha256": "74254c24b9bd900a989b7b64734d60e563bd163fe286b9b7a0a30b9afc67316b"
+    },
+    {
+      "name": "ppt/media/image17.jpeg",
+      "size": 312409,
+      "sha256": "01b6da081c4586a81cad12a771a187e6e24401fe81476b485af417ea5670856b"
+    },
+    {
+      "name": "ppt/media/image18.png",
+      "size": 91173,
+      "sha256": "3740b4167daac949fe688cb2f9c546d7adbb83128e2b794e4b469b9240a1c969"
+    },
+    {
+      "name": "ppt/media/image19.svg",
+      "size": 2965,
+      "sha256": "58c0900029ed10d3dea10fcee59fd93c96913587dc1678e113276a74926d99f1"
+    },
+    {
+      "name": "ppt/media/image20.png",
+      "size": 293586,
+      "sha256": "d3cecc5fafc3d1d77b15fde08e7dcdd06aab87a5544b40a7460f33efd65ade6e"
+    },
+    {
+      "name": "ppt/media/image21.jpeg",
+      "size": 139170,
+      "sha256": "4347775e65d46af594c2b674e51e42714ffe06a74c8ada444cbfbf0ee231264f"
+    },
+    {
+      "name": "ppt/media/image22.png",
+      "size": 28362,
+      "sha256": "20144fa889893db57100d8d63d6403d205ec7294f5a07208378b1481cca1074b"
+    },
+    {
+      "name": "ppt/media/image23.svg",
+      "size": 4498,
+      "sha256": "fa579403a42b32464a6e50cd7e2775b372ee24f7682debceda2117d0edb77390"
+    },
+    {
+      "name": "ppt/media/image24.jpeg",
+      "size": 224250,
+      "sha256": "c68a0782c22093f5d180ac9379e0249fe9fc9e8bc4d5067d729b77992800d81d"
+    },
+    {
+      "name": "ppt/media/image25.png",
+      "size": 203162,
+      "sha256": "d3d8964b89008ba935530727cd8107824b144bc7b5e12975e8f70d2034d03a41"
+    }
+  ]
+}
